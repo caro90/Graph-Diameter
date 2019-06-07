@@ -1,5 +1,8 @@
 class Node:
-    def __init__(self, val):
+    def __init__(self,x,y,val):
+        self.x = x
+        self.y = y
+        # val is not strictly defined yet
         self.val = val
         self.leftChild = None
         self.rightChild = None
@@ -66,16 +69,16 @@ class BST:
     def __init__(self):
         self.root = None
 
-    def setRoot(self, val):
+    def setRoot(self, x, y, val):
         self.root = Node(val)
 
-    def insert(self, val):
+    def insert(self, x, y, val):
         if (self.root is None):
             self.setRoot(val)
         else:
-            self.insertNode(self.root, val)
+            self.insertNode(self.root, x, y, val)
 
-    def insertNode(self, currentNode, val):
+    def insertNode(self, currentNode, x, y, val):
         if (val <= currentNode.val):
             if (currentNode.leftChild):
                 self.insertNode(currentNode.leftChild, val)
