@@ -11,7 +11,6 @@ class Point:
         self.z = int(z)
         self.val = int(val)
 
-
 class PointHandler:
     def insertManually(self, x, y, z, val):
         pointList = []
@@ -40,14 +39,13 @@ class PointHandler:
                 line_count += 1
         return listOfPoints
 
-
 class Node:
-    def __init__(self, dimension, point, Tassoc):
+    def __init__(self, dimension, point, TAssoc):
 
         self.nextDimNode = None
         self.point = point
         self.dimension = dimension
-        self.Tassoc = Tassoc
+        self.TAssoc = TAssoc
         # val is not strictly defined yet
         if self.dimension == 1: self.coordinate = int(point.x)
         if self.dimension == 2: self.coordinate = int(point.y)
@@ -64,6 +62,10 @@ class Node:
     def set(self, val):
         self.val = val
 
+    def setChildren(self, right, left):
+        self.rightChild = right
+        self.leftChild = left
+
     def setNextDimNode(self, node):
         self.nextDimNode = node
 
@@ -78,6 +80,7 @@ class Node:
 class BST:
     def __init__(self, root):
         self.root = root
+        # associateT is a BST object reference to the associate tree of the current BST
         self.associateT = None
 
     def setRoot(self, root):
@@ -126,7 +129,6 @@ class BST:
             # Finally recur on right child
             self.printPreorder(root.rightChild)
 
-
 class RangeTree:
     # TODO: write doc for each function and class
     def __init__(self):
@@ -146,7 +148,8 @@ class RangeTree:
         for i in listOfPoints:
             x = Node(1, i, None)
             x.setNextDimNode(Node(2, i, None))
-            y = Node(2, i, None)
+            y=x.nextDimNode
+
             y.setNextDimNode(Node(3, i, None))
             self.nodeXList.append(x)
             self.nodeYList.append(y)
@@ -157,27 +160,42 @@ class RangeTree:
         self.nodeYList.sort(key=operator.attrgetter('coordinate'))
         self.nodeZList.sort(key=operator.attrgetter('coordinate'))
 
-        self.build2DRangeTree(self.nodeXList, 0, root)
-
+        # TESTING:
+        x = self.build2DRangeTree(self.nodeXList, 0, root)
+        root.setRoot(x)
         root.printPreorder(root.root)
         print("--------")
         root.printPostorder(root.root)
         print("--------")
         root.printInorder(root.root)
+        print("---------")
+        print("aa!=", root.root.coordinate)
+        root.setRoot(root.root.TAssoc)
+        root.printInorder(root.root)
+        print("---------")
+        root.setRoot(x.leftChild.TAssoc)
+        root.printInorder(root.root)
 
     def build2DRangeTree(self, nodeList, flag, root):
-        # Construction of the associate Tree treeAssoc:
-        nextDimNodeList = []
-        if len(nodeList >= 2):
-            for i in nodeList:
-                nextDimNodeList.append(i.nextDimNode)
 
         PLeftList = []
         PRightList = []
         median = int(math.ceil(len(nodeList) / 2))
+        # Construction of the associate Tree treeAssoc:
+        TAssoc = None
+        nextDimNodeList = []
+        if len(nodeList) >= 2:
+            if nodeList[0].nextDimNode is not None:
+                for i in nodeList:
+                    nextDimNodeList.append(i.nextDimNode)
+                # Sorting the list
+                nextDimNodeList.sort(key=operator.attrgetter('coordinate'))
+                TAssoc = self.build2DRangeTree(nextDimNodeList, flag,root)
+
+
         if len(nodeList) == 1:
             # Base case of the recursion
-            mid = nodeList[0]
+            mid = Node(nodeList[0].dimension, nodeList[0].point, None)
         else:
             if flag == 0:
                 median = int(math.ceil(len(self.nodeXList) / 2))
@@ -192,25 +210,39 @@ class RangeTree:
                 else:
                     PRightList.append(i)
                 count += 1
+
+            mid = Node(nodeList[median - 1].dimension, nodeList[median - 1].point, nodeList[median - 1].TAssoc)
+            mid.setChildren(nodeList[median - 1].rightChild, nodeList[median - 1].leftChild)
+            if len(nodeList)> 1:
+                # Make the TAssoc the associate structure of mid
+                mid.TAssoc = TAssoc
+            del TAssoc
             vLeft = self.build2DRangeTree(PLeftList, flag, root)
             vRight = self.build2DRangeTree(PRightList, flag, root)
-            mid = nodeList[median-1]
+
             # The internal nodes are used only to guide the search path
             # For the leaves we create new Node classes
             if len(PLeftList) < 2:
-                x = Node(vLeft.dimension, vLeft.point, vLeft.Tassoc)
+                x = Node(vLeft.dimension, vLeft.point, vLeft.TAssoc)
                 mid.leftChild = x
             else:
                 mid.leftChild = vLeft
             if len(PRightList) < 2:
-                y = Node(vRight.dimension, vRight.point, vRight.Tassoc)
+                y = Node(vRight.dimension, vRight.point, vRight.TAssoc)
                 mid.rightChild = y
             else:
                 mid.rightChild = vRight
 
-            # Make the Tassoc the associate structure of mid
-
         return mid
+
+
+    def findSplitNode(self, xR, xL):
+        # Input: A range tree T with two values xL and xR with xL <= xR
+        # Output: The node v where the paths to xL and xR split, or the leaf where both paths end.
+        print()
+
+
+   # def rangeQuery(self):
 
 
 def main():
