@@ -24,7 +24,7 @@ class PointHandler:
         ylist = []
         zlist = []
         listOfPoints = []
-        with open('points.txt', mode='r') as csv_file:
+        with open('points2.txt', mode='r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             line_count = 0
             for row in csv_reader:
@@ -103,8 +103,7 @@ class BST:
             # now recur on right child
             self.printInorder(root.rightChild)
 
-            # A function to do postorder tree traversal
-
+    # A function to do postorder tree traversal
     def printPostorder(self, root):
         if root:
             # First recur on left child
@@ -116,8 +115,7 @@ class BST:
             # now print the data of node
             print(root.coordinate)
 
-            # A function to do preorder tree traversal
-
+    # A function to do preorder tree traversal
     def printPreorder(self, root):
         if root:
             # First print the data of node
@@ -128,6 +126,18 @@ class BST:
 
             # Finally recur on right child
             self.printPreorder(root.rightChild)
+
+    def printLeaves(self, v):
+        if v:
+            if v.leftChild is None and v.rightChild is None:
+                # First print the data of node only if it is a leaf
+                print(v.coordinate)
+
+            # Then recur on left child
+            self.printLeaves(v.leftChild)
+
+            # Finally recur on right child
+            self.printLeaves(v.rightChild)
 
 class RangeTree:
     # TODO: write doc for each function and class
@@ -163,21 +173,27 @@ class RangeTree:
         # TESTING:
         x = self.build2DRangeTree(self.nodeXList, 0, root)
         root.setRoot(x)
+
         root.printPreorder(root.root)
         print("--------")
         root.printPostorder(root.root)
         print("--------")
         root.printInorder(root.root)
-        print("---------")
-        print("aa!=", root.root.coordinate)
-        root.setRoot(root.root.TAssoc)
-        root.printInorder(root.root)
-        print("---------")
-        root.setRoot(x.leftChild.TAssoc)
-        root.printInorder(root.root)
+
+        print("-------")
+        root.printLeaves(root.root)
+        range1 = [-5, 200]
+        print("Query:")
+        L = self.oneDRangeQuery(root.root, range1)
+        for i in L:
+            print(i.coordinate)
+        print("-----------")
+        range2 = [100, 200, -11, 99]
+        L2 = self.dimensionalRangeQuery(root.root, range2)
+        for j in L2:
+            print(j.coordinate)
 
     def build2DRangeTree(self, nodeList, flag, root):
-
         PLeftList = []
         PRightList = []
         median = int(math.ceil(len(nodeList) / 2))
@@ -192,10 +208,10 @@ class RangeTree:
                 nextDimNodeList.sort(key=operator.attrgetter('coordinate'))
                 TAssoc = self.build2DRangeTree(nextDimNodeList, flag,root)
 
-
         if len(nodeList) == 1:
             # Base case of the recursion
             mid = Node(nodeList[0].dimension, nodeList[0].point, None)
+            mid.setNextDimNode(nodeList[0].nextDimNode)
         else:
             if flag == 0:
                 median = int(math.ceil(len(self.nodeXList) / 2))
@@ -213,6 +229,7 @@ class RangeTree:
 
             mid = Node(nodeList[median - 1].dimension, nodeList[median - 1].point, nodeList[median - 1].TAssoc)
             mid.setChildren(nodeList[median - 1].rightChild, nodeList[median - 1].leftChild)
+            mid.setNextDimNode(nodeList[median - 1].nextDimNode)
             if len(nodeList)> 1:
                 # Make the TAssoc the associate structure of mid
                 mid.TAssoc = TAssoc
@@ -224,27 +241,145 @@ class RangeTree:
             # For the leaves we create new Node classes
             if len(PLeftList) < 2:
                 x = Node(vLeft.dimension, vLeft.point, vLeft.TAssoc)
+                x.setNextDimNode(vLeft.nextDimNode)
                 mid.leftChild = x
             else:
                 mid.leftChild = vLeft
             if len(PRightList) < 2:
                 y = Node(vRight.dimension, vRight.point, vRight.TAssoc)
+                y.setNextDimNode(vRight.nextDimNode)
                 mid.rightChild = y
             else:
                 mid.rightChild = vRight
-
         return mid
 
-
-    def findSplitNode(self, xR, xL):
+    def findSplitNode(self, root, xL, xR):
         # Input: A range tree T with two values xL and xR with xL <= xR
         # Output: The node v where the paths to xL and xR split, or the leaf where both paths end.
-        print()
+        v = root
+        while (v.leftChild is not None) and (v.rightChild is not None) and\
+                ((xR <= v.coordinate) | (xL > v.coordinate)):
+            if xR <= v.coordinate:
+                v = v.leftChild
+            else:
+                v = v.rightChild
+        return v
+
+    def dimensionalRangeQuery(self, root, range):
+        # Input: A dimensional range tree T and a range [x : x'] * [y : y'] * ...
+        # Output: All points in T that lie in that range
+        reportedList = []
+        vSplit = self.findSplitNode(root, range[0], range[1])
+
+        # if vSplit is a leaf
+        if (vSplit.leftChild is None) and (vSplit.rightChild is None):
+            # Checking if the point stored at vSplit must be reported
+            if (vSplit.coordinate >= range[0]) & (vSplit.coordinate <= range[1]):
+                reportedList.append(vSplit)
+        else:
+            # Follow the path to x and call oneDrangeQuery on the subtrees right of the path
+            v = vSplit.leftChild
+            # While v is not a leaf
+            while (v.leftChild is not None) and (v.rightChild is not None):
+                if (range[0] <= v.coordinate):
+                    temp = self.oneDRangeQuery(v.rightChild.TAssoc, [range[2], range[3]])
+                    if temp is not None:
+                        for i in temp:
+                            reportedList.append(i)
+                    else:
+                        if (range[2] <= v.rightChild.nextDimNode.coordinate) & \
+                                (range[3] >= v.rightChild.nextDimNode.coordinate):
+                            reportedList.append(v.rightChild.nextDimNode)
+                    v = v.leftChild
+                else:
+                    v = v.rightChild
+            # Check if the point stored at v must be reported
+            if (v.coordinate >= range[0]) & (v.coordinate <= range[1])\
+                        &(range[2] <= v.nextDimNode.coordinate)\
+                        &(range[3] >= v.nextDimNode.coordinate):
+                    reportedList.append(v.nextDimNode)
 
 
-   # def rangeQuery(self):
+            # Similarly, follow the path from the right of vSplit to x',
+            # call oneDRangeQuery with the range [y:y'] on the associate structures
+            # of subtrees left of the path, and check if the point stored at the leaf
+            # where the paths ends must be reported
+            v = vSplit.rightChild
+            # While v is not a leaf
+            while (v.leftChild is not None) and (v.rightChild is not None):
+                if (range[1] >= v.coordinate):
+                    temp = self.oneDRangeQuery(v.leftChild.TAssoc, [range[2], range[3]])
+                    if temp is not None:
+                        for i in temp:
+                            reportedList.append(i)
+                    else:
+                        if (range[2] <= v.leftChild.nextDimNode.coordinate) & \
+                                (range[3] >= v.leftChild.nextDimNode.coordinate):
+                            reportedList.append(v.leftChild.nextDimNode)
+                    v = v.rightChild
+                else:
+                    v = v.leftChild
 
+            # Check if the point stored at v must be reported
+            if (v.coordinate >= range[0]) & (v.coordinate <= range[1])\
+                        &(range[2] <= v.nextDimNode.coordinate)\
+                        &(range[3] >= v.nextDimNode.coordinate):
+                reportedList.append(v.nextDimNode)
+        return reportedList
 
+    def oneDRangeQuery(self, root, range):
+        # Input: A binary search tree T and a range [x : x']
+        # Output: All points stored in T that lie in that range
+
+        if root is None:
+            return
+
+        reportedList = []
+        vSplit = self.findSplitNode(root,range[0], range[1])
+        if (vSplit.leftChild is None) and (vSplit.rightChild is None):
+            # if vSplit is a leaf
+            if (vSplit.coordinate >= range[0]) & (vSplit.coordinate <= range[1]):
+                # Checking if the point stored at vSplit must be reported
+                reportedList.append(vSplit)
+        else:
+            # Follow the path to x(stored at range[0]) and report the points in subtrees right of the path
+            v = vSplit.leftChild
+            # While v is not a leaf:
+            while (v.leftChild is not None) and (v.rightChild is not None):
+                if range[0] <= v.coordinate:
+                    self.reportSubtree(v.rightChild)
+                    v = v.leftChild
+                else:
+                    v = v.rightChild
+            # Check if the point stored at the leaf v must be reported:
+            if (v.coordinate >= range[0]) & (v.coordinate <= range[1]):
+                reportedList.append(v)
+
+            # Similarly, follow the path to x'(stored at range[1]), report the points in subtrees left of the path,
+            # and check if the point stored at the leaf where the path ends must be reported
+            v = vSplit.rightChild
+            # While v is not a leaf:
+            while (v.leftChild is not None) and (v.rightChild is not None):
+                if range[1] >= v.coordinate:
+                    self.reportSubtree(v.leftChild)
+                    v = v.rightChild
+                else:
+                    v = v.leftChild
+            # Check if the point stored at the leaf v must be reported:
+            if (v.coordinate >= range[0]) & (v.coordinate <= range[1]):
+                reportedList.append(v)
+
+        return reportedList
+
+    def reportSubtree(self, v):
+        if v:
+            if v.leftChild is None and v.rightChild is None:
+                # First print the data of node only if it is a leaf
+                print(v.coordinate)
+            # Then recur on left child
+            self.reportSubtree(v.leftChild)
+            # Finally recur on right child
+            self.reportSubtree(v.rightChild)
 def main():
     testRange = RangeTree()
     testRange.initialization()

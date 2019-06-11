@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b84174-18f8-454c-87d4-6a35c0ecff8e" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/BST.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/RangeTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/RangeTree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/points.txt" beforeDir="false" afterPath="$PROJECT_DIR$/points.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,23 +17,18 @@
       <file leaf-file-name="RangeTree.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RangeTree.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="227" column="17" lean-forward="true" selection-start-line="227" selection-start-column="17" selection-end-line="227" selection-end-column="17" />
+            <state relative-caret-position="408">
+              <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
               <folding>
                 <element signature="e#90#223#0" />
                 <element signature="e#250#1231#0" />
                 <element signature="e#1250#2141#0" />
-                <element signature="e#2158#3503#0" />
+                <element signature="e#2367#4180#0" />
+                <element signature="e#6348#8656#0" />
+                <element signature="e#8709#9202#0" />
+                <element signature="e#11577#13478#0" />
+                <element signature="e#10100#10366#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BST.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BST.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2592">
-              <caret line="108" selection-start-line="108" selection-end-line="108" />
             </state>
           </provider>
         </entry>
@@ -66,8 +61,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="12" />
-    <option name="width" value="1912" />
+    <option name="x" value="57" />
+    <option name="width" value="1867" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -167,7 +162,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="12" y="0" width="1912" height="1047" extended-state="0" />
+    <frame x="57" y="0" width="1867" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="1" weight="0.07880435" />
@@ -175,10 +170,10 @@
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.3295711" />
       <window_info active="true" anchor="bottom" x="12" y="418" width="1422" height="564" id="Run" order="6" type="WINDOWED" visible="true" weight="0.39954853" />
       <window_info anchor="bottom" id="Version Control" order="3" />
-      <window_info anchor="bottom" id="Python Console" order="0" weight="0.18848759" />
+      <window_info anchor="bottom" id="Python Console" order="0" visible="true" weight="0.046275396" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.28185746" />
+      <window_info anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.31045932" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="5" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -213,6 +208,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/RangeTree.py</url>
+          <line>191</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -220,10 +222,17 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="42" />
+      <option name="time" value="52" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$USER_HOME$/Anaconda3/envs/AlgorithmE_eccentricities/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="233">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/BST.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2592">
@@ -231,22 +240,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/envs/AlgorithmE_eccentricities/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="310" selection-start-line="310" selection-end-line="310" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/RangeTree.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="227" column="17" lean-forward="true" selection-start-line="227" selection-start-column="17" selection-end-line="227" selection-end-column="17" />
+        <state relative-caret-position="408">
+          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
           <folding>
             <element signature="e#90#223#0" />
             <element signature="e#250#1231#0" />
             <element signature="e#1250#2141#0" />
-            <element signature="e#2158#3503#0" />
+            <element signature="e#2367#4180#0" />
+            <element signature="e#6348#8656#0" />
+            <element signature="e#8709#9202#0" />
+            <element signature="e#11577#13478#0" />
+            <element signature="e#10100#10366#0" />
           </folding>
         </state>
       </provider>
