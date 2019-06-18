@@ -1,169 +1,37 @@
-import csv
+from DataHandler import *
+from binaryTrees import *
 import operator
 import math
-import random
-import collections
 
-class Point:
-    def __init__(self, x, y, z, val):
-        self.x = int(x)
-        self.y = int(y)
-        self.z = int(z)
-        self.val = int(val)
-
-class PointHandler:
-    def insertManually(self, x, y, z, val):
-        pointList = []
-        node = Point(x, y, z, val)
-        print("Insert point ")
-        return node
-
-    def insertFile(self):
-        # Imports the points from a csv file and creates object points
-        xlist = []
-        ylist = []
-        zlist = []
-        listOfPoints = []
-        with open('points2.txt', mode='r') as csv_file:
-            csv_reader = csv.DictReader(csv_file)
-            line_count = 0
-            for row in csv_reader:
-                if line_count == 0:
-                    print(f'Column names are:{", ".join(row)}')
-                print(f'\t\t\t\t { row["x"]} { row["y"]} { row["z"]} { row["val"]}')
-                xlist.append(row["x"])
-                ylist.append(row["y"])
-                zlist.append(row["z"])
-                tempPoint = Point(row["x"], row["y"], row["z"], row["val"])
-                listOfPoints.append(tempPoint)
-                line_count += 1
-        return listOfPoints
-
-class Node:
-    def __init__(self, dimension, point, TAssoc):
-
-        self.nextDimNode = None
-        self.point = point
-        self.dimension = dimension
-        self.TAssoc = TAssoc
-        # val is not strictly defined yet
-        if self.dimension == 1: self.coordinate = int(point.x)
-        if self.dimension == 2: self.coordinate = int(point.y)
-        if self.dimension == 3:
-            # if dimension is the last one we also store the value of the point
-            self.coordinate = int(point.z)
-            self.val = int(point.val)
-        self.leftChild = None
-        self.rightChild = None
-
-    def get(self):
-        return self.val
-
-    def set(self, val):
-        self.val = val
-
-    def setChildren(self, right, left):
-        self.rightChild = right
-        self.leftChild = left
-
-    def setNextDimNode(self, node):
-        self.nextDimNode = node
-
-    def getChildren(self):
-        children = []
-        if (self.leftChild != None):
-               children.append(self.leftChild)
-        if (self.rightChild != None):
-            children.append(self.rightChild)
-        return children
-
-class BST:
-    def __init__(self, root):
-        self.root = root
-        # associateT is a BST object reference to the associate tree of the current BST
-        self.associateT = None
-
-    def setRoot(self, root):
-        self.root = root
-    def setAssociateT(self, associateT):
-        self.associateT = associateT
-
-    def getRoot(self):
-        return self.root
-
-    # A function to do inorder tree traversal
-    def printInorder(self, root):
-        if root:
-            # First recur on left child
-            self.printInorder(root.leftChild)
-
-            # then print the data of node
-            print(root.coordinate),
-
-            # now recur on right child
-            self.printInorder(root.rightChild)
-
-    # A function to do postorder tree traversal
-    def printPostorder(self, root):
-        if root:
-            # First recur on left child
-            self.printPostorder(root.leftChild)
-
-            # the recur on right child
-            self.printPostorder(root.rightChild)
-
-            # now print the data of node
-            print(root.coordinate)
-
-    # A function to do preorder tree traversal
-    def printPreorder(self, root):
-        if root:
-            # First print the data of node
-            print(root.coordinate),
-
-            # Then recur on left child
-            self.printPreorder(root.leftChild)
-
-            # Finally recur on right child
-            self.printPreorder(root.rightChild)
-
-    def printLeaves(self, v):
-        if v:
-            if v.leftChild is None and v.rightChild is None:
-                # First print the data of node only if it is a leaf
-                print(v.coordinate)
-
-            # Then recur on left child
-            self.printLeaves(v.leftChild)
-
-            # Finally recur on right child
-            self.printLeaves(v.rightChild)
 
 class RangeTree:
     # TODO: write doc for each function and class
+    # TODO: range tree dynamic dimensions - change also in Node class for dynamic coordinates
     def __init__(self):
         self.dimension = 1
         self.nodeXList = []
         self.nodeYList = []
         self.nodeZList = []
+        self.dynamicList = []
 
     def initialization(self):
+
         # Loading points and setting up the nodes for the BSTs
         # Read the points from the file
         root = BST(None)
         x = PointHandler()
-        listOfPoints = x.insertFile()
+        listOfPoints = x.insertFile_XYZval("points2.txt")
 
         # Creating Node objects for x, y and z coordinates
         for i in listOfPoints:
-            x = Node(1, i, None)
-            x.setNextDimNode(Node(2, i, None))
+            x = Node(1, i, None, None)
+            x.setNextDimNode(Node(2, i, None, None))
             y=x.nextDimNode
 
-            y.setNextDimNode(Node(3, i, None))
+            y.setNextDimNode(Node(3, i, None, None))
             self.nodeXList.append(x)
             self.nodeYList.append(y)
-            self.nodeZList.append(Node(3, i, None))
+            self.nodeZList.append(Node(3, i, None, None))
 
         # Sorting according to x, y and z coordinates
         self.nodeXList.sort(key=operator.attrgetter('coordinate'))
@@ -174,24 +42,64 @@ class RangeTree:
         x = self.build2DRangeTree(self.nodeXList, 0, root)
         root.setRoot(x)
 
-        root.printPreorder(root.root)
-        print("--------")
-        root.printPostorder(root.root)
-        print("--------")
-        root.printInorder(root.root)
-
         print("-------")
         root.printLeaves(root.root)
+        print("-------")
+        root.printLeaves(root.root.TAssoc)
+        print("-------")
+        root.printLeaves(root.root.TAssoc.TAssoc)
+
+
         range1 = [-5, 200]
         print("Query:")
         L = self.oneDRangeQuery(root.root, range1)
         for i in L:
             print(i.coordinate)
         print("-----------")
-        range2 = [100, 200, -11, 99]
+        range2 = [100, 200, -11, 99, -99, 100]
         L2 = self.dimensionalRangeQuery(root.root, range2)
         for j in L2:
             print(j.coordinate)
+
+
+    def initialization2(self, pi):
+        root = BST(None)
+        listOfPoints = []
+        x = PointHandler()
+        for i in pi:
+            for j in range(0, len(pi)):
+                point = x.insertManually2(i[j])
+                listOfPoints.append(point)
+
+        # Creating Node objects for all the coordinates
+        for i in listOfPoints:
+            stop = i.listOfCoordinates
+            for j in range(1, len(stop)+1):
+                x = Node(j, None, None, i)
+                if j != len(stop):
+                    x.setNextDimNode(Node(j+1, None, None, i))
+                if j == 1:
+                    self.nodeXList.append(x)
+
+        # Sorting according to the first coordinate
+        self.nodeXList.sort(key=operator.attrgetter('coordinate'))
+        # TESTING:
+        x = self.build2DRangeTree(self.nodeXList, 0, root)
+        root.setRoot(x)
+        print("-------")
+        root.printLeaves(root.root)
+        print("-------")
+        root.printLeaves(root.root.TAssoc)
+        print("-------")
+        root.printLeaves(root.root.TAssoc.TAssoc)
+
+        range1 = [1, 2]
+        print("Query:")
+        L = self.oneDRangeQuery(root.root, range1)
+        for i in L:
+            print(i.coordinate)
+
+        print("a")
 
     def build2DRangeTree(self, nodeList, flag, root):
         PLeftList = []
@@ -210,7 +118,7 @@ class RangeTree:
 
         if len(nodeList) == 1:
             # Base case of the recursion
-            mid = Node(nodeList[0].dimension, nodeList[0].point, None)
+            mid = Node(nodeList[0].dimension, nodeList[0].point, None, nodeList[0].dynamicPoint)
             mid.setNextDimNode(nodeList[0].nextDimNode)
         else:
             if flag == 0:
@@ -227,7 +135,7 @@ class RangeTree:
                     PRightList.append(i)
                 count += 1
 
-            mid = Node(nodeList[median - 1].dimension, nodeList[median - 1].point, nodeList[median - 1].TAssoc)
+            mid = Node(nodeList[median - 1].dimension, nodeList[median - 1].point, nodeList[median - 1].TAssoc, nodeList[median - 1].dynamicPoint)
             mid.setChildren(nodeList[median - 1].rightChild, nodeList[median - 1].leftChild)
             mid.setNextDimNode(nodeList[median - 1].nextDimNode)
             if len(nodeList)> 1:
@@ -240,13 +148,13 @@ class RangeTree:
             # The internal nodes are used only to guide the search path
             # For the leaves we create new Node classes
             if len(PLeftList) < 2:
-                x = Node(vLeft.dimension, vLeft.point, vLeft.TAssoc)
+                x = Node(vLeft.dimension, vLeft.point, vLeft.TAssoc, vLeft.dynamicPoint)
                 x.setNextDimNode(vLeft.nextDimNode)
                 mid.leftChild = x
             else:
                 mid.leftChild = vLeft
             if len(PRightList) < 2:
-                y = Node(vRight.dimension, vRight.point, vRight.TAssoc)
+                y = Node(vRight.dimension, vRight.point, vRight.TAssoc, vRight.dynamicPoint)
                 y.setNextDimNode(vRight.nextDimNode)
                 mid.rightChild = y
             else:
@@ -380,9 +288,12 @@ class RangeTree:
             self.reportSubtree(v.leftChild)
             # Finally recur on right child
             self.reportSubtree(v.rightChild)
+
+
 def main():
     testRange = RangeTree()
     testRange.initialization()
+
 
 if __name__ == "__main__":
     main()
