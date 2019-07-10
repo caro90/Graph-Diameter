@@ -74,7 +74,7 @@ def algorithmE(G, separatorList, edges, X, Y):
     # [E5] Recurse on G[X]
 def main():
     test = Graphs()
-    g = test.createGrid2D(3,3)
+    g = test.createGrid2D(3, 3)
     print("-------")
     edges2 = []
 

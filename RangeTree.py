@@ -41,13 +41,15 @@ class RangeTree:
         x = self.buildRangeTree(self.nodeXList, 0, root)
         root.setRoot(x)
 
-        print("-------")
+        print("---Post Order----")
+        root.printPostorder(root.root)
+        print("----1st Dim---")
         root.printLeaves(root.root)
-        print("-------")
+        print("---2nd Dim----")
         root.printLeaves(root.root.TAssoc)
-        print("-------")
+        print("----3rd Dim---")
         root.printLeaves(root.root.TAssoc.TAssoc)
-
+        print("-------")
 
         range1 = [-5, 200]
         print("Query 1 D:")
@@ -64,7 +66,7 @@ class RangeTree:
 
         print("-----------")
         print("Query 3D:")
-        range3 = [-5, 200, 3,8, -100, 120]
+        range3 = [-5, 200, -100, 100, -100, 120]
         L3 = self.dimensionalRangeQuery(root.root, range3)
         for j in L3:
             print(j.coordinate)
@@ -220,9 +222,6 @@ class RangeTree:
                          &(range[counter+1] >= v.nextDimNode.coordinate):
                      reportedList.append(v.nextDimNode)
 
-
-
-
             # Similarly, follow the path from the right of vSplit to x',
             # call oneDRangeQuery with the range [y:y'] on the associate structures
             # of subtrees left of the path, and check if the point stored at the leaf
@@ -230,9 +229,8 @@ class RangeTree:
             v = vSplit.rightChild
             # While v is not a leaf
 
-
             while (v.leftChild is not None) and (v.rightChild is not None):
-                if (range[counter-1] >= v.coordinate):
+                if range[counter-1] >= v.coordinate:
                     temp = self.oneDRangeQuery(v.leftChild.TAssoc, [range[counter], range[counter+1]])
                     if temp is not None:
                          for i in temp:
@@ -250,8 +248,6 @@ class RangeTree:
                         &(range[counter] <= v.nextDimNode.coordinate)\
                          &(range[counter+1] >= v.nextDimNode.coordinate):
                  reportedList.append(v.nextDimNode)
-
-
 
         return reportedList
 
