@@ -6,7 +6,6 @@ from networkx.algorithms import approximation as approx
 import matplotlib.pyplot as plt
 
 
-
 class Point:
     def __init__(self, x, y, z, val):
         self.x = int(x)
