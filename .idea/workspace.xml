@@ -5,7 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataHandler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RangeTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/RangeTree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grid.edgelist" beforeDir="false" afterPath="$PROJECT_DIR$/grid.edgelist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/binaryTrees.py" beforeDir="false" afterPath="$PROJECT_DIR$/binaryTrees.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,10 +19,11 @@
       <file leaf-file-name="RangeTree.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RangeTree.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5964">
-              <caret line="290" column="8" selection-start-line="290" selection-start-column="8" selection-end-line="290" selection-end-column="8" />
+            <state relative-caret-position="63">
+              <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#388#2265#0" />
               </folding>
             </state>
           </provider>
@@ -31,11 +32,8 @@
       <file leaf-file-name="binaryTrees.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/binaryTrees.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="1" column="11" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
-              <folding>
-                <element signature="e#1390#1854#1" />
-              </folding>
+            <state relative-caret-position="315">
+              <caret line="15" column="43" lean-forward="true" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -43,12 +41,10 @@
       <file leaf-file-name="DataHandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DataHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2168">
-              <caret line="132" column="38" lean-forward="true" selection-start-line="132" selection-start-column="38" selection-end-line="132" selection-end-column="38" />
+            <state relative-caret-position="1197">
+              <caret line="57" column="54" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#201#334#0" />
-                <element signature="e#360#449#0" />
               </folding>
             </state>
           </provider>
@@ -78,6 +74,7 @@
       <find>setRo</find>
       <find>Tas</find>
       <find>dest</find>
+      <find>t_a</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -92,18 +89,18 @@
         <option value="$PROJECT_DIR$/dijkstra4.py" />
         <option value="$PROJECT_DIR$/dijkstra3.py" />
         <option value="$PROJECT_DIR$/dijkstra.py" />
-        <option value="$PROJECT_DIR$/binaryTrees.py" />
         <option value="$PROJECT_DIR$/AlgorithmE.py" />
+        <option value="$PROJECT_DIR$/binaryTrees.py" />
         <option value="$PROJECT_DIR$/DataHandler.py" />
         <option value="$PROJECT_DIR$/RangeTree.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="61" />
-    <option name="y" value="15" />
-    <option name="width" value="1768" />
-    <option name="height" value="939" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="273" />
+    <option name="y" value="2" />
+    <option name="width" value="1608" />
+    <option name="height" value="1032" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -111,6 +108,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -126,7 +124,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -267,13 +264,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="273" y="2" width="1608" height="1032" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" weight="0.17977528" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.14522293" />
       <window_info anchor="bottom" id="TODO" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.32842416" />
-      <window_info active="true" anchor="bottom" x="205" y="30" width="1075" height="649" id="Run" order="6" type="WINDOWED" visible="true" weight="0.39954853" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.3295711" />
+      <window_info anchor="bottom" x="620" y="91" width="857" height="613" id="Run" order="6" type="WINDOWED" weight="0.39954853" />
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Python Console" order="0" weight="0.23122239" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
@@ -281,22 +278,12 @@
       <window_info anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" weight="0.29194632" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" order="3" />
-      <window_info content_ui="combo" id="Project" order="1" weight="0.18053691" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="9" />
-      <window_info anchor="bottom" x="620" y="91" width="857" height="613" id="Run" order="6" type="WINDOWED" visible="true" weight="0.39954853" />
-      <window_info anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.29194632" />
       <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.3295711" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
-      <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32960895" />
-      <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info anchor="bottom" id="Python Console" order="0" weight="0.23122239" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -326,12 +313,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DataHandler.py</url>
-          <line>272</line>
+          <line>234</line>
           <option name="timeStamp" value="176" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DataHandler.py</url>
-          <line>239</line>
+          <line>201</line>
           <option name="timeStamp" value="189" />
         </line-breakpoint>
       </breakpoints>
@@ -373,6 +360,7 @@
           <caret line="210" column="10" selection-start-line="210" selection-start-column="10" selection-end-line="210" selection-end-column="10" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#388#2265#0" />
           </folding>
         </state>
       </provider>
@@ -388,9 +376,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
           <caret line="1" column="11" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
-          <folding>
-            <element signature="e#1390#1854#1" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -400,8 +385,6 @@
           <caret line="283" column="82" selection-start-line="283" selection-start-column="82" selection-end-line="283" selection-end-column="82" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#201#334#0" />
-            <element signature="e#360#449#0" />
           </folding>
         </state>
       </provider>
@@ -412,6 +395,7 @@
           <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#388#2265#0" />
           </folding>
         </state>
       </provider>
@@ -443,8 +427,6 @@
           <caret line="194" column="47" selection-start-line="194" selection-start-column="47" selection-end-line="194" selection-end-column="47" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#201#334#0" />
-            <element signature="e#360#449#0" />
           </folding>
         </state>
       </provider>
@@ -455,6 +437,7 @@
           <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#388#2265#0" />
           </folding>
         </state>
       </provider>
@@ -486,8 +469,6 @@
           <caret line="163" column="42" lean-forward="true" selection-start-line="163" selection-start-column="42" selection-end-line="163" selection-end-column="42" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#201#334#0" />
-            <element signature="e#360#449#0" />
           </folding>
         </state>
       </provider>
@@ -498,6 +479,7 @@
           <caret line="66" column="28" lean-forward="true" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#388#2265#0" />
           </folding>
         </state>
       </provider>
@@ -515,8 +497,6 @@
           <caret line="118" column="21" lean-forward="true" selection-start-line="118" selection-start-column="21" selection-end-line="118" selection-end-column="21" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#201#334#0" />
-            <element signature="e#360#449#0" />
           </folding>
         </state>
       </provider>
@@ -541,6 +521,7 @@
           <caret line="236" column="51" lean-forward="true" selection-start-line="236" selection-start-column="51" selection-end-line="236" selection-end-column="51" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#388#2265#0" />
           </folding>
         </state>
       </provider>
@@ -567,8 +548,6 @@
           <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#201#334#0" />
-            <element signature="e#360#449#0" />
           </folding>
         </state>
       </provider>
@@ -586,6 +565,7 @@
           <caret line="109" selection-start-line="109" selection-end-line="109" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#388#2265#0" />
           </folding>
         </state>
       </provider>
@@ -604,8 +584,6 @@
           <caret line="52" column="30" lean-forward="true" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#201#334#0" />
-            <element signature="e#360#449#0" />
           </folding>
         </state>
       </provider>
@@ -624,8 +602,6 @@
           <caret line="97" selection-start-line="97" selection-end-line="97" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#201#334#0" />
-            <element signature="e#360#449#0" />
           </folding>
         </state>
       </provider>
@@ -698,34 +674,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/binaryTrees.py">
+    <entry file="file://$PROJECT_DIR$/DataHandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="11" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
+        <state relative-caret-position="1197">
+          <caret line="57" column="54" selection-start-line="57" selection-start-column="54" selection-end-line="57" selection-end-column="54" />
           <folding>
-            <element signature="e#1390#1854#1" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
+    <entry file="file://$PROJECT_DIR$/binaryTrees.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2168">
-          <caret line="132" column="38" lean-forward="true" selection-start-line="132" selection-start-column="38" selection-end-line="132" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#201#334#0" />
-            <element signature="e#360#449#0" />
-          </folding>
+        <state relative-caret-position="315">
+          <caret line="15" column="43" lean-forward="true" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RangeTree.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5964">
-          <caret line="290" column="8" selection-start-line="290" selection-start-column="8" selection-end-line="290" selection-end-column="8" />
+        <state relative-caret-position="63">
+          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#388#2265#0" />
           </folding>
         </state>
       </provider>

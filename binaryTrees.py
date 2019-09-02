@@ -1,5 +1,6 @@
 
 class Node:
+    # TODO: make _init_ simpler with only one point, change dimension to be passed and not assign here
     def __init__(self, dimension, point, TAssoc, dynamicPoint):
         self.nextDimNode = None
         self.point = point
@@ -67,6 +68,7 @@ class BST:
 
     def setRoot(self, root):
         self.root = root
+
     def setAssociateT(self, associateT):
         self.associateT = associateT
 

@@ -13,9 +13,11 @@ class Point:
         self.z = int(z)
         self.val = int(val)
 
+
 class DynamicPoint:
     def __init__(self, listOfCoordinates):
         self.listOfCoordinates = listOfCoordinates
+
 
 class PointHandler:
 
@@ -53,6 +55,7 @@ class PointHandler:
 
 
 class Graphs:
+    # TODO: check if is needed and delete createGrid2D
     def createGrid2D(self, x, y):
         # Creates a grid x*y where all the weights are 1
 
@@ -76,47 +79,6 @@ class Graphs:
         g[len(g)].append(x)
         g[len(g)].append(y)
         return g
-
-    # TODO check relevance and delete function
-    def gridSeparator(self, grid, k):
-        # Given a grid returns the indices of a k - separator tree Zt (if it exists)
-        # which separates the grid in its left and right part
-        # and also returns the left and the right part
-
-        # If the lines of the grid are more than k then no k - separator exists for this grid
-        if len(grid)-1 > k & len(grid)-2 > k:
-            print("No such k separator exists for the given graph")
-            return None
-        else:
-            # Find the smallest dimension so we can have a minimum tree decomposition
-            y = grid[len(grid) - 1]
-            y = y[0]
-            x = grid[len(grid) - 2]
-            x = x[0]
-            if y >= x:
-                dim = y
-            else:
-                dim = x
-
-            indices = []
-            X = []
-            Y = []
-            step = dim
-            dim = round(y / 2)
-            stop = len(grid) - 2
-            # X corresponds to the left part after the removal of the separator tree
-            # Y to the right part
-            for i in range(dim-1, stop-1, step):
-                indices.append(i)
-                for j in range(i-(dim-1), i + dim-2):
-                    X.append(j)
-                if y%2 == 0:
-                    for k in range(i+1, i + dim+1):
-                        Y.append(k)
-                else:
-                    for k in range(i+1, i + dim):
-                        Y.append(k)
-        return indices, X, Y
 
     def skew_kseparator_tree(self, G, tw, tree_decomp):
         # TODO: Generic form of the function not to be dependent on networkX

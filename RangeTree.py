@@ -3,7 +3,6 @@ from binaryTrees import *
 import operator
 import math
 
-
 class RangeTree:
     # TODO: write doc for each function and class
     def __init__(self):
@@ -13,6 +12,7 @@ class RangeTree:
         self.nodeZList = []
         self.dynamicList = []
 
+    # TODO: delete initialization2
     def initialization(self):
         # Loading points and setting up the nodes for the BSTs
         # Read the points from the file
@@ -24,7 +24,7 @@ class RangeTree:
         for i in list_of_points:
             x = Node(1, i, None, None)
             x.setNextDimNode(Node(2, i, None, None))
-            y=x.nextDimNode
+            y = x.nextDimNode
 
             y.setNextDimNode(Node(3, i, None, None))
             self.nodeXList.append(x)
@@ -146,7 +146,7 @@ class RangeTree:
             mid = Node(nodelist[median - 1].dimension, nodelist[median - 1].point, nodelist[median - 1].TAssoc, nodelist[median - 1].dynamicPoint)
             mid.setChildren(nodelist[median - 1].rightChild, nodelist[median - 1].leftChild)
             mid.setNextDimNode(nodelist[median - 1].nextDimNode)
-            if len(nodelist)> 1:
+            if len(nodelist) > 1:
                 # Make the TAssoc the associate structure of mid
                 mid.TAssoc = t_assoc
             del t_assoc
