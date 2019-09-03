@@ -5,6 +5,10 @@ import math
 
 class RangeTree:
     # TODO: write doc for each function and class
+    """
+    The main class that allows the creation of a Range Tree
+
+    """
     def __init__(self):
         self.dimension = 1
         self.nodeXList = []
@@ -14,8 +18,13 @@ class RangeTree:
 
     # TODO: delete initialization2
     def initialization(self):
-        # Loading points and setting up the nodes for the BSTs
-        # Read the points from the file
+        """
+        Loading points and setting up the nodes for the BSTs
+        Read the points from the file
+
+        :return:
+        """
+
         root = BST(None)
         x = PointHandler()
         list_of_points = x.insertFile_XYZval("points2.txt")
@@ -122,7 +131,7 @@ class RangeTree:
                     next_dim_node_list.append(i.nextDimNode)
                 # Sorting the list
                 next_dim_node_list.sort(key=operator.attrgetter('coordinate'))
-                t_assoc = self.build_range_tree(next_dim_node_list, flag,root)
+                t_assoc = self.build_range_tree(next_dim_node_list, flag, root)
 
         if len(nodelist) == 1:
             # Base case of the recursion
