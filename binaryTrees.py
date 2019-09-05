@@ -3,24 +3,20 @@ class Node:
     """
 
     """
-    # TODO: make _init_ simpler with only one point, change coordinate to be passed and not assign here
-    def __init__(self, dimension, point, TAssoc, dynamicPoint):
+
+    def __init__(self, dimension, point, TAssoc):
+        """
+
+        """
         self.nextDimNode = None
         self.point = point
-        self.dynamicPoint = dynamicPoint
         self.dimension = dimension
         self.TAssoc = TAssoc
         # val is not strictly defined yet
         if point is not None:
-            if self.dimension == 1: self.coordinate = int(point.x)
-            if self.dimension == 2: self.coordinate = int(point.y)
-            if self.dimension == 3:
-                # if dimension is the last one we also store the value of the point
-                self.coordinate = int(point.z)
-                self.val = int(point.val)
-        else:
-            # Sets the coordinate of the current node from the dimension
-            self.coordinate = self.dynamicPoint.listOfCoordinates[dimension-1]
+            self.coordinate = point.pointList[self.dimension-1]
+            if self.dimension == len(point.pointList):
+                self.val = point.pointList[len(point.pointList)-1]
         self.leftChild = None
         self.rightChild = None
 
@@ -46,25 +42,12 @@ class Node:
         return children
 
 
-''' def insertNodes(self, data):
-        if self.data:
-            if data < self.data:
-                if self.left is None:
-                    self.left = Node(data)
-                else:
-                    self.left.insert(data)
-            elif data > self.data:
-                if self.right is None:
-                    self.right = Node(data)
-                else:
-                    self.right.insert(data)
-        else:
-            self.data = data
-'''
-
-
 class BST:
+    """
+
+    """
     def __init__(self, root):
+        # self.root: its class is Node
         self.root = root
         # associateT is a BST object reference to the associate tree of the current BST
         self.associateT = None
