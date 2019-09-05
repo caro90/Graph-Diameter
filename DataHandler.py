@@ -7,48 +7,50 @@ import matplotlib.pyplot as plt
 
 
 class Point:
-    def __init__(self, x, y, z, val):
-        self.x = int(x)
-        self.y = int(y)
-        self.z = int(z)
-        self.val = int(val)
+    """
 
-
-class DynamicPoint:
-    def __init__(self, listOfCoordinates):
-        self.listOfCoordinates = listOfCoordinates
+    """
+    def __init__(self, tempList):
+        self.pointList = []
+        # Changing a list of strings into a list of integers
+        temp = tempList.pop()
+        for i in range(0, len(temp)):
+            temp2 = temp.pop(i)
+            self.pointList.append(int(temp2))
+            temp.insert(i, temp2)
 
 
 class PointHandler:
-
-    def insertManually(self, x, y, z, val):
-        pointList = []
-        node = Point(x, y, z, val)
-        print("Insert point ")
-        return node
-
+    """
+    """
     def insertManually2(self, listOfCoordinates):
-        # Handles the dynamicPoint Class
-        point = DynamicPoint(listOfCoordinates)
+        """
+        """
+        point = Point(listOfCoordinates)
         return point
 
     def insertFile_XYZval(self, file):
-        # Imports the points from a csv file and creates object points
-        xlist = []
-        ylist = []
-        zlist = []
+        """
+        Imports the points from a csv file and creates object points
+
+        """
         listOfPoints = []
+        tempList = []
+        listOfElements = []
         with open(file, mode='r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             line_count = 0
             for row in csv_reader:
                 if line_count == 0:
                     print(f'Column names are:{", ".join(row)}')
-                print(f'\t\t\t\t { row["x"]} { row["y"]} { row["z"]} { row["val"]}')
-                xlist.append(row["x"])
-                ylist.append(row["y"])
-                zlist.append(row["z"])
-                tempPoint = Point(row["x"], row["y"], row["z"], row["val"])
+                print(f'\t\t\t\t { row["x"]} { row["y"]} { row["z"]} { row["w"]} { row["val"]}')
+
+                for i in row:
+                    listOfElements.append(row[i])
+
+                tempList.append(listOfElements)
+                listOfElements = []
+                tempPoint = Point(tempList)
                 listOfPoints.append(tempPoint)
                 line_count += 1
         return listOfPoints

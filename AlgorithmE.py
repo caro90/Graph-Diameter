@@ -75,7 +75,6 @@ def algorithmE(G, separatorList, edges, X, Y):
 def main():
     test = Graphs()
     g = test.createGrid2D(3, 3)
-    print("-------")
     edges2 = []
 
     # Configuring edges to be readable for Dijkstra function
@@ -87,9 +86,6 @@ def main():
             else:
                 edges2.append(edges)
 
-
-    separatorList, X, Y = test.gridSeparator(g, 100)
-    print(separatorList)
 
     algorithmE(g, separatorList, edges2, X, Y)
 

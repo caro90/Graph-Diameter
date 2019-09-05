@@ -3,60 +3,60 @@ from binaryTrees import *
 import operator
 import math
 
+
 class RangeTree:
     # TODO: write doc for each function and class
     """
-    The main class that allows the creation of a Range Tree
+    The main class that allows the creation of a Range Tree with multiple dimension support.
+    It builds the Range Tree using a recursive divide and conquer approach. It also allows range queries
+    where reports all the points under a given range.
 
     """
     def __init__(self):
         self.dimension = 1
         self.nodeXList = []
-        self.nodeYList = []
-        self.nodeZList = []
         self.dynamicList = []
 
-    # TODO: delete initialization2
     def initialization(self):
         """
-        Loading points and setting up the nodes for the BSTs
-        Read the points from the file
+        Loading points and creating Node objects that will be used to build the Range Tree.
+        Typically, for a given point (x,y,z) three Node objects are being created, one for each
+        dimension.
 
-        :return:
+        Returns:
         """
 
         root = BST(None)
         x = PointHandler()
-        list_of_points = x.insertFile_XYZval("points2.txt")
+        list_of_points = x.insertFile_XYZval("points4.txt")
+        # length_of_indices: saves the number of indices/coordinates
+        length_of_indices = len(list_of_points[0].pointList)
 
-        # Creating Node objects for x, y and z coordinates
+        # Creating Node objects for all the coordinates (x, y, z ...)
         for i in list_of_points:
-            x = Node(1, i, None, None)
-            x.setNextDimNode(Node(2, i, None, None))
-            y = x.nextDimNode
+            temp = Node(1, i, None)
+            self.nodeXList.append(temp)
+            for j in range(2, length_of_indices):
+                temp.setNextDimNode(Node(j, i, None))
+                temp = temp.nextDimNode
 
-            y.setNextDimNode(Node(3, i, None, None))
-            self.nodeXList.append(x)
-            self.nodeYList.append(y)
-            self.nodeZList.append(Node(3, i, None, None))
-
-        # Sorting according to x, y and z coordinates
+        # Sorting according to x coordinate
         self.nodeXList.sort(key=operator.attrgetter('coordinate'))
-        self.nodeYList.sort(key=operator.attrgetter('coordinate'))
-        self.nodeZList.sort(key=operator.attrgetter('coordinate'))
 
         # TESTING:
         x = self.build_range_tree(self.nodeXList, 0, root)
         root.setRoot(x)
 
         print("---Post Order----")
-        root.printPostorder(root.root)
+        root.printPostorder(root.root.TAssoc.TAssoc.TAssoc.TAssoc)
         print("----1st Dim---")
         root.printLeaves(root.root)
         print("---2nd Dim----")
         root.printLeaves(root.root.TAssoc)
         print("----3rd Dim---")
         root.printLeaves(root.root.TAssoc.TAssoc)
+        print("----4rd Dim---")
+        root.printLeaves(root.root.TAssoc.TAssoc.TAssoc)
         print("-------")
 
         range1 = [-5, 200]
@@ -79,6 +79,14 @@ class RangeTree:
         for j in L3:
             print(j.coordinate)
 
+        print("-----------")
+        print("Query 5D:")
+        range3 = [-5, 200, -100, 100, -100, 120, -10, 100, -5, 55]
+        L3 = self.dimensional_range_query(root.root, range3)
+        for j in L3:
+            print(j.coordinate)
+
+    #TODO: integrate initialization2 to initialization and delete
     def initialization2(self, pi):
         root = BST(None)
         list_of_points = []
@@ -119,6 +127,20 @@ class RangeTree:
         print("a")
 
     def build_range_tree(self, nodelist, flag, root):
+        """
+        Using a divide and conquer approach builds the Range Tree.
+
+        Parameters
+        ----------
+            nodelist:
+
+            flag:
+
+            root
+
+        Returns:
+             The median node of the first coordinate
+        """
         p_left_list = []
         p_right_list = []
         median = int(math.ceil(len(nodelist) / 2))
@@ -135,7 +157,7 @@ class RangeTree:
 
         if len(nodelist) == 1:
             # Base case of the recursion
-            mid = Node(nodelist[0].dimension, nodelist[0].point, None, nodelist[0].dynamicPoint)
+            mid = Node(nodelist[0].dimension, nodelist[0].point, None)
             mid.setNextDimNode(nodelist[0].nextDimNode)
         else:
             if flag == 0:
@@ -152,7 +174,7 @@ class RangeTree:
                     p_right_list.append(i)
                 count += 1
 
-            mid = Node(nodelist[median - 1].dimension, nodelist[median - 1].point, nodelist[median - 1].TAssoc, nodelist[median - 1].dynamicPoint)
+            mid = Node(nodelist[median - 1].dimension, nodelist[median - 1].point, nodelist[median - 1].TAssoc)
             mid.setChildren(nodelist[median - 1].rightChild, nodelist[median - 1].leftChild)
             mid.setNextDimNode(nodelist[median - 1].nextDimNode)
             if len(nodelist) > 1:
@@ -165,13 +187,13 @@ class RangeTree:
             # The internal nodes are used only to guide the search path
             # For the leaves we create new Node classes
             if len(p_left_list) < 2:
-                x = Node(v_left.dimension, v_left.point, v_left.TAssoc, v_left.dynamicPoint)
+                x = Node(v_left.dimension, v_left.point, v_left.TAssoc)
                 x.setNextDimNode(v_left.nextDimNode)
                 mid.leftChild = x
             else:
                 mid.leftChild = v_left
             if len(p_right_list) < 2:
-                y = Node(v_right.dimension, v_right.point, v_right.TAssoc, v_right.dynamicPoint)
+                y = Node(v_right.dimension, v_right.point, v_right.TAssoc)
                 y.setNextDimNode(v_right.nextDimNode)
                 mid.rightChild = y
             else:
@@ -179,8 +201,15 @@ class RangeTree:
         return mid
 
     def find_split_node(self, root, xl, xr):
-        # Input: A range tree T with two values xL and xR with xL <= xR
-        # Output: The node v where the paths to xL and xR split, or the leaf where both paths end.
+        """
+         Parameters
+         ----------
+            A range tree T with two values xL and xR with xL <= xR
+
+         Returns
+         -------
+             The node v where the paths to xL and xR split, or the leaf where both paths end.
+        """
         v = root
         while (v.leftChild is not None) and (v.rightChild is not None) and\
                 ((xr <= v.coordinate) | (xl > v.coordinate)):
@@ -191,8 +220,12 @@ class RangeTree:
         return v
 
     def dimensional_range_query(self, root, range):
-        # Input: A dimensional range tree T and a range [x : x'] * [y : y'] * ...
-        # Output: All points in T that lie in that range
+        """
+         Input: A dimensional range tree T and a range [x : x'] * [y : y'] * ...
+         Returns:
+              All points in T that lie in that range
+        """
+
         reported_list = []
         counter = 0
         while counter < len(range)-2:
@@ -259,8 +292,11 @@ class RangeTree:
         return reported_list
 
     def one_d_range_query(self, root, range):
-        # Input: A binary search tree T and a range [x : x']
-        # Output: All points stored in T that lie in that range
+        """
+         Input: A binary search tree T and a range [x : x']
+         Returns:
+            All points stored in T that lie in that range
+        """
 
         if root is None:
             return
@@ -303,6 +339,8 @@ class RangeTree:
         return reported_list
 
     def report_subtree(self, v):
+        """
+        """
         if v:
             if v.leftChild is None and v.rightChild is None:
                 # First print the data of node only if it is a leaf
