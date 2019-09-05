@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b84174-18f8-454c-87d4-6a35c0ecff8e" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RangeTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/RangeTree.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/binaryTrees.py" beforeDir="false" afterPath="$PROJECT_DIR$/binaryTrees.py" afterDir="false" />
     </list>
@@ -17,29 +18,36 @@
       <file leaf-file-name="RangeTree.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RangeTree.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2793">
-              <caret line="133" column="74" selection-start-line="133" selection-start-column="74" selection-end-line="133" selection-end-column="74" />
+            <state relative-caret-position="2814">
+              <caret line="134" column="24" selection-start-line="134" selection-start-column="20" selection-end-line="134" selection-end-column="24" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#12609#12952#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="binaryTrees.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="binaryTrees.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/binaryTrees.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+            <state relative-caret-position="588">
+              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+              <folding>
+                <element signature="e#2042#2302#0" />
+                <element signature="e#2396#2658#0" />
+                <element signature="e#2750#3016#0" />
+                <element signature="e#3056#3394#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataHandler.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataHandler.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DataHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="58" column="33" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
+            <state relative-caret-position="2835">
+              <caret line="158" column="35" lean-forward="true" selection-start-line="158" selection-start-column="35" selection-end-line="158" selection-end-column="35" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#1683#2672#0" />
@@ -51,8 +59,8 @@
       <file leaf-file-name="AlgorithmE.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1008">
-              <caret column="23" selection-start-column="23" selection-end-column="23" />
+            <state relative-caret-position="63">
+              <caret line="3" column="31" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -96,9 +104,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="249" />
-    <option name="y" value="2" />
-    <option name="width" value="1632" />
+    <option name="y" value="9" />
+    <option name="width" value="1857" />
     <option name="height" value="1032" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -263,45 +270,55 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="249" y="2" width="1632" height="1032" extended-state="0" />
+    <frame x="164" y="0" width="1763" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.14303638" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.10510863" />
       <window_info anchor="bottom" id="TODO" order="9" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.3295711" />
-      <window_info anchor="bottom" x="620" y="91" width="857" height="613" id="Run" order="6" type="WINDOWED" weight="0.39954853" />
+      <window_info active="true" anchor="bottom" x="462" y="41" width="1163" height="791" id="Run" order="6" type="WINDOWED" visible="true" weight="0.39954853" />
       <window_info anchor="bottom" id="Version Control" order="3" />
-      <window_info anchor="bottom" id="Python Console" order="0" weight="0.23122239" />
+      <window_info anchor="bottom" id="Python Console" order="0" weight="0.3846154" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" weight="0.29194632" />
+      <window_info anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.32061067" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" x="620" y="91" width="857" height="613" id="Run" order="6" type="WINDOWED" weight="0.39954853" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.09961046" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="3" />
+      <window_info anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.29994434" />
       <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.3295711" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
+      <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32960895" />
+      <window_info anchor="bottom" id="Terminal" order="1" />
+      <window_info anchor="bottom" id="Python Console" order="0" weight="0.23122239" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" weight="0.10826211" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" x="22" y="444" width="1798" height="514" id="Run" order="6" type="WINDOWED" visible="true" weight="0.39954853" />
-      <window_info anchor="bottom" id="Find" order="5" />
-      <window_info anchor="bottom" id="Python Console" order="0" visible="true" weight="0.094808124" />
+      <window_info anchor="bottom" id="Message" order="4" />
       <window_info active="true" anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.42393163" />
       <window_info anchor="bottom" id="Terminal" order="1" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.3295711" />
-      <window_info anchor="bottom" id="Version Control" order="3" />
-      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
       <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="5" />
+      <window_info anchor="bottom" id="Python Console" order="0" visible="true" weight="0.094808124" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -322,8 +339,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/RangeTree.py</url>
-          <line>317</line>
+          <line>318</line>
           <option name="timeStamp" value="193" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/RangeTree.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="195" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -333,7 +355,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="194" />
+      <option name="time" value="196" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -351,12 +373,20 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/binaryTrees.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/RangeTree.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4410">
           <caret line="210" column="10" selection-start-line="210" selection-start-column="10" selection-end-line="210" selection-end-column="10" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#12609#12952#0" />
           </folding>
         </state>
       </provider>
@@ -392,6 +422,7 @@
           <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#12609#12952#0" />
           </folding>
         </state>
       </provider>
@@ -434,6 +465,7 @@
           <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#12609#12952#0" />
           </folding>
         </state>
       </provider>
@@ -476,6 +508,7 @@
           <caret line="66" column="28" lean-forward="true" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#12609#12952#0" />
           </folding>
         </state>
       </provider>
@@ -518,6 +551,7 @@
           <caret line="236" column="51" lean-forward="true" selection-start-line="236" selection-start-column="51" selection-end-line="236" selection-end-column="51" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#12609#12952#0" />
           </folding>
         </state>
       </provider>
@@ -562,6 +596,7 @@
           <caret line="109" selection-start-line="109" selection-end-line="109" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#12609#12952#0" />
           </folding>
         </state>
       </provider>
@@ -665,41 +700,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/points2.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="58" column="33" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1683#2672#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1008">
-          <caret column="23" selection-start-column="23" selection-end-column="23" />
+        <state relative-caret-position="63">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/RangeTree.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2793">
-          <caret line="133" column="74" selection-start-line="133" selection-start-column="74" selection-end-line="133" selection-end-column="74" />
+        <state relative-caret-position="2814">
+          <caret line="134" column="24" selection-start-line="134" selection-start-column="20" selection-end-line="134" selection-end-column="24" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#12609#12952#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/binaryTrees.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        <state relative-caret-position="588">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="e#2042#2302#0" />
+            <element signature="e#2396#2658#0" />
+            <element signature="e#2750#3016#0" />
+            <element signature="e#3056#3394#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataHandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2835">
+          <caret line="158" column="35" lean-forward="true" selection-start-line="158" selection-start-column="35" selection-end-line="158" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#1683#2672#0" />
+          </folding>
         </state>
       </provider>
     </entry>

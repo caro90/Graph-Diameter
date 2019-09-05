@@ -17,6 +17,7 @@ class RangeTree:
         self.dynamicList = []
 
     # TODO: delete initialization2
+
     def initialization(self):
         """
         Loading points and setting up the nodes for the BSTs
