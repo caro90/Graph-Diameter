@@ -4,6 +4,8 @@ from dijkstra3 import *
 import networkx as nx
 from networkx.algorithms import approximation as approx
 import matplotlib.pyplot as plt
+import operator
+
 
 
 class Point:
@@ -57,7 +59,7 @@ class PointHandler:
 
 
 class Graphs:
-    # TODO: check if is needed and delete createGrid2D
+    # TODO: check if it is needed and delete createGrid2D
     def createGrid2D(self, x, y):
         # Creates a grid x*y where all the weights are 1
 
@@ -82,164 +84,226 @@ class Graphs:
         g[len(g)].append(y)
         return g
 
-    def skew_kseparator_tree(self, G, tw, tree_decomp):
-        # TODO: Generic form of the function not to be dependent on networkX
-        # For k>=1, given a graph G with n > k+1 vertices and treewidth at most k,
-        # this function computes in linear time a subset A of V(G)
+    def data_reform(self, num_of_nodes, tw, tree_decomp_graph):
+        """
+        Transforms the input graph from networkx into a readable form for skew_kseparator_tree
+        This function breaks the dependency of skew_kseparator_tree on networkx graph structure.
 
-        # num_of_nodes is the nodes in the initial graph(before tree decomp)
-        num_of_nodes = len(G._node)
+        Parameters:
+        ----------
+        initial_graph :
+            The very first graph without any processing.
 
+        tw: int
+            The treewidth of the current tree decomposition.
+
+        tree_decomp_graph :
+            The resulting graph after applying a tree decomposition algorithm on initial_graph.
+
+        Retuns:
+        -------
+        node_list: list of lists
+            For each list/node or bag contains a list of vertices which came from the tree decomposition
+        adjacency_list: list of lists
+            For each node of the graph(the result of the tree decomposition) it keeps a list of the adjacent nodes
+        node_list_set: list of sets
+            The very same as node_list but in different format for more efficient calculations
+        adjacency_list_set: list of sets
+           ...
+
+        """
+
+        # Read the bags and their adjacency list and move them to a mutable object (list)
+        adjacency_list = []
+        node_list = []
+        for x in tree_decomp_graph._adj:
+            temp1 = []
+            for y in tree_decomp_graph._adj[x]:
+                temp1.append(y)
+            adjacency_list.append(temp1)
+
+        for x in tree_decomp_graph._node:
+            node_list.append(list( tree_decomp_graph._node[x]["bags"]))
+
+        # Creating set versions of node_list and adjacency_list
+        node_list_set = [set(i) for i in node_list]
+        adjacency_list_set = list()
+        temp = []
+        for i in range(0, len(adjacency_list)):
+            for j in adjacency_list[i]:
+                temp.append(j)
+            adjacency_list_set.append(set(temp))
+            temp = list()
+
+        return node_list, adjacency_list, node_list_set, adjacency_list_set
+
+    def data_reform2(self, num_of_nodes, tw, tree_decomp_graph):
+        node_dict = {}
+        adjacency_dict = {}
+        for x in tree_decomp_graph._node:
+            node_dict[x] = set( tree_decomp_graph._node[x]["bags"])
+            adjacency_dict[x] = set(tree_decomp_graph._adj[x] )
+
+
+        return node_dict, adjacency_dict
+
+    # TODO: test if needed and delete
+    def test(self, set_t):
+        return len(set_t)
+
+    def skew_kseparator_tree(self, initial_graph, tw, tree_decomp_graph):
+
+        """
+        # TODO: write summary of the algorithm
+        For k>=1, given a graph G with n > k+1 vertices and treewidth at most k,
+        this function computes in linear time a subset A of V(G)
+
+        Parameters:
+        ----------
+        initial_graph :
+            The very first graph without any processing.
+
+        tw: int
+            The treewidth of the current tree decomposition.
+
+        tree_decomp_graph :
+            The resulting graph after applying a tree decomposition algorithm on initial_graph.
+
+        Returns:
+        --------
+            A graph which is the skew separator tree.
+
+        """
+
+        # num_of_nodes is the nodes in the initial graph(before tree decomposition)
+        num_of_nodes = len(initial_graph._node)
+        #node_list, adjacency_list, node_list_set, adjacency_list_set = self.data_reform(num_of_nodes, tw, tree_decomp_graph)
+        nodes, adj = self.data_reform2(num_of_nodes, tw, tree_decomp_graph)
+
+        # num_of_nodes has to be strictly bigger than the treewidth + 1 (Requirement in Lemma 3)
         if num_of_nodes > tw + 1:
-            # Read the bags and their adjacency list and move them to a mutable object (list)
-            adjacency_list = []
-            node_list = []
-            for x in tree_decomp._adj:
-                temp1 = []
-                for y in tree_decomp._adj[x]:
-                    temp1.append(list(y))
-                adjacency_list.append(temp1)
-
-            for x in tree_decomp._node:
-                node_list.append(list(x))
-
-            # Creating set versions of node_list and adjacency_list
-            node_list_set = [set(i) for i in node_list]
-            adjacency_list_set = list()
-            temp = []
-            for i in range(0, len(adjacency_list)):
-                for j in adjacency_list[i]:
-                    temp.append(set(j))
-                adjacency_list_set.append(temp)
-                temp = list()
-
             # Transformation part:
             # [Step 1] Add vertices to each bag until each bag has exactly k+1 elements
-            for i in range(0, len(node_list)):
-                i_temp = i
+            for i in range(0, len(nodes)):
+                while len(nodes[i]) < tw + 1:
+                    #print(nodes[i])
+                    # Find the adjacent nodes of current node to draw elements from there
+                    # in order to keep property 3 of tree decomposition
+                    for j in adj[i]:
+                        diff_of_sets = nodes[j].difference(nodes[i])
+                        if len(diff_of_sets) != 0:
+                            nodes[i].add(next(iter(diff_of_sets)))
+                            #print("diff of sets:",diff_of_sets)
+                            #print("next iter:",next(iter(diff_of_sets)))
+                            #print(nodes[j].difference(nodes[i]))
 
-                while len(node_list[i]) < tw + 1:
-                #if len(node_list[i]) < tw + 1:
-                    # Use of sets for more efficient calculations
-                    current_element = set(node_list[i])
-                    if i_temp < len(node_list)-1:
-                        temp2 = node_list[i_temp+1]
-                        temp2 = set(temp2)
-                        temp3 = list(temp2.difference(current_element))
-                    else:
-                        temp2 = node_list[i_temp - 1]
-                        temp2 = set(temp2)
-                        temp3 = list(temp2.difference(current_element))
+                        if len(nodes[i]) == tw + 1:
+                            break
 
-                    if len(temp3) != 0:
-                        # Update the adjacency lists of the neighbors of i
-                        for j in adjacency_list[i_temp]:
-                            temp = set(j)
-                            node_list_set = [set(k_temp) for k_temp in node_list]
-                            counter = -1
-                            flag = 0
-                            for k in node_list_set:
-                                counter += 1
-                                if len(k.difference(temp)) == 0:
-                                    break
-                            # Update the adjacency list of the neighbor of the current element
-                            for k in adjacency_list[counter]:
-                                temp = set(k)
-                                if len(current_element.difference(temp)) == 0:
-                                    k.append((temp3[0]))
+            del diff_of_sets, i, j
 
-                        # Update node i
-                        node_list[i].append(temp3[0])
-                    if len(temp3) > 0:
-                        temp3.pop(0)
-                    if len(temp3) == 0:
-                        i_temp = i_temp + 1
-                    if i_temp >= len(node_list):
-                        # TODO: Check if property 3 of tree decomposition holds
-                        # (use to take elements olny from adjacent nodes G._node.index(i))
-                        break
-                        #i_temp = 0
-            del i_temp, temp3, i, j
-            # [Step 2] Contract any edge ij in E(T) whenever Xi=Xj.
+            # [Step 2] Contract any edge ij in E(T) whenever Xi == Xj.
             # It now holds that any two nodes i j of T are different
-
             nodes_to_be_deleted = []
-            for i in range(0, len(node_list_set)-1):
-                for j in range(i+1, len(node_list_set)):
-                    if len(node_list_set[j].difference(node_list_set[i])) == 0:
-                        # if 2 bags contain exactly the same elements
-                        # 1st contract their adjacency lists
-                        for l in adjacency_list_set[i]:
-                            for p in range(0, len(adjacency_list_set[j])):
-                                if l in adjacency_list_set[j][p]:
-                                    adjacency_list[i].append(list(adjacency_list_set[j][p]))
-
-                        nodes_to_be_deleted.append(j)
-
-            nodes_to_be_deleted = (list(set(nodes_to_be_deleted)))
-            nodes_to_be_deleted.sort(reverse=True)
+            for i in nodes:
+                # TODO: delete this line if there is no need to start from the children
+                #temp_dict = sorted(adj.values(), key = self.test )
+                # Checking if the current bag contains exactly the same elements with one of its neighbors
+                for e in adj[i].copy():
+                    if len(nodes[e].difference(nodes[i])) == 0:
+                        # Removing node -e from the adjacency list of the other nodes
+                        # -i is the node that will be kept, -e the one that will be removed
+                        adj[i].remove(e)
+                        for j in adj:
+                            if e in adj[j]:
+                                adj[j].remove(e)
+                                # Updating current node's adjacency list to point to node -i that will be kept
+                                # Updating also node's -i adjacency list
+                                adj[j].update([i])
+                                adj[i].update([j])
+                        # Permanently deleting node -e
+                        nodes_to_be_deleted.append(e)
+                        adj[e].clear()
             for j in nodes_to_be_deleted:
-                # Removing duplicates
+                 del nodes[j], adj[j]
 
-                # Delete node j since j = i
-                del(node_list_set[j])
-                del (node_list[j])
-                del (adjacency_list_set[j])
-                del (adjacency_list[j])
-
-            # [Step 3] Finally, for each node i in T of degree at least k+2 we create k+1 new bags
-            # TODO: step3 (doesn't apply on grids)
-
-            del i, j, k, counter, flag, temp, temp1, temp2, current_element, nodes_to_be_deleted, x, y
+            # [Step 3] For each node i in T of degree at least k+2 we create k+1 new bags
+            # TODO: Doesn't apply on grids. Fill it later
         else:
             print("Error: Total vertices inside the bags <= k+1")
             return
 
-        # Finding separator set A
-
+        # [Step 4] Finding separator set A
         # Assign each vertex of G to one and only one of the bags where it appears,
         # and define the weight of a bag to be the number of vertices that were
         # assigned to it
 
-        for i in range(0, len(node_list)):
-            k = 0
-            temp = len(node_list[i])
-            while k < temp:
-                current_element = node_list[i][k]
-                # if is used for to maintain a balance on the number elements inside the bags.
-                if k % 2 == 0:
-                    for j in range(i+1, len(node_list)):
-                        if current_element in node_list[j]:
-                            # This "if" is for not letting a bag to be completely empty
-                            if len(node_list[j]) == 1:
-                                node_list[i].pop(node_list[i].index(current_element))
-                                break
-                            else:
-                                node_list[j].pop(node_list[j].index(current_element))
-                else:
-                    flag = 0
-                    for j in range(i+1, len(node_list)):
-                        if current_element in node_list[j]:
-                            flag = 1
-                            for j2 in range(j+1, len(node_list)):
-                                if current_element in node_list[j2]:
+        set_of_numbers = set()
+        [set_of_numbers.add(i) for i in range(0, num_of_nodes)]
+        weights = {}
+        for i in nodes:
+            inter = nodes[i].intersection(set_of_numbers)
+            print(inter)
+            if len(inter) != 0:
+                set_of_numbers = set_of_numbers.difference(inter)
+                weights[i]= len(inter)
 
-                                        node_list[j2].pop(node_list[j2].index(current_element))
+        # Finding the edge that minimizes the absolute value of the difference
+        # between the weights of the two trees T-ij
+        # TODO: document this part:
 
-                    if flag == 1:
-                        # current element found somewhere else and it can be removed from the
-                        # 1st bag
-                        node_list[i].pop(node_list[i].index(current_element))
+        # Implementing a non recursive DFS
+        nodes_to_visit = []
+        nodes_already_visited = set()
+        # white_nodes: nodes that still have children to be examined
+        white_nodes = []
+        nodes_to_visit.append(0)
+        dict = {}
+        dict_sum = {}
+        for i in nodes:
+            dict_sum[i] = 0
+        predecessor = {}
+        while len(nodes_to_visit) > 0:
+            current_node = nodes_to_visit.pop()
+            white_nodes.append(current_node)
+            nodes_already_visited.update([current_node])
 
-                temp = len(node_list[i])
-                k = k + 1
+            # Checking if current node is not leaf
+            if len( adj[current_node].difference(nodes_already_visited)) > 0:
+                for i in adj[current_node]:
+                    if i not in nodes_already_visited:
+                        nodes_to_visit.append(i)
+                        predecessor[i] = current_node
+            else:
+                # Current node is a leaf
+                #try
+                print("current node:",current_node)
+                dict_sum[current_node] = weights[current_node]
+                dict[current_node] = abs (dict_sum[current_node] - abs(num_of_nodes - dict_sum[current_node]) )
+                white_nodes.pop()
+
+            while len(white_nodes) > 0 and len(nodes_to_visit) == 0:
+                temp = white_nodes.pop()
+                sum = 0
+                for i in adj[temp]:
+                    sum = dict_sum[i] + sum
+                dict_sum[temp] = weights[temp] + sum
+                dict[temp] = abs (dict_sum[temp] - abs(num_of_nodes - dict_sum[temp]))
+
 
         print()
 
 
+
+
+
+
 def main():
 
+    # Testing using my own grid structure:
+
     test = Graphs()
+
     g = test.createGrid2D(2, 3)
     print("-------")
     print(g)
@@ -253,31 +317,55 @@ def main():
             else:
                 edges2.append(edges)
 
-    separatorList, X, Y = test.gridSeparator(g, 100)
-    print(separatorList)
-    print("-------")
+    # Graph is dijkstra's object
     graph = Graph(edges2)
     path, distances = graph.dijkstra(0, 1)
     print(path)
     print(distances)
 
-    # Testing
-    G = nx.grid_2d_graph(5, 5)
-    p = approx.treewidth_min_degree(G)
-    print(p[1])
+    del i, j, g, path, distances, edges, edges2, graph
+    # -------------------------------
 
-    # print the adjacency list
-    for line in nx.generate_adjlist(p[1]):
-        print(line)
-    # write edgelist to grid.edgelist
-    nx.write_edgelist(p[1], path="grid.edgelist", delimiter=":")
-    # read edgelist from grid.edgelist
-    H = nx.read_edgelist(path="grid.edgelist", delimiter=":")
+    # Testing using networkx's structure:
 
-    nx.draw(H, with_labels=True)
-    plt.show()
+    initial_graph = nx.grid_2d_graph(4, 4)
+    # treewidth_min_degree returns a tuple with treewidth and the corresponding decomposed tree.
+    # Returns: (int, Graph) tuple
 
-    test.skew_kseparator_tree(G, p[0], p[1])
+    initial_graph = nx.convert_node_labels_to_integers(initial_graph, first_label=0, ordering='default', label_attribute='old_labels')
+
+    p = approx.treewidth_min_degree(initial_graph)
+    tree_decomp_graph = nx.convert_node_labels_to_integers(p[1], first_label=0, ordering='default', label_attribute= 'bags' )
+
+
+
+    # print or not the Tree Decomposition
+    flag = 1
+    if flag == 0:
+        # print the adjacency list
+    #   for line in nx.generate_adjlist(p[1]):
+    #       print(line)
+        # write edgelist to grid.edgelist
+        nx.write_edgelist(tree_decomp_graph, path="grid.edgelist", delimiter=":")
+        # read edgelist from grid.edgelist
+        H = nx.read_edgelist(path="grid.edgelist", delimiter=":")
+
+        nx.draw(H, with_labels=True)
+        plt.show()
+    del flag
+
+    # TODO: TO be deleted:
+    G = nx.Graph()
+    G.add_edge('a', 'b', weight=0.6)
+    G.add_edge('a', 'c', weight=0.2)
+    G.add_edge('c', 'd', weight=0.1)
+    G.add_edge('c', 'e', weight=0.7)
+    G.add_edge('c', 'f', weight=0.9)
+    G.add_edge('a', 'd', weight=0.3)
+
+
+
+    test.skew_kseparator_tree(initial_graph, p[0], tree_decomp_graph)
 
 if __name__ == "__main__":
     main()

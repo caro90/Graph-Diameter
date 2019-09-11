@@ -2,6 +2,20 @@ from RangeTree import *
 
 
 def algorithmE(G, separatorList, edges, X, Y):
+    """
+    # TODO: write summary of the algorithm
+
+
+    Parameters:
+    ----------
+        :
+
+
+    Returns:
+    --------
+        A graph which is the skew separator tree.
+
+    """
 
     graph = Graph(edges)
     path = []
@@ -87,7 +101,7 @@ def main():
                 edges2.append(edges)
 
 
-    algorithmE(g, separatorList, edges2, X, Y)
+    algorithmE(g, edges2, X, Y)
 
 
 if __name__ == "__main__":
