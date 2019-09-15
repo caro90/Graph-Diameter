@@ -84,6 +84,7 @@ class Graphs:
         g[len(g)].append(y)
         return g
 
+    # TODO: keep one out of two data_reform and document
     def data_reform(self, num_of_nodes, tw, tree_decomp_graph):
         """
         Transforms the input graph from networkx into a readable form for skew_kseparator_tree
@@ -137,13 +138,28 @@ class Graphs:
 
         return node_list, adjacency_list, node_list_set, adjacency_list_set
 
-    def data_reform2(self, num_of_nodes, tw, tree_decomp_graph):
+    def data_reform2(self, tree_decomp_graph):
+        """
+        Transforms the input graph from networkx library into a readable form for skew_kseparator_tree
+        This function breaks the dependency of skew_kseparator_tree on networkx graph structure.
+
+        Parameters:
+        ----------
+        initial_graph :
+            The very first graph without any processing.
+        Retuns:
+        -------
+        node_list: list of lists
+            For each list/node or bag contains a list of vertices which came from the tree decomposition
+        adjacency_list: list of lists
+            For each node of the graph(the result of the tree decomposition) it keeps a list of the adjacent nodes
+
+        """
         node_dict = {}
         adjacency_dict = {}
         for x in tree_decomp_graph._node:
             node_dict[x] = set( tree_decomp_graph._node[x]["bags"])
             adjacency_dict[x] = set(tree_decomp_graph._adj[x] )
-
 
         return node_dict, adjacency_dict
 
@@ -177,8 +193,7 @@ class Graphs:
 
         # num_of_nodes is the nodes in the initial graph(before tree decomposition)
         num_of_nodes = len(initial_graph._node)
-        #node_list, adjacency_list, node_list_set, adjacency_list_set = self.data_reform(num_of_nodes, tw, tree_decomp_graph)
-        nodes, adj = self.data_reform2(num_of_nodes, tw, tree_decomp_graph)
+        nodes, adj = self.data_reform2(tree_decomp_graph)
 
         # num_of_nodes has to be strictly bigger than the treewidth + 1 (Requirement in Lemma 3)
         if num_of_nodes > tw + 1:
@@ -186,17 +201,12 @@ class Graphs:
             # [Step 1] Add vertices to each bag until each bag has exactly k+1 elements
             for i in range(0, len(nodes)):
                 while len(nodes[i]) < tw + 1:
-                    #print(nodes[i])
                     # Find the adjacent nodes of current node to draw elements from there
                     # in order to keep property 3 of tree decomposition
                     for j in adj[i]:
                         diff_of_sets = nodes[j].difference(nodes[i])
                         if len(diff_of_sets) != 0:
                             nodes[i].add(next(iter(diff_of_sets)))
-                            #print("diff of sets:",diff_of_sets)
-                            #print("next iter:",next(iter(diff_of_sets)))
-                            #print(nodes[j].difference(nodes[i]))
-
                         if len(nodes[i]) == tw + 1:
                             break
 
@@ -207,7 +217,6 @@ class Graphs:
             nodes_to_be_deleted = []
             for i in nodes:
                 # TODO: delete this line if there is no need to start from the children
-                #temp_dict = sorted(adj.values(), key = self.test )
                 # Checking if the current bag contains exactly the same elements with one of its neighbors
                 for e in adj[i].copy():
                     if len(nodes[e].difference(nodes[i])) == 0:
@@ -243,14 +252,12 @@ class Graphs:
         weights = {}
         for i in nodes:
             inter = nodes[i].intersection(set_of_numbers)
-            print(inter)
             if len(inter) != 0:
                 set_of_numbers = set_of_numbers.difference(inter)
-                weights[i]= len(inter)
+                weights[i] = len(inter)
 
         # Finding the edge that minimizes the absolute value of the difference
         # between the weights of the two trees T-ij
-        # TODO: document this part:
 
         # Implementing a non recursive DFS
         nodes_to_visit = []
@@ -269,17 +276,15 @@ class Graphs:
             nodes_already_visited.update([current_node])
 
             # Checking if current node is not leaf
-            if len( adj[current_node].difference(nodes_already_visited)) > 0:
+            if len(adj[current_node].difference(nodes_already_visited)) > 0:
                 for i in adj[current_node]:
                     if i not in nodes_already_visited:
                         nodes_to_visit.append(i)
                         predecessor[i] = current_node
             else:
                 # Current node is a leaf
-                #try
-                print("current node:",current_node)
                 dict_sum[current_node] = weights[current_node]
-                dict[current_node] = abs (dict_sum[current_node] - abs(num_of_nodes - dict_sum[current_node]) )
+                dict[current_node] = abs(dict_sum[current_node] - abs(num_of_nodes - dict_sum[current_node]))
                 white_nodes.pop()
 
             while len(white_nodes) > 0 and len(nodes_to_visit) == 0:
@@ -288,14 +293,42 @@ class Graphs:
                 for i in adj[temp]:
                     sum = dict_sum[i] + sum
                 dict_sum[temp] = weights[temp] + sum
-                dict[temp] = abs (dict_sum[temp] - abs(num_of_nodes - dict_sum[temp]))
+                dict[temp] = abs(dict_sum[temp] - abs(num_of_nodes - dict_sum[temp]))
+
+        del e, i, inter, sum, temp, white_nodes, set_of_numbers, nodes_already_visited, nodes_to_be_deleted, nodes_to_visit
+
+        # Finding the edge
+        x_i = min(dict, key=dict.get)
+        x_j = predecessor[x_i]
+        # We now know that the edge with the lowest absolute difference is between node x_i and x_j
+        nodes_to_visit = []
+        # A  contains the nodes/bags of the tree decomposition
+        A = set()
+        nodes_to_visit.append(x_i)
+        while len(nodes_to_visit) > 0:
+            current_node = nodes_to_visit.pop()
+            A.add(current_node)
+            for i in adj[current_node]:
+                # i != x_j : in order to force DFS to give us only the children of x_i
+                if i not in A and i != x_j:
+                    nodes_to_visit.append(i)
+        # set_A is a subset of V(G)
+        # set_A contains the nodes, of the initial graph, that were inside the node/bags A.
+        set_A = set()
+        for i in A:
+            [set_A.add(j) for j in nodes[i]]
+        # portals_of_A: are the nodes, of the initial graph, that have some edge incident to V(G)\set_A
+        portals_of_A = nodes[x_i].intersection(nodes[x_j])
+
+        # set_B: are the nodes of V(G) equal to right part of A (or left) along with the portals of A.
+        set_B = set()
+        [set_B.add(i) for i in range(0, num_of_nodes)]
+        for i in set_A:
+            set_B.remove(i)
+        [set_B.add(i) for i in portals_of_A]
 
 
-        print()
-
-
-
-
+        return portals_of_A, set_A, set_B
 
 
 def main():
@@ -303,23 +336,22 @@ def main():
     # Testing using my own grid structure:
 
     test = Graphs()
-
-    g = test.createGrid2D(2, 3)
+    g = test.createGrid2D(3, 3)
     print("-------")
     print(g)
     edges2 = []
     # Configuring edges to be readable for Dijkstra function
     for i in range(len(g)-2):
-        for j in range(len(g[i]) ):
+        for j in range(len(g[i])):
             edges = [i, g[i][j], 1]
             if edges2 == []:
                 edges2 = [edges[:]]
             else:
                 edges2.append(edges)
 
-    # Graph is dijkstra's object
+    # Graph is dijkstra's class
     graph = Graph(edges2)
-    path, distances = graph.dijkstra(0, 1)
+    path, distances = graph.dijkstra(0, 8)
     print(path)
     print(distances)
 
@@ -328,16 +360,20 @@ def main():
 
     # Testing using networkx's structure:
 
-    initial_graph = nx.grid_2d_graph(4, 4)
+    initial_graph = nx.grid_2d_graph(3, 3)
+    # Add weight 1 in each edge of the grid
+    for i in initial_graph._adj:
+        for j in initial_graph._adj[i]:
+            initial_graph.add_edge(i, j, weight=1)
+
+    initial_graph = nx.convert_node_labels_to_integers(initial_graph, first_label=0, ordering='default',
+                                                       label_attribute='old_labels')
     # treewidth_min_degree returns a tuple with treewidth and the corresponding decomposed tree.
     # Returns: (int, Graph) tuple
 
-    initial_graph = nx.convert_node_labels_to_integers(initial_graph, first_label=0, ordering='default', label_attribute='old_labels')
-
     p = approx.treewidth_min_degree(initial_graph)
-    tree_decomp_graph = nx.convert_node_labels_to_integers(p[1], first_label=0, ordering='default', label_attribute= 'bags' )
-
-
+    tree_decomp_graph = nx.convert_node_labels_to_integers(p[1], first_label=0, ordering='default',
+                                                           label_attribute='bags')
 
     # print or not the Tree Decomposition
     flag = 1
@@ -354,18 +390,10 @@ def main():
         plt.show()
     del flag
 
-    # TODO: TO be deleted:
-    G = nx.Graph()
-    G.add_edge('a', 'b', weight=0.6)
-    G.add_edge('a', 'c', weight=0.2)
-    G.add_edge('c', 'd', weight=0.1)
-    G.add_edge('c', 'e', weight=0.7)
-    G.add_edge('c', 'f', weight=0.9)
-    G.add_edge('a', 'd', weight=0.3)
 
 
-
-    test.skew_kseparator_tree(initial_graph, p[0], tree_decomp_graph)
+    portals_of_A, set_A, set_B = test.skew_kseparator_tree(initial_graph, p[0], tree_decomp_graph)
+    print()
 
 if __name__ == "__main__":
     main()

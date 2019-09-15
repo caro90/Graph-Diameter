@@ -12,10 +12,10 @@ class Node:
         self.point = point
         self.dimension = dimension
         self.TAssoc = TAssoc
-        # val is not strictly defined yet
         if point is not None:
             self.coordinate = point.pointList[self.dimension-1]
             if self.dimension == len(point.pointList):
+                # self.val is stored at the last position of every point: (x, y, z, val)
                 self.val = point.pointList[len(point.pointList)-1]
         self.leftChild = None
         self.rightChild = None

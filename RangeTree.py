@@ -12,7 +12,10 @@ class RangeTree:
     where reports all the points under a given range.
 
     """
+
+    # TODO: Check if this init is relevant and delete
     def __init__(self):
+
         self.dimension = 1
         self.nodeXList = []
         self.dynamicList = []
@@ -75,7 +78,7 @@ class RangeTree:
 
         print("-----------")
         print("Query 3D:")
-        range3 = [-5, 200, -100, 100, -100, 120]
+        range3 = [-3, -5, -11, 8, -100, 120]
         L3 = self.dimensional_range_query(root.root, range3)
         for j in L3:
             print(j.coordinate)
@@ -89,29 +92,40 @@ class RangeTree:
 
     #TODO: integrate initialization2 to initialization and delete
     def initialization2(self, pi):
+        """
+        TODO: better documentation
+        Loading points and creating Node objects that will be used to build the Range Tree.
+        Typically, for a given point (x,y,z) three Node objects are being created, one for each
+        dimension.
+
+        Returns:
+        """
+
         root = BST(None)
         list_of_points = []
         x = PointHandler()
         for i in pi:
-            for j in range(0, len(pi)):
-                point = x.insertManually2(i[j])
-                list_of_points.append(point)
+            point = x.insertManually2([i])
+            list_of_points.append(point)
 
         # Creating Node objects for all the coordinates
+        # For a point: (x, y, z) we create 3 Node objects.
         for i in list_of_points:
-            stop = i.listOfCoordinates
-            for j in range(1, len(stop)+1):
-                x = Node(j, None, None, i)
-                if j != len(stop):
-                    x.setNextDimNode(Node(j+1, None, None, i))
-                if j == 1:
-                    self.nodeXList.append(x)
+            temp = Node(1, i, None)
+            self.nodeXList.append(temp)
+            print(len(i.pointList))
+            for j in range(2, len(i.pointList)+1):
+                temp.setNextDimNode(Node(j, i, None))
+                temp = temp.nextDimNode
+
 
         # Sorting according to the first coordinate
         self.nodeXList.sort(key=operator.attrgetter('coordinate'))
         # TESTING:
         x = self.build_range_tree(self.nodeXList, 0, root)
         root.setRoot(x)
+
+        """
         print("-------")
         root.printLeaves(root.root)
         print("-------")
@@ -124,8 +138,9 @@ class RangeTree:
         L = self.one_d_range_query(root.root, range1)
         for i in L:
             print(i.coordinate)
+        """
 
-        print("a")
+        return root
 
     def build_range_tree(self, nodelist, flag, root):
         """
@@ -211,13 +226,18 @@ class RangeTree:
          -------
              The node v where the paths to xL and xR split, or the leaf where both paths end.
         """
+
         v = root
+        if v is None:
+            return
         while (v.leftChild is not None) and (v.rightChild is not None) and\
                 ((xr <= v.coordinate) | (xl > v.coordinate)):
             if xr <= v.coordinate:
                 v = v.leftChild
             else:
                 v = v.rightChild
+
+
         return v
 
     def dimensional_range_query(self, root, range):
@@ -233,7 +253,6 @@ class RangeTree:
             v_split = self.find_split_node(root, range[counter], range[counter+1])
             root = v_split.TAssoc
             counter +=2
-        # counter -=2
 
         # if vSplit is a leaf
         if (v_split.leftChild is None) and (v_split.rightChild is None):
