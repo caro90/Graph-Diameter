@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b84174-18f8-454c-87d4-6a35c0ecff8e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AlgorithmE.py" beforeDir="false" afterPath="$PROJECT_DIR$/AlgorithmE.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataHandler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RangeTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/RangeTree.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/binaryTrees.py" beforeDir="false" afterPath="$PROJECT_DIR$/binaryTrees.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,17 +16,26 @@
       <file leaf-file-name="RangeTree.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/RangeTree.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1704">
-              <caret line="80" column="24" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
+            <state relative-caret-position="408">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#153#417#1" />
                 <element signature="e#459#535#0" />
+                <element signature="e#3022#4798#0" />
                 <element signature="e#4616#7456#0" />
                 <element signature="e#4861#5112#1" />
+                <element signature="e#7511#8052#0" />
+                <element signature="e#11668#13678#0" />
                 <element signature="e#13721#14088#0" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="points4.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/points4.txt">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="points2.txt" pinned="false" current-in-tab="false">
@@ -70,8 +75,8 @@
       <file leaf-file-name="AlgorithmE.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="602">
-              <caret line="159" selection-start-line="159" selection-end-line="159" />
+            <state relative-caret-position="2436">
+              <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
                 <element signature="e#97#723#0" />
@@ -297,17 +302,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="1" weight="0.14232409" />
       <window_info anchor="bottom" id="TODO" order="9" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.3295711" />
-      <window_info anchor="bottom" x="620" y="91" width="1155" height="732" id="Run" order="6" type="WINDOWED" visible="true" weight="0.39954853" />
+      <window_info anchor="bottom" x="337" y="198" width="1155" height="732" id="Run" order="6" type="WINDOWED" weight="0.39954853" />
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Python Console" order="0" weight="0.23122239" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info active="true" anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.4498934" />
+      <window_info active="true" anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.36353946" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -366,7 +370,17 @@
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/RangeTree.py</url>
           <line>85</line>
-          <option name="timeStamp" value="406" />
+          <option name="timeStamp" value="409" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/RangeTree.py</url>
+          <line>81</line>
+          <option name="timeStamp" value="447" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/RangeTree.py</url>
+          <line>76</line>
+          <option name="timeStamp" value="448" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -376,7 +390,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="407" />
+      <option name="time" value="449" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -394,13 +408,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/binaryTrees.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="11" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataHandler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3064">
@@ -421,9 +428,13 @@
           <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#153#417#1" />
             <element signature="e#459#535#0" />
+            <element signature="e#3022#4798#0" />
             <element signature="e#4616#7456#0" />
             <element signature="e#4861#5112#1" />
+            <element signature="e#7511#8052#0" />
+            <element signature="e#11668#13678#0" />
             <element signature="e#13721#14088#0" />
           </folding>
         </state>
@@ -470,9 +481,13 @@
           <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#153#417#1" />
             <element signature="e#459#535#0" />
+            <element signature="e#3022#4798#0" />
             <element signature="e#4616#7456#0" />
             <element signature="e#4861#5112#1" />
+            <element signature="e#7511#8052#0" />
+            <element signature="e#11668#13678#0" />
             <element signature="e#13721#14088#0" />
           </folding>
         </state>
@@ -519,9 +534,13 @@
           <caret line="66" column="28" lean-forward="true" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#153#417#1" />
             <element signature="e#459#535#0" />
+            <element signature="e#3022#4798#0" />
             <element signature="e#4616#7456#0" />
             <element signature="e#4861#5112#1" />
+            <element signature="e#7511#8052#0" />
+            <element signature="e#11668#13678#0" />
             <element signature="e#13721#14088#0" />
           </folding>
         </state>
@@ -568,9 +587,13 @@
           <caret line="236" column="51" lean-forward="true" selection-start-line="236" selection-start-column="51" selection-end-line="236" selection-end-column="51" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#153#417#1" />
             <element signature="e#459#535#0" />
+            <element signature="e#3022#4798#0" />
             <element signature="e#4616#7456#0" />
             <element signature="e#4861#5112#1" />
+            <element signature="e#7511#8052#0" />
+            <element signature="e#11668#13678#0" />
             <element signature="e#13721#14088#0" />
           </folding>
         </state>
@@ -619,9 +642,13 @@
           <caret line="109" selection-start-line="109" selection-end-line="109" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#153#417#1" />
             <element signature="e#459#535#0" />
+            <element signature="e#3022#4798#0" />
             <element signature="e#4616#7456#0" />
             <element signature="e#4861#5112#1" />
+            <element signature="e#7511#8052#0" />
+            <element signature="e#11668#13678#0" />
             <element signature="e#13721#14088#0" />
           </folding>
         </state>
@@ -760,6 +787,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2436">
+          <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#97#723#0" />
+            <element signature="e#77#258#1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/points2.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -774,27 +813,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="159" selection-start-line="159" selection-end-line="159" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-            <element signature="e#97#723#0" />
-            <element signature="e#77#258#1" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/points4.txt">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/RangeTree.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1704">
-          <caret line="80" column="24" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
+        <state relative-caret-position="408">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#153#417#1" />
             <element signature="e#459#535#0" />
+            <element signature="e#3022#4798#0" />
             <element signature="e#4616#7456#0" />
             <element signature="e#4861#5112#1" />
+            <element signature="e#7511#8052#0" />
+            <element signature="e#11668#13678#0" />
             <element signature="e#13721#14088#0" />
           </folding>
         </state>
