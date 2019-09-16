@@ -157,8 +157,14 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
             del r_j[len(r_j)-1]
 
         # Query the Range Tree:
-        rangeTree.dimensional_range_query(root.root, r_j[0:6])
-        print()
+        range2 = [-100, 100, -100, 100, -100, 100]
+        #  r_j[0:6]
+        query = rangeTree.dimensional_range_query(root.root, range2, 0)
+        temp = []
+        # for i in query:
+        #     temp = i[0]
+        #     nodes.append()
+        # print()
 
     # [E5] Recurse on G[X]
 """
