@@ -32,7 +32,7 @@ class RangeTree:
 
         root = BST(None)
         x = PointHandler()
-        list_of_points = x.insertFile_XYZval("points4.txt")
+        list_of_points = x.insertFile_XYZval("points3D.txt")
         # length_of_indices: saves the number of indices/coordinates
         length_of_indices = len(list_of_points[0].pointList)
 
@@ -51,42 +51,42 @@ class RangeTree:
         x = self.build_range_tree(self.nodeXList, 0, root)
         root.setRoot(x)
 
-        print("---Post Order----")
-        root.printPostorder(root.root.TAssoc.TAssoc.TAssoc.TAssoc)
-        print("----1st Dim---")
-        root.printLeaves(root.root)
-        print("---2nd Dim----")
-        root.printLeaves(root.root.TAssoc)
-        print("----3rd Dim---")
-        root.printLeaves(root.root.TAssoc.TAssoc)
-        print("----4rd Dim---")
-        root.printLeaves(root.root.TAssoc.TAssoc.TAssoc)
-        print("-------")
+        # print("---Post Order----")
+        # root.printPostorder(root.root.TAssoc.TAssoc.TAssoc.TAssoc)
+        # print("----1st Dim---")
+        # root.printLeaves(root.root)
+        # print("---2nd Dim----")
+        # root.printLeaves(root.root.TAssoc)
+        # print("----3rd Dim---")
+        # root.printLeaves(root.root.TAssoc.TAssoc)
+        # print("----4rd Dim---")
+        # root.printLeaves(root.root.TAssoc.TAssoc.TAssoc)
+        # print("-------")
 
-        range1 = [300, 200]
-        print("Query 1 D:")
-        L = self.one_d_range_query(root.root, range1)
-        for i in L:
-            print(i.coordinate)
+        # range1 = [-5, 200]
+        # print("Query 1 D:")
+        # L = self.one_d_range_query(root.root, range1)
+        # for i in L:
+        #     print(i.coordinate)
 
-        print("-----------")
-        print("Query 2D:")
-        range2 = [10, 200, -11, 99]
-        L2 = self.dimensional_range_query(root.root, range2, 0)
-        # for j in L2:
-        #     print(j.coordinate)
-
+        # print("-----------")
+        # print("Query 2D:")
+        # range2 = [10, 200, -11, 99]
+        # L2 = self.dimensional_range_query(root.root, range2, 0)
+        # # for j in L2:
+        # #     print(j.coordinate)
+        #
         print("-----------")
         print("Query 3D:")
-        range3 = [-5, 10, -11, 99, -100, 120]
+        range3 = [-5, 200, -11, 99, -100, 100]
         L3 = self.dimensional_range_query(root.root, range3, 0)
         # for j in L3:
         #     print(j.coordinate)
 
-        print("-----------")
-        print("Query 5D:")
-        range3 = [-5, 10, -100, 100, -100, 120, -1000, 100, -1000, 1155]
-        L3 = self.dimensional_range_query(root.root, range3, 0)
+        # print("-----------")
+        # print("Query 5D:")
+        # range3 = [-500, 10000, -100, 100, -100, 120, -1000, 100, -1000, 1155]
+        # L3 = self.dimensional_range_query(root.root, range3, 0)
         # for j in L3:
         #     print(j.coordinate)
         print()
@@ -113,8 +113,7 @@ class RangeTree:
         for i in list_of_points:
             temp = Node(1, i, None)
             self.nodeXList.append(temp)
-            print(len(i.pointList))
-            for j in range(2, len(i.pointList)+1):
+            for j in range(2, len(i.pointList)):
                 temp.setNextDimNode(Node(j, i, None))
                 temp = temp.nextDimNode
 
@@ -240,17 +239,13 @@ class RangeTree:
 
         return v
 
-    #TODO: clean up dimensional_range_query
     def dimensional_range_query(self, root, range, counter):
         """
          Input: A dimensional range tree T and a range [x : x'] * [y : y'] * ...
          Returns:
               All points in T that lie in that range
         """
-
         # Base case of the recursion:
-
-
         reported_list = []
         if root is None:
             return
@@ -262,46 +257,47 @@ class RangeTree:
             # Checking if the point stored at vSplit must be reported
             if (v_split.coordinate >= range[counter]) & (v_split.coordinate <= range[counter+1]):
                 if counter + 2 >= len(range):
-                    return self.one_d_range_query(v_split, [range[counter],range[counter+1]])
+                    return self.one_d_range_query(v_split, [range[counter], range[counter + 1]])
                 else:
                     temp = self.dimensional_range_query(v_split.nextDimNode, range, counter + 2)
 
-                if temp is None:
-                    return v_split
+                if not temp:
+                    return
                 else:
                     return temp
-
         else:
             # Follow the path to x and call oneDrangeQuery on the subtrees right of the path
             v = v_split.leftChild
             # While v is not a leaf
             while (v.leftChild is not None) and (v.rightChild is not None):
                 if range[counter] <= v.coordinate:
-
-                    if counter +2 < len(range):
+                    if counter + 2 < len(range):
                         if v.rightChild.TAssoc is not None:
-                            reported_list.append(self.dimensional_range_query(v.rightChild.TAssoc, range, counter +2))
+                            temp = self.dimensional_range_query(v.rightChild.TAssoc, range, counter +2)
+                            # if temp is not None:
+                            #     reported_list.append(temp)
                         else:
-                            reported_list.append(self.dimensional_range_query(v.rightChild.nextDimNode, range, counter + 2))
+                            temp = self.dimensional_range_query(v.rightChild.nextDimNode, range, counter + 2)
+                            # if temp is not None:
+                            #     reported_list.append(temp)
                     else:
-                            return self.one_d_range_query(v.rightChild, [range[counter],range[counter+1]])
+                        temp = self.one_d_range_query(v.rightChild, [range[counter], range[counter+1]])
+                        for i in temp:
+                            reported_list.append(temp.pop())
 
-
-                        # if temp is not None and counter >= len(range):
-                        #    for i in temp:
-                        #        reported_list.append(i)
-                        # else:
-                        #     if (range[counter] <= v.rightChild.nextDimNode.coordinate) & \
-                        #            (range[counter+1] >= v.rightChild.nextDimNode.coordinate):
-                        #      reported_list.append(v.rightChild.nextDimNode)
+                    if temp is not None and temp:
+                        for i in temp:
+                            reported_list.append(temp.pop())
                     v = v.leftChild
                 else:
                     v = v.rightChild
             if counter + 2 < len(range):
                 # Check if the point stored at v must be reported
                 if (v.coordinate >= range[counter]) & (v.coordinate <= range[counter+1]):
-                    reported_list.append(self.dimensional_range_query(v.nextDimNode, range, counter+2))
-
+                    temp = self.dimensional_range_query(v.nextDimNode, range, counter+2)
+                    if temp is not None and temp:
+                        for i in temp:
+                            reported_list.append(temp.pop())
 
             # Similarly, follow the path from the right of vSplit to x',
             # call oneDRangeQuery with the range [y:y'] on the associate structures
@@ -309,25 +305,20 @@ class RangeTree:
             # where the paths ends must be reported
             v = v_split.rightChild
             # While v is not a leaf
-
             while (v.leftChild is not None) and (v.rightChild is not None):
                 if range[counter+1] >= v.coordinate:
 
                     if counter +2 < len(range):
                         if v.leftChild.TAssoc is not None:
-                            self.dimensional_range_query(v.leftChild.TAssoc, range, counter+2)
+                            temp = self.dimensional_range_query(v.leftChild.TAssoc, range, counter+2)
                         else:
-                            reported_list.append(self.dimensional_range_query(v.leftChild.nextDimNode, range, counter + 2))
+                            temp = self.dimensional_range_query(v.leftChild.nextDimNode, range, counter + 2)
                     else:
-                        reported_list.append(self.one_d_range_query(v.leftChild.TAssoc, [range[counter], range[counter+1]]))
+                        temp = self.one_d_range_query(v.leftChild, [range[counter], range[counter+1]])
 
-                    # if temp is not None:
-                    #     for i in temp:
-                    #         reported_list.append(i)
-                    # else:
-                    #     if (range[counter] <= v.leftChild.nextDimNode.coordinate) & \
-                    #                  (range[counter+1] >= v.leftChild.nextDimNode.coordinate):
-                    #          reported_list.append(v.leftChild.nextDimNode)
+                    if temp is not None and temp:
+                        for i in temp:
+                            reported_list.append(temp.pop())
                     v = v.rightChild
                 else:
                     v = v.leftChild
@@ -335,9 +326,10 @@ class RangeTree:
             if counter + 2 < len(range):
                 # Check if the point stored at v must be reported
                 if (v.coordinate >= range[counter]) & (v.coordinate <= range[counter+1]):
-                        reported_list.append(self.dimensional_range_query(v.nextDimNode, range, counter+2))
-
-
+                    temp = self.dimensional_range_query(v.nextDimNode, range, counter+2)
+                    if temp is not None and temp:
+                        for i in temp:
+                            reported_list.append(temp.pop())
         return reported_list
 
     def one_d_range_query(self, root, range):
@@ -346,7 +338,6 @@ class RangeTree:
          Returns:
             All points stored in T that lie in that range
         """
-
         if root is None:
             return
 
@@ -356,20 +347,24 @@ class RangeTree:
             # if vSplit is a leaf
             if (v_split.coordinate >= range[0]) & (v_split.coordinate <= range[1]):
                 # Checking if the point stored at vSplit must be reported
-                reported_list.append(v_split)
+                #reported_list.append(v_split.val)
+                self.report_subtree(v_split, reported_list)
         else:
             # Follow the path to x(stored at range[0]) and report the points in subtrees right of the path
             v = v_split.leftChild
             # While v is not a leaf:
             while (v.leftChild is not None) and (v.rightChild is not None):
                 if range[0] <= v.coordinate:
-                    self.report_subtree(v.rightChild)
+                    # self.report_subtree(v.rightChild)
+                    # reported_list.append(v.rightChild.val)
+                    self.report_subtree(v.rightChild, reported_list)
                     v = v.leftChild
                 else:
                     v = v.rightChild
             # Check if the point stored at the leaf v must be reported:
             if (v.coordinate >= range[0]) & (v.coordinate <= range[1]):
-                reported_list.append(v)
+                #reported_list.append(v.val)
+                self.report_subtree(v, reported_list)
 
             # Similarly, follow the path to x'(stored at range[1]), report the points in subtrees left of the path,
             # and check if the point stored at the leaf where the path ends must be reported
@@ -377,27 +372,33 @@ class RangeTree:
             # While v is not a leaf:
             while (v.leftChild is not None) and (v.rightChild is not None):
                 if range[1] >= v.coordinate:
-                    self.report_subtree(v.leftChild)
+                    self.report_subtree(v.leftChild, reported_list)
+                    #reported_list.append(v.leftChild.val)
                     v = v.rightChild
                 else:
                     v = v.leftChild
             # Check if the point stored at the leaf v must be reported:
             if (v.coordinate >= range[0]) & (v.coordinate <= range[1]):
-                reported_list.append(v)
+                #reported_list.append(v.val)
+                self.report_subtree(v, reported_list)
 
-        return reported_list
+        if len(reported_list) == 0:
+            return
+        else:
+            return reported_list
 
-    def report_subtree(self, v):
+    def report_subtree(self, v, reported_list):
         """
         """
         if v:
             if v.leftChild is None and v.rightChild is None:
                 # First print the data of node only if it is a leaf
-                print(v.coordinate)
+                #print(v.coordinate)
+                reported_list.append(v.val)
             # Then recur on left child
-            self.report_subtree(v.leftChild)
+            self.report_subtree(v.leftChild, reported_list)
             # Finally recur on right child
-            self.report_subtree(v.rightChild)
+            self.report_subtree(v.rightChild, reported_list)
 
 
 def main():

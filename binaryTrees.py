@@ -14,7 +14,7 @@ class Node:
         self.TAssoc = TAssoc
         if point is not None:
             self.coordinate = point.pointList[self.dimension-1]
-            if self.dimension == len(point.pointList):
+            if self.dimension == len(point.pointList)-1:
                 # self.val is stored at the last position of every point: (x, y, z, val)
                 self.val = point.pointList[len(point.pointList)-1]
         self.leftChild = None

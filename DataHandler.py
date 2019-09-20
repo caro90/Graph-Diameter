@@ -45,7 +45,7 @@ class PointHandler:
             for row in csv_reader:
                 if line_count == 0:
                     print(f'Column names are:{", ".join(row)}')
-                print(f'\t\t\t\t { row["x"]} { row["y"]} { row["z"]} { row["w"]} { row["val"]}')
+                print(f'\t\t\t\t { row["x"]}  {row["y"]}  {row["z"]} { row["val"]}')
 
                 for i in row:
                     listOfElements.append(row[i])
@@ -138,7 +138,7 @@ class Graphs:
 
         return node_list, adjacency_list, node_list_set, adjacency_list_set
 
-    def data_reform2(self, tree_decomp_graph):
+    def data_reform2(self, tree_decomp_graph, set_of_nodes, initial_graph):
         """
         Transforms the input graph from networkx library into a readable form for skew_kseparator_tree
         This function breaks the dependency of skew_kseparator_tree on networkx graph structure.
@@ -157,17 +157,30 @@ class Graphs:
         """
         node_dict = {}
         adjacency_dict = {}
-        for x in tree_decomp_graph._node:
-            node_dict[x] = set( tree_decomp_graph._node[x]["bags"])
-            adjacency_dict[x] = set(tree_decomp_graph._adj[x] )
+        initial_graph_node_dict = {}
+        initial_graph_adjacency_dict = {}
+        temp_nodes = set()
+        [temp_nodes.add(i) for i in initial_graph]
+        for i in initial_graph:
+            initial_graph_node_dict[i] = set([i])
+            initial_graph_adjacency_dict[i] = set(initial_graph._adj[i])
+            extra_elem = initial_graph_adjacency_dict[i].difference(temp_nodes)
+            if len( extra_elem) > 0:
+                for e in extra_elem:
+                    initial_graph_adjacency_dict[i].remove(e)
 
-        return node_dict, adjacency_dict
+        for i in set_of_nodes:
+            node_dict[i] = set(tree_decomp_graph._node[i]["bags"])
+            adjacency_dict[i] = set(tree_decomp_graph._adj[i])
+
+        return node_dict, adjacency_dict, initial_graph_node_dict, initial_graph_adjacency_dict
 
     # TODO: test if needed and delete
     def test(self, set_t):
         return len(set_t)
 
-    def skew_kseparator_tree(self, initial_graph, tw, tree_decomp_graph):
+    def skew_kseparator_tree(self, num_of_nodes, tw, tree_decomp_graph, nodes, adj, set_temp,
+                             initial_graph, initial_graph_nodes, initial_graph_adj):
 
         """
         # TODO: write summary of the algorithm
@@ -182,8 +195,7 @@ class Graphs:
         tw: int
             The treewidth of the current tree decomposition.
 
-        tree_decomp_graph :
-            The resulting graph after applying a tree decomposition algorithm on initial_graph.
+
 
         Returns:
         --------
@@ -192,14 +204,13 @@ class Graphs:
         """
 
         # num_of_nodes is the nodes in the initial graph(before tree decomposition)
-        num_of_nodes = len(initial_graph._node)
-        nodes, adj = self.data_reform2(tree_decomp_graph)
+
 
         # num_of_nodes has to be strictly bigger than the treewidth + 1 (Requirement in Lemma 3)
         if num_of_nodes > tw + 1:
             # Transformation part:
             # [Step 1] Add vertices to each bag until each bag has exactly k+1 elements
-            for i in range(0, len(nodes)):
+            for i in nodes:#range(0, len(nodes)):
                 while len(nodes[i]) < tw + 1:
                     # Find the adjacent nodes of current node to draw elements from there
                     # in order to keep property 3 of tree decomposition
@@ -210,7 +221,7 @@ class Graphs:
                         if len(nodes[i]) == tw + 1:
                             break
 
-            del diff_of_sets, i, j
+            #del diff_of_sets, i, j
 
             # [Step 2] Contract any edge ij in E(T) whenever Xi == Xj.
             # It now holds that any two nodes i j of T are different
@@ -248,7 +259,11 @@ class Graphs:
         # assigned to it
 
         set_of_numbers = set()
-        [set_of_numbers.add(i) for i in range(0, num_of_nodes)]
+        if len(set_temp) == 0:
+            [set_of_numbers.add(i) for i in range(0, num_of_nodes)]
+        else:
+            [set_of_numbers.add(i) for i in set_temp]
+
         weights = {}
         for i in nodes:
             inter = nodes[i].intersection(set_of_numbers)
@@ -264,7 +279,8 @@ class Graphs:
         nodes_already_visited = set()
         # white_nodes: nodes that still have children to be examined
         white_nodes = []
-        nodes_to_visit.append(0)
+        my_keys = list(nodes.keys())
+        nodes_to_visit.append(my_keys[0])
         dict = {}
         dict_sum = {}
         for i in nodes:
@@ -318,17 +334,25 @@ class Graphs:
         for i in A:
             [set_A.add(j) for j in nodes[i]]
         # portals_of_A: are the nodes, of the initial graph, that have some edge incident to V(G)\set_A
-        portals_of_A = nodes[x_i].intersection(nodes[x_j])
+        #portals_of_A = nodes[x_i].intersection(nodes[x_j])
+        portals_of_A = []
+        for i in set_A:
+            if len( initial_graph_adj[i].difference(set_A)) >0:
+                portals_of_A.append(i)
 
         # set_B: are the nodes of V(G) equal to right part of A (or left) along with the portals of A.
         set_B = set()
-        [set_B.add(i) for i in range(0, num_of_nodes)]
+        # TODO:change name in set_temp and document it
+        if len(set_temp) == 0:
+            [set_B.add(i) for i in range(0, num_of_nodes)]
+        else:
+            [set_B.add(i) for i in set_temp]
         for i in set_A:
             set_B.remove(i)
         [set_B.add(i) for i in portals_of_A]
 
 
-        return portals_of_A, set_A, set_B
+        return portals_of_A, set_A, set_B, A
 
 
 def main():
@@ -360,7 +384,7 @@ def main():
 
     # Testing using networkx's structure:
 
-    initial_graph = nx.grid_2d_graph(3, 3)
+    initial_graph = nx.grid_2d_graph(6, 6)
     # Add weight 1 in each edge of the grid
     for i in initial_graph._adj:
         for j in initial_graph._adj[i]:
@@ -390,9 +414,11 @@ def main():
         plt.show()
     del flag
 
-
-
-    portals_of_A, set_A, set_B = test.skew_kseparator_tree(initial_graph, p[0], tree_decomp_graph)
+    set_of_nodes = [i for i in range(0, len(tree_decomp_graph._node))]
+    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, set_of_nodes, initial_graph)
+    num_of_nodes = len(initial_graph._node)
+    portals_of_A, set_A, set_B, A = test.skew_kseparator_tree(num_of_nodes, p[0], tree_decomp_graph, nodes, adj,
+                                                              [], initial_graph, initial_graph_nodes, initial_graph_adj)
     print()
 
 if __name__ == "__main__":

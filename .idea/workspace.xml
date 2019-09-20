@@ -2,95 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b84174-18f8-454c-87d4-6a35c0ecff8e" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AlgorithmE.py" beforeDir="false" afterPath="$PROJECT_DIR$/AlgorithmE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataHandler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RangeTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/RangeTree.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/binaryTrees.py" beforeDir="false" afterPath="$PROJECT_DIR$/binaryTrees.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grid.edgelist" beforeDir="false" afterPath="$PROJECT_DIR$/grid.edgelist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/points.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/points2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/points3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/points4.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RangeTree.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/RangeTree.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="91" selection-start-line="91" selection-end-line="91" />
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
-                <element signature="e#153#417#1" />
-                <element signature="e#459#535#0" />
-                <element signature="e#3022#4798#0" />
-                <element signature="e#4616#7456#0" />
-                <element signature="e#4861#5112#1" />
-                <element signature="e#7511#8052#0" />
-                <element signature="e#13721#14088#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="points4.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/points4.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="3" column="10" lean-forward="true" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="points3.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/points3.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="5" column="9" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataHandler.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DataHandler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="651">
-              <caret line="31" selection-start-line="31" selection-end-line="31" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#1706#2695#0" />
-                <element signature="e#2769#4696#0" />
-                <element signature="e#4842#5101#0" />
-                <element signature="e#5207#5829#1" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="binaryTrees.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/binaryTrees.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="10" column="24" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AlgorithmE.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="161" selection-start-line="161" selection-end-line="161" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-                <element signature="e#97#723#0" />
-                <element signature="e#77#258#1" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -99,74 +26,11 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>getCh</find>
-      <find>setRo</find>
-      <find>Tas</find>
-      <find>dest</find>
-      <find>t_a</find>
-      <find>Node</find>
-      <find>insertManually</find>
-      <find>DynamicPoint</find>
-      <find>nextDimNode</find>
-      <find>nodeYList</find>
-      <find>separatorList</find>
-      <find>flag</find>
-      <find>gridSeparator</find>
-      <find>update</find>
-      <find>print</find>
-      <find>edges</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/BST.py" />
-        <option value="$PROJECT_DIR$/__init__.py" />
-        <option value="$PROJECT_DIR$/dijkstra2.py" />
-        <option value="$PROJECT_DIR$/dijkstra4.py" />
-        <option value="$PROJECT_DIR$/dijkstra3.py" />
-        <option value="$PROJECT_DIR$/dijkstra.py" />
-        <option value="$PROJECT_DIR$/DataHandler.py" />
-        <option value="$PROJECT_DIR$/binaryTrees.py" />
-        <option value="$PROJECT_DIR$/AlgorithmE.py" />
-        <option value="$PROJECT_DIR$/RangeTree.py" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
-    <option name="width" value="1546" />
-    <option name="height" value="830" />
-  </component>
+  <component name="ProjectId" id="1QyNS0S28cGQrG8Zdhne9mirBEl" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="AlgorithmE_eccentricities" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AlgorithmE_eccentricities" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AlgorithmE_eccentricities" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
-  </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -183,7 +47,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.RangeTree">
+  <component name="RunManager" selected="Python.AlgorithmE">
     <configuration name="AlgorithmE" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AlgorithmE_eccentricities" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -201,6 +65,9 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
     </configuration>
     <configuration name="DataHandler" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AlgorithmE_eccentricities" />
@@ -219,6 +86,9 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
     </configuration>
     <configuration name="RangeTree" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AlgorithmE_eccentricities" />
@@ -237,6 +107,9 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
     </configuration>
     <configuration name="dijkstra" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AlgorithmE_eccentricities" />
@@ -255,6 +128,9 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
     </configuration>
     <configuration name="dijkstra3" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AlgorithmE_eccentricities" />
@@ -273,6 +149,9 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Python.DataHandler" />
@@ -283,8 +162,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.RangeTree" />
         <item itemvalue="Python.AlgorithmE" />
+        <item itemvalue="Python.RangeTree" />
         <item itemvalue="Python.DataHandler" />
         <item itemvalue="Python.dijkstra3" />
         <item itemvalue="Python.dijkstra" />
@@ -304,77 +183,61 @@
     </task>
     <servers />
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="1" weight="0.14232409" />
-      <window_info anchor="bottom" id="TODO" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.3295711" />
-      <window_info anchor="bottom" x="337" y="198" width="1155" height="732" id="Run" order="6" type="WINDOWED" visible="true" weight="0.39954853" />
-      <window_info anchor="bottom" id="Version Control" order="3" />
-      <window_info anchor="bottom" id="Python Console" order="0" weight="0.23122239" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info active="true" anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.3827292" />
-      <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.32960895" />
-    </layout>
-    <layout-to-restore>
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="8" weight="0.4" />
-      <window_info content_ui="combo" id="Project" order="1" weight="0.10826211" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="9" />
-      <window_info anchor="bottom" id="Version Control" order="3" />
-      <window_info anchor="bottom" x="22" y="444" width="1798" height="514" id="Run" order="6" type="WINDOWED" visible="true" weight="0.39954853" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info active="true" anchor="right" x="157" y="565" width="1662" height="287" id="Debug" order="3" visible="true" weight="0.42393163" />
-      <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" weight="0.3295711" />
-      <window_info anchor="bottom" id="Cvs" order="7" weight="0.25" />
-      <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="5" />
-      <window_info anchor="bottom" id="Python Console" order="0" visible="true" weight="0.094808124" />
-    </layout-to-restore>
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
-          <line>223</line>
-          <option name="timeStamp" value="318" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DataHandler.py</url>
-          <line>395</line>
-          <option name="timeStamp" value="358" />
+          <line>416</line>
+          <option name="timeStamp" value="547" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
-          <line>166</line>
-          <option name="timeStamp" value="386" />
+          <line>312</line>
+          <option name="timeStamp" value="626" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
-          <line>161</line>
-          <option name="timeStamp" value="403" />
+          <line>311</line>
+          <option name="timeStamp" value="631" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/RangeTree.py</url>
-          <line>91</line>
-          <option name="timeStamp" value="459" />
+          <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
+          <line>68</line>
+          <option name="timeStamp" value="632" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
+          <line>186</line>
+          <option name="timeStamp" value="639" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
+          <line>192</line>
+          <option name="timeStamp" value="640" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
+          <line>210</line>
+          <option name="timeStamp" value="641" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
+          <line>178</line>
+          <option name="timeStamp" value="642" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -384,7 +247,6 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="460" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -400,431 +262,5 @@
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3064">
-          <caret line="283" column="82" selection-start-line="283" selection-start-column="82" selection-end-line="283" selection-end-column="82" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1706#2695#0" />
-            <element signature="e#2769#4696#0" />
-            <element signature="e#4842#5101#0" />
-            <element signature="e#5207#5829#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RangeTree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1617">
-          <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <element signature="e#153#417#1" />
-            <element signature="e#459#535#0" />
-            <element signature="e#3022#4798#0" />
-            <element signature="e#4616#7456#0" />
-            <element signature="e#4861#5112#1" />
-            <element signature="e#7511#8052#0" />
-            <element signature="e#13721#14088#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/binaryTrees.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1932">
-          <caret line="92" column="16" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dijkstra3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="23" selection-start-column="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4074">
-          <caret line="194" column="47" selection-start-line="194" selection-start-column="47" selection-end-line="194" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1706#2695#0" />
-            <element signature="e#2769#4696#0" />
-            <element signature="e#4842#5101#0" />
-            <element signature="e#5207#5829#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RangeTree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1617">
-          <caret line="80" column="29" selection-start-line="80" selection-start-column="29" selection-end-line="80" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <element signature="e#153#417#1" />
-            <element signature="e#459#535#0" />
-            <element signature="e#3022#4798#0" />
-            <element signature="e#4616#7456#0" />
-            <element signature="e#4861#5112#1" />
-            <element signature="e#7511#8052#0" />
-            <element signature="e#13721#14088#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/binaryTrees.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1932">
-          <caret line="92" column="16" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dijkstra3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="23" selection-start-column="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3318">
-          <caret line="163" column="42" lean-forward="true" selection-start-line="163" selection-start-column="42" selection-end-line="163" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1706#2695#0" />
-            <element signature="e#2769#4696#0" />
-            <element signature="e#4842#5101#0" />
-            <element signature="e#5207#5829#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RangeTree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1452">
-          <caret line="66" column="28" lean-forward="true" selection-start-line="66" selection-start-column="28" selection-end-line="66" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <element signature="e#153#417#1" />
-            <element signature="e#459#535#0" />
-            <element signature="e#3022#4798#0" />
-            <element signature="e#4616#7456#0" />
-            <element signature="e#4861#5112#1" />
-            <element signature="e#7511#8052#0" />
-            <element signature="e#13721#14088#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/binaryTrees.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2024">
-          <caret line="92" column="16" lean-forward="true" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2552">
-          <caret line="118" column="21" lean-forward="true" selection-start-line="118" selection-start-column="21" selection-end-line="118" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1706#2695#0" />
-            <element signature="e#2769#4696#0" />
-            <element signature="e#4842#5101#0" />
-            <element signature="e#5207#5829#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dijkstra3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="24" lean-forward="true" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RangeTree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5520">
-          <caret line="236" column="51" lean-forward="true" selection-start-line="236" selection-start-column="51" selection-end-line="236" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <element signature="e#153#417#1" />
-            <element signature="e#459#535#0" />
-            <element signature="e#3022#4798#0" />
-            <element signature="e#4616#7456#0" />
-            <element signature="e#4861#5112#1" />
-            <element signature="e#7511#8052#0" />
-            <element signature="e#13721#14088#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/binaryTrees.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dijkstra.py" />
-    <entry file="file://$PROJECT_DIR$/dijkstra4.py" />
-    <entry file="file://$PROJECT_DIR$/dijkstra3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2328">
-          <caret line="97" column="12" selection-start-line="97" selection-start-column="3" selection-end-line="99" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2376">
-          <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1706#2695#0" />
-            <element signature="e#2769#4696#0" />
-            <element signature="e#4842#5101#0" />
-            <element signature="e#5207#5829#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RangeTree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2496">
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <element signature="e#153#417#1" />
-            <element signature="e#459#535#0" />
-            <element signature="e#3022#4798#0" />
-            <element signature="e#4616#7456#0" />
-            <element signature="e#4861#5112#1" />
-            <element signature="e#7511#8052#0" />
-            <element signature="e#13721#14088#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dijkstra.py" />
-    <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="52" column="30" lean-forward="true" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1706#2695#0" />
-            <element signature="e#2769#4696#0" />
-            <element signature="e#4842#5101#0" />
-            <element signature="e#5207#5829#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RangeTree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2496">
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dijkstra.py" />
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2280">
-          <caret line="97" selection-start-line="97" selection-end-line="97" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1706#2695#0" />
-            <element signature="e#2769#4696#0" />
-            <element signature="e#4842#5101#0" />
-            <element signature="e#5207#5829#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RangeTree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3480">
-          <caret line="154" column="37" lean-forward="true" selection-start-line="154" selection-start-column="37" selection-end-line="154" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BST.py" />
-    <entry file="file://$PROJECT_DIR$/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/dijkstra2.py" />
-    <entry file="file://$PROJECT_DIR$/dijkstra.py" />
-    <entry file="file://$PROJECT_DIR$/dijkstra4.py" />
-    <entry file="file://$USER_HOME$/Anaconda3/envs/AlgorithmE_eccentricities/Lib/site-packages/matplotlib/pyplot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="262" selection-start-line="262" selection-end-line="262" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/envs/AlgorithmE_eccentricities/Lib/site-packages/networkx/readwrite/adjlist.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="76" selection-start-line="76" selection-end-line="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/envs/AlgorithmE_eccentricities/Lib/site-packages/networkx/utils/decorators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="181" selection-start-line="181" selection-end-line="181" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1060">
-          <caret line="1663" selection-start-line="1663" selection-end-line="1663" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/envs/AlgorithmE_eccentricities/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="310" selection-start-line="310" selection-end-line="310" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/envs/AlgorithmE_eccentricities/Lib/site-packages/networkx/classes/graph.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="909" selection-start-line="909" selection-end-line="909" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dijkstra3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/points2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1706#2695#0" />
-            <element signature="e#2769#4696#0" />
-            <element signature="e#4842#5101#0" />
-            <element signature="e#5207#5829#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/binaryTrees.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="10" column="24" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/points3.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" column="9" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AlgorithmE.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="161" selection-start-line="161" selection-end-line="161" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-            <element signature="e#97#723#0" />
-            <element signature="e#77#258#1" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/points4.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" column="10" lean-forward="true" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RangeTree.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="91" selection-start-line="91" selection-end-line="91" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-            <element signature="e#153#417#1" />
-            <element signature="e#459#535#0" />
-            <element signature="e#3022#4798#0" />
-            <element signature="e#4616#7456#0" />
-            <element signature="e#4861#5112#1" />
-            <element signature="e#7511#8052#0" />
-            <element signature="e#13721#14088#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>
