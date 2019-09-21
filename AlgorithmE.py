@@ -52,6 +52,7 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
     rangeTree = RangeTree()
     test = Graphs()
     distances = []
+    distances = {}
     # edges: the edges of the initial_graph in readable format for Dijkstra
     edges, adj = data_format(initial_graph)
     graph = Graph(edges)
@@ -61,19 +62,19 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
     # Dijkstra function is an object of Graph class
     for i in initial_graph._node:
         # graph.dijkstra(source, destination). The path from source to destination will be saved on path variable
-        temp_path, temp_distances = graph.dijkstra(i, 0)
-        distances.append(temp_distances)
+        temp_path, temp_distances = graph.dijkstra(i, i)
+        distances[i] = temp_distances
 
     # n: the number of nodes in G, |V(G)|.
     n = len(initial_graph._node)
+    print((n / math.log(n, np.e)))
     if (n / math.log(n, np.e)) < 4*tw*(tw+1):
         # Computing the eccentricities from distances
         eccentricities = {}
-        for i in range(0, len(distances)):
+        for i in distances:
            max_value = max(distances[i].values())
            eccentricities[i] = max_value
 
-        # TODO: uncommemnt
         return eccentricities
 
         del temp_path, temp_distances, i, max_value, edges
@@ -110,6 +111,7 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
             # An edge exists
             current_weight = adj[i[0]].get(i[1])
             current_weight = current_weight.get('weight')
+            #TODO : Check why pass?
             if min_val < current_weight: pass
 
         else:
@@ -118,9 +120,7 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
             # TODO: DO we have to update the edges? (data format)
             adj[i[0]][i[1]] = {'weight': min_val}
 
-    #del i, j, min_val, current_weight, pairs
     print()
-
     # [E4.1] Start iterating over {z1,...,zk}
     # [E4.2] Build range tree for zi. Construct a k-dimensional
     # range tree R of points {p(y) = (p1,...,pk)}
@@ -156,6 +156,8 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
         # Query box = [inf,r1] x ... x [inf,rk]
         r_j = []
         ntive_inf = float("-inf")
+        # infinity: Define a constant variable to represent infinity in an integer form
+        infinity = -10000000
         query_results = {}
 
         for k in set_A:
@@ -169,7 +171,9 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
             # Query the Range Tree:
             # query_results: e(x, zi; Y)
             temp_query = rangeTree.dimensional_range_query(root.root, r_j, 0)
-            if len(temp_query) > 0:
+            if len(temp_query) == 0:
+                query_results[k] = [infinity]
+            else:
                 query_results[k] = temp_query
             r_j = []
         # e_x_z: is e(x,zi:Y)
@@ -180,7 +184,6 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
         for i in value:
             value[i] = max(value[i])
 
-    del i, j, k, n, ntive_inf, r_j, temp_query, key, value
     print()
     # [E5] Recurse on G[X]
 
@@ -193,11 +196,12 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
     p2 = approx.treewidth_min_degree(initial_graph2)
     tree_decomp_graph2 = nx.convert_node_labels_to_integers(p2[1], first_label=0, ordering='default',
                                                            label_attribute='bags')
+    tw2 = p2[0]
     temp_nodes = []
     [temp_nodes.append(i) for i in range(0, len(tree_decomp_graph2._node))]
 
-    nodes, adj, initial_graph_nodes, initial_graph_adj  = test.data_reform2(tree_decomp_graph2, temp_nodes, initial_graph2)
-    portals_of_A, set_A, set_B, A = test.skew_kseparator_tree(len(set_A), tw, tree_decomp_graph2, nodes,
+    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph2, temp_nodes, initial_graph2)
+    portals_of_A2, set_A2, set_B2, A2 = test.skew_kseparator_tree(len(set_A), tw2, tree_decomp_graph2, nodes,
                                                                adj, set_A, initial_graph2,  initial_graph_nodes, initial_graph_adj )
 
     # e_x_Χ: in this variable are stored the values of e(x:X)
@@ -207,8 +211,9 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
     e_x_Y = {}
     e_z = {}
     e_x_Χ = {}
+    e_x = {}
 
-    e_x_Χ = algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph, A)
+    e_x_X = algorithm_E(initial_graph2, tw2, portals_of_A2, set_A2, set_B2, tree_decomp_graph2, A2)
     for i in set_A:
         temp_max = 0
         for j in portals_of_A:
@@ -220,54 +225,21 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
                     temp_max = distances[i].get(j)
         e_x_Y[i] = temp_max
 
-    for i in set_A:
-        e_x = max(e_x_X[i], e_x_Y[i])
+    for i in e_x_X:
+        # if e_x_X[i] and e_x_Y[i]:
+        e_x[i] = max(e_x_X[i], e_x_Y[i])
     for key, value in distances_from_separator.items():
         e_z[key] = max(value.values())
 
     print()
     return e_x
 
-def main():
+def testing():
     test = Graphs()
-    g = test.createGrid2D(3, 3)
-    edges2 = []
 
-    # Configuring edges to be readable for Dijkstra function
-    for i in range(len(g)-2):
-        for j in range(len(g[i]) ):
-            edges = [i, g[i][j], 1]
-            if edges2 == []:
-                edges2 = [edges[:]]
-            else:
-                edges2.append(edges)
-    del edges
-
-
-    # ----Creating custom graph-----:
-    initial_graph = nx.Graph()
-    list = []
-    [list.append(i) for i in range(1,12)]
-    initial_graph.add_nodes_from(list)
-
-
-    initial_graph.add_edge(1, 9)
-
-    initial_graph.add_edge(3, 5)
-    initial_graph.add_edge(3, 6)
-    initial_graph.add_edge(4, 5)
-    initial_graph.add_edge(4, 7)
-
-    initial_graph.add_edge(5, 8)
-
-    initial_graph.add_edge(7, 9)
-
-    initial_graph.add_edge(2, 11)
-    initial_graph.add_edge(6, 10)
-    initial_graph.add_edge(10, 11)
-
-    #initial_graph = nx.turan_graph(20, 10)
-    initial_graph = nx.ladder_graph(20)
+    initial_graph = nx.ladder_graph(70)
+    # initial_graph = nx.star_graph(10)
+    # initial_graph = nx.grid_2d_graph(4,4)
 
     # print or not the Graph
     flag = 0
@@ -284,12 +256,7 @@ def main():
         plt.show()
     del flag
 
-
-    #-----------------------
-    #initial_graph = nx.star_graph(10)
-    #initial_graph = nx.grid_2d_graph(4,4)
-
-    # Add weight 1 in each edge of the grid
+    # Add weight 1 in each edge of the graph
     for i in initial_graph._adj:
         for j in initial_graph._adj[i]:
             initial_graph.add_edge(i, j, weight=1)
@@ -304,12 +271,21 @@ def main():
                                                            label_attribute='bags')
     set_of_nodes = [i for i in range(0, len(tree_decomp_graph._node))]
 
-    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, set_of_nodes, initial_graph)
+    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, set_of_nodes,
+                                                                           initial_graph)
     num_of_nodes = len(initial_graph._node)
     portals_of_A, set_A, set_B, A = test.skew_kseparator_tree(num_of_nodes, p[0], tree_decomp_graph, nodes, adj, [],
                                                               initial_graph, initial_graph_nodes, initial_graph_adj)
 
-    result = algorithm_E(initial_graph, p[0], portals_of_A, set_A, set_B, tree_decomp_graph, A)
+    return  initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p
+
+def main():
+    initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p  = testing()
+
+    result1 = algorithm_E(initial_graph, p[0], portals_of_A, set_A, set_B, tree_decomp_graph, A)
+    # [E6] Flip:
+    initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p = testing()
+    result2 = algorithm_E(initial_graph, p[0], portals_of_A, set_B, set_A, tree_decomp_graph, A)
     print()
 
 
