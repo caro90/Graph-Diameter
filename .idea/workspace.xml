@@ -4,7 +4,8 @@
     <list default="true" id="53b84174-18f8-454c-87d4-6a35c0ecff8e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AlgorithmE.py" beforeDir="false" afterPath="$PROJECT_DIR$/AlgorithmE.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grid.edgelist" beforeDir="false" afterPath="$PROJECT_DIR$/grid.edgelist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataHandler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grid.edgelist" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -194,13 +195,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DataHandler.py</url>
-          <line>416</line>
+          <line>414</line>
           <option name="timeStamp" value="547" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
-          <line>288</line>
-          <option name="timeStamp" value="626" />
+          <line>315</line>
+          <option name="timeStamp" value="709" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

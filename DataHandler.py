@@ -205,7 +205,6 @@ class Graphs:
 
         # num_of_nodes is the nodes in the initial graph(before tree decomposition)
 
-
         # num_of_nodes has to be strictly bigger than the treewidth + 1 (Requirement in Lemma 3)
         if num_of_nodes > tw + 1:
             # Transformation part:
@@ -350,7 +349,6 @@ class Graphs:
         for i in set_A:
             set_B.remove(i)
         [set_B.add(i) for i in portals_of_A]
-
 
         return portals_of_A, set_A, set_B, A
 

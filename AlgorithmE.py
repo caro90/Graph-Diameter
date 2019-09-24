@@ -4,8 +4,7 @@ import math
 from dijkstra3 import *
 
 
-
-def data_format(graph):
+def data_format(adj):
     """
     Transforms the weight on the edges from networkx library, in a form readable for Dijkstra function
     Parameters:
@@ -23,19 +22,19 @@ def data_format(graph):
     """
 
     edges2 = []
-    for i in (graph._adj):
-        for j in graph._adj[i]:
-            edges = [i, j, next(iter(graph._adj[i][j].values()))]
+    for i in (adj):
+        for j in adj[i]:
+            edges = [i, j, next(iter(adj[i][j].values()))]
             if edges2 == []:
                 edges2 = [edges[:]]
             else:
                 edges2.append(edges)
 
-    adj = graph._adj
+    #adj = graph._adj
     return edges2, adj
 
 
-def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph, A):
+def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
     """
     # TODO: write summary of the algorithm
     Given a graph G and a skew k-separator tree, the algorithm computes the eccentricity e(v) of every
@@ -51,24 +50,25 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
     # TODO: not be dependent on networkx, change variables, eg initial_graph._node
     rangeTree = RangeTree()
     test = Graphs()
-    distances = []
     distances = {}
     # edges: the edges of the initial_graph in readable format for Dijkstra
-    edges, adj = data_format(initial_graph)
+
+    edges, adj = data_format(initial_graph._adj)
     graph = Graph(edges)
+
     # [E1] Base case of the recursion:
     # if n\ln(n) < 4tw(tw+1) then find all distances using Dijkstra's Algorithm and terminate
-
-    # Dijkstra function is an object of Graph class
-    for i in initial_graph._node:
-        # graph.dijkstra(source, destination). The path from source to destination will be saved on path variable
-        temp_path, temp_distances = graph.dijkstra(i, i)
-        distances[i] = temp_distances
 
     # n: the number of nodes in G, |V(G)|.
     n = len(initial_graph._node)
     print((n / math.log(n, np.e)))
     if (n / math.log(n, np.e)) < 4*tw*(tw+1):
+        # Dijkstra function is an object of Graph class
+        for i in initial_graph._node:
+            # graph.dijkstra(source, destination). The path from source to destination will be saved on path variable
+            temp_path, temp_distances = graph.dijkstra(i, i)
+            distances[i] = temp_distances
+
         # Computing the eccentricities from distances
         eccentricities = {}
         for i in distances:
@@ -84,7 +84,7 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
     distances_from_separator = {}
     count = 0
     for i in portals_of_A:
-        temp_path, temp_distances = graph.dijkstra(i, 0)
+        temp_path, temp_distances = graph.dijkstra(i, i)
         distances_from_separator[i] = temp_distances
         count += 1
 
@@ -127,6 +127,21 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
     # The output is stored at p_j.
     # f(p(y)) = d(z_i,y) using the monoid (Z, max)
 
+    # Calculate the distances d(x,zi) for every x in X
+    # ----------------
+    # Dijkstra function is an object of Graph class
+    adj_x = dict()
+    for i2 in set_A:
+        adj_x[i2] = adj[i2]
+    edges_x, adj_x = data_format(adj_x)
+    # graph2 is reduced only on X part of the graph
+    graph2 = Graph(edges_x)
+    distances_x_zi = {}
+    for k in set_A:
+        # graph.dijkstra(source, destination). The path from source to destination will be saved on path variable
+        temp_path, temp_distances = graph2.dijkstra(k, k)
+        distances_x_zi[k] = temp_distances
+    # ---------------------
     e_x_z = dict()
     p_y = []
     for i in portals_of_A:
@@ -149,7 +164,6 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
         # [E4.3] Query range tree.
         # For each x in X (X here is the set_A), query R with l1 = ... = lk = inf
         # Output: e(x, zi; Y)
-        print()
 
         # Calculating the ranges for the query
         # In rj is stored the right part of the query B for every i for every X
@@ -161,13 +175,13 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
         query_results = {}
 
         for k in set_A:
-            for j in range(0, len(portals_of_A)):
+            for j in (portals_of_A):
                 if j < i:
                     r_j.append(ntive_inf)
-                    r_j.append(distances[k].get(i) - distances[k].get(j) - 1)
+                    r_j.append(distances_x_zi[k].get(i) - distances_x_zi[k].get(j) - 1)
                 else:
                     r_j.append(ntive_inf)
-                    r_j.append(distances[k].get(i) - distances[k].get(j))
+                    r_j.append(distances_x_zi[k].get(i) - distances_x_zi[k].get(j))
             # Query the Range Tree:
             # query_results: e(x, zi; Y)
             temp_query = rangeTree.dimensional_range_query(root.root, r_j, 0)
@@ -211,18 +225,19 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
     e_x_Y = {}
     e_z = {}
     e_x_Χ = {}
+    e_y_Y = {}
     e_x = {}
 
-    e_x_X = algorithm_E(initial_graph2, tw2, portals_of_A2, set_A2, set_B2, tree_decomp_graph2, A2)
+    e_x_X = algorithm_E(initial_graph2, tw2, portals_of_A2, set_A2, set_B2)
     for i in set_A:
         temp_max = 0
         for j in portals_of_A:
             if e_x_z[j].get(i) is not None:
-                if temp_max < (distances[i].get(j) + e_x_z[j].get(i)):
-                    temp_max = distances[i].get(j) + e_x_z[j].get(i)
+                if temp_max < (distances_x_zi[i].get(j) + e_x_z[j].get(i)):
+                    temp_max = distances_x_zi[i].get(j) + e_x_z[j].get(i)
             else:
-                if temp_max < (distances[i].get(j)):
-                    temp_max = distances[i].get(j)
+                if temp_max < (distances_x_zi[i].get(j)):
+                    temp_max = distances_x_zi[i].get(j)
         e_x_Y[i] = temp_max
 
     for i in e_x_X:
@@ -232,18 +247,23 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
         e_z[key] = max(value.values())
 
     print()
+
+   # e_y_Y = algorithm_E(initial_graph, tw, portals_of_A, set_B, set_A, tree_decomp_graph, A)
+
     return e_x
 
 def testing():
     test = Graphs()
 
-    initial_graph = nx.ladder_graph(70)
+    #initial_graph = nx.ladder_graph(140)
+    # initial_graph = nx.lollipop_graph(10, 50)
+    # initial_graph = nx.wheel_graph(200)
     # initial_graph = nx.star_graph(10)
-    # initial_graph = nx.grid_2d_graph(4,4)
+    initial_graph = nx.grid_2d_graph(2,70)
 
     # print or not the Graph
-    flag = 0
-    if flag == 0:
+    flag = 1
+    if flag == 1:
         # print the adjacency list
         #   for line in nx.generate_adjlist(p[1]):
         #       print(line)
@@ -280,12 +300,21 @@ def testing():
     return  initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p
 
 def main():
-    initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p  = testing()
+    initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p = testing()
 
-    result1 = algorithm_E(initial_graph, p[0], portals_of_A, set_A, set_B, tree_decomp_graph, A)
+    result1 = algorithm_E(initial_graph, p[0], portals_of_A, set_A, set_B)
     # [E6] Flip:
     initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p = testing()
-    result2 = algorithm_E(initial_graph, p[0], portals_of_A, set_B, set_A, tree_decomp_graph, A)
+    result2 = algorithm_E(initial_graph, p[0], portals_of_A, set_B, set_A)
+
+    maximum1 = max(result1, key=result1.get)
+    #print("key:",maximum1,"value:", result1[maximum1])
+
+    maximum2 = max(result2, key=result2.get)
+    #print("key:",maximum2,"value:", result2[maximum2])
+
+    print("Diameter is:", max(result1[maximum1], result2[maximum2]) )
+
     print()
 
 
