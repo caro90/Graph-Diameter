@@ -142,7 +142,6 @@ class Graphs:
         """
         Transforms the input graph from networkx library into a readable form for skew_kseparator_tree
         This function breaks the dependency of skew_kseparator_tree on networkx graph structure.
-
         Parameters:
         ----------
         initial_graph :
@@ -153,7 +152,6 @@ class Graphs:
             For each list/node or bag contains a list of vertices which came from the tree decomposition
         adjacency_list: list of lists
             For each node of the graph(the result of the tree decomposition) it keeps a list of the adjacent nodes
-
         """
         node_dict = {}
         adjacency_dict = {}
@@ -172,6 +170,10 @@ class Graphs:
         for i in set_of_nodes:
             node_dict[i] = set(tree_decomp_graph._node[i]["bags"])
             adjacency_dict[i] = set(tree_decomp_graph._adj[i])
+            extra_elem = adjacency_dict[i].difference(set_of_nodes)
+            if len(extra_elem) > 0:
+                for e in extra_elem:
+                    adjacency_dict[i].remove(e)
 
         return node_dict, adjacency_dict, initial_graph_node_dict, initial_graph_adjacency_dict
 
@@ -179,8 +181,7 @@ class Graphs:
     def test(self, set_t):
         return len(set_t)
 
-    def skew_kseparator_tree(self, num_of_nodes, tw, tree_decomp_graph, nodes, adj, set_temp,
-                             initial_graph, initial_graph_nodes, initial_graph_adj):
+    def skew_kseparator_tree(self, num_of_nodes, tw, nodes, adj, set_temp, initial_graph_adj):
 
         """
         # TODO: write summary of the algorithm
@@ -195,21 +196,19 @@ class Graphs:
         tw: int
             The treewidth of the current tree decomposition.
 
-
-
+        num_of_nodes: int
+            The number of nodes in the initial graph(before tree decomposition
         Returns:
         --------
             A graph which is the skew separator tree.
 
         """
 
-        # num_of_nodes is the nodes in the initial graph(before tree decomposition)
-
         # num_of_nodes has to be strictly bigger than the treewidth + 1 (Requirement in Lemma 3)
         if num_of_nodes > tw + 1:
             # Transformation part:
             # [Step 1] Add vertices to each bag until each bag has exactly k+1 elements
-            for i in nodes:#range(0, len(nodes)):
+            for i in nodes:
                 while len(nodes[i]) < tw + 1:
                     # Find the adjacent nodes of current node to draw elements from there
                     # in order to keep property 3 of tree decomposition
@@ -269,6 +268,9 @@ class Graphs:
             if len(inter) != 0:
                 set_of_numbers = set_of_numbers.difference(inter)
                 weights[i] = len(inter)
+             # TODO: check if one bag can have 0 elements
+            else:
+                weights[i] = 0
 
         # Finding the edge that minimizes the absolute value of the difference
         # between the weights of the two trees T-ij
@@ -333,11 +335,14 @@ class Graphs:
         for i in A:
             [set_A.add(j) for j in nodes[i]]
         # portals_of_A: are the nodes, of the initial graph, that have some edge incident to V(G)\set_A
-        #portals_of_A = nodes[x_i].intersection(nodes[x_j])
         portals_of_A = []
         for i in set_A:
-            if len( initial_graph_adj[i].difference(set_A)) >0:
+            if len( initial_graph_adj[i].difference(set_A)) > 0:
                 portals_of_A.append(i)
+
+        # Creating B:
+        temp_node_keys = set( nodes.keys())
+        B = temp_node_keys.difference(A)
 
         # set_B: are the nodes of V(G) equal to right part of A (or left) along with the portals of A.
         set_B = set()
@@ -350,7 +355,7 @@ class Graphs:
             set_B.remove(i)
         [set_B.add(i) for i in portals_of_A]
 
-        return portals_of_A, set_A, set_B, A
+        return portals_of_A, set_A, set_B, A, B
 
 
 def main():
@@ -382,7 +387,7 @@ def main():
 
     # Testing using networkx's structure:
 
-    initial_graph = nx.grid_2d_graph(6, 6)
+    initial_graph = nx.grid_2d_graph(3, 3)
     # Add weight 1 in each edge of the grid
     for i in initial_graph._adj:
         for j in initial_graph._adj[i]:
@@ -415,8 +420,8 @@ def main():
     set_of_nodes = [i for i in range(0, len(tree_decomp_graph._node))]
     nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, set_of_nodes, initial_graph)
     num_of_nodes = len(initial_graph._node)
-    portals_of_A, set_A, set_B, A = test.skew_kseparator_tree(num_of_nodes, p[0], tree_decomp_graph, nodes, adj,
-                                                              [], initial_graph, initial_graph_nodes, initial_graph_adj)
+    portals_of_A, set_A, set_B, A, B = test.skew_kseparator_tree(num_of_nodes, p[0], nodes, adj,
+                                                              [], initial_graph_adj)
     print()
 
 if __name__ == "__main__":

@@ -34,7 +34,7 @@ def data_format(adj):
     return edges2, adj
 
 
-def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
+def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph, A):
     """
     # TODO: write summary of the algorithm
     Given a graph G and a skew k-separator tree, the algorithm computes the eccentricity e(v) of every
@@ -61,11 +61,13 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
 
     # n: the number of nodes in G, |V(G)|.
     n = len(initial_graph._node)
-    print((n / math.log(n, np.e)))
+    print("First term:", (n / math.log(n, np.e)))
+    print("Second term:", 4*tw*(tw+1))
     if (n / math.log(n, np.e)) < 4*tw*(tw+1):
         # Dijkstra function is an object of Graph class
         for i in initial_graph._node:
-            # graph.dijkstra(source, destination). The path from source to destination will be saved on path variable
+            # graph.dijkstra(source, destination). The path from source to destination
+            # will be saved on path variable
             temp_path, temp_distances = graph.dijkstra(i, i)
             distances[i] = temp_distances
 
@@ -82,11 +84,9 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
     # [E2] Distances from separator:
     #  Compute d(z,v) for every z in Z and every v in V(G), using k applications of Dijkstra's algorithm.
     distances_from_separator = {}
-    count = 0
     for i in portals_of_A:
         temp_path, temp_distances = graph.dijkstra(i, i)
         distances_from_separator[i] = temp_distances
-        count += 1
 
     # [E3] Add shortcuts:
     # For each pair z,z' in Z, add the edge zz' to G, weighted by d(z,z'). Remove duplicates, retain shortest
@@ -100,7 +100,7 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
             else:
                 pairs.append([temp[i], temp[j]])
 
-    del count, temp, temp_path
+    del temp, temp_path
 
     for i in pairs:
         # We get the min distance between the two separators
@@ -130,9 +130,26 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
     # Calculate the distances d(x,zi) for every x in X
     # ----------------
     # Dijkstra function is an object of Graph class
+
+
+
     adj_x = dict()
+
     for i2 in set_A:
         adj_x[i2] = adj[i2]
+
+    #--------------TODO: check if needed
+    x = set_B.difference(set_A)
+    list_to_remove = []
+    temp_adj = adj_x.copy()
+    for i in portals_of_A:
+        for j in temp_adj[i]:
+            if j in x:
+                list_to_remove.append(j)
+        for k in list_to_remove:
+            adj_x[i].pop(k)
+        list_to_remove = []
+    #--------------------------
     edges_x, adj_x = data_format(adj_x)
     # graph2 is reduced only on X part of the graph
     graph2 = Graph(edges_x)
@@ -144,23 +161,31 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
     # ---------------------
     e_x_z = dict()
     p_y = []
-    for i in portals_of_A:
+    for i in range(0, len(portals_of_A)):
         for y in set_B:
             temp = []
-            for j in distances_from_separator:
-                temp.append(distances_from_separator[i].get(y) - distances_from_separator[j].get(y))
-            # f(p(y)) = d(z_i,y) using the monoid (Z, max)
-            # Finding d(z_i,y)
             temp2 = []
+            for j in distances_from_separator:
+                temp.append(distances_from_separator[portals_of_A[i]].get(y) - distances_from_separator[j].get(y))
+            # f(p(y)) = d(z_i,y) using the monoid (Z, max)
+            # Finding d(z_i,y): for all the z_i in portal_of_A until the i, we select the max
+
+            # for i2 in portals_of_A:
+            #     temp2.append(distances_from_separator[i2].get(y))
+            # temp.append(max(temp2))
+
             for i2 in portals_of_A:
-               temp2.append(distances_from_separator[i2].get(y))
+                temp2.append(distances_from_separator[i2].get(y))
+                if i2 == portals_of_A[i]:
+                    break
             temp.append(max(temp2))
+
+            #temp.append(distances_from_separator[portals_of_A[i]].get(y))
             p_y.append(temp)
 
-        del y, j, i2, temp, temp2
         # Constructing the range tree
         root = rangeTree.initialization2(p_y)
-
+        p_y = []
         # [E4.3] Query range tree.
         # For each x in X (X here is the set_A), query R with l1 = ... = lk = inf
         # Output: e(x, zi; Y)
@@ -170,53 +195,66 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
         # Query box = [inf,r1] x ... x [inf,rk]
         r_j = []
         ntive_inf = float("-inf")
+        ptive_inf = float("inf")
         # infinity: Define a constant variable to represent infinity in an integer form
         infinity = -10000000
         query_results = {}
 
         for k in set_A:
-            for j in (portals_of_A):
+            for j in range(0, len(portals_of_A)):
                 if j < i:
                     r_j.append(ntive_inf)
-                    r_j.append(distances_x_zi[k].get(i) - distances_x_zi[k].get(j) - 1)
+                    r_j.append( distances_x_zi[k].get(portals_of_A[j]) - distances_x_zi[k].get(portals_of_A[i]) - 1)
+                elif j > i:
+                    r_j.append(ntive_inf)
+                    r_j.append( distances_x_zi[k].get(portals_of_A[j]) - distances_x_zi[k].get(portals_of_A[i]) )
                 else:
                     r_j.append(ntive_inf)
-                    r_j.append(distances_x_zi[k].get(i) - distances_x_zi[k].get(j))
+                    r_j.append(ptive_inf)
             # Query the Range Tree:
             # query_results: e(x, zi; Y)
             temp_query = rangeTree.dimensional_range_query(root.root, r_j, 0)
-            if len(temp_query) == 0:
-                query_results[k] = [infinity]
+            if temp_query is not None:
+                if len(temp_query) == 0:
+                    query_results[k] = [infinity]
+                else:
+                    query_results[k] = temp_query
             else:
-                query_results[k] = temp_query
+                temp_query = 0
             r_j = []
         # e_x_z: is e(x,zi:Y)
         # The 1st key of the dictionary is the zi, and the inner key is the x
-        e_x_z[i] = query_results
+        e_x_z[portals_of_A[i]] = query_results
 
     for key, value in e_x_z.items():
         for i in value:
             value[i] = max(value[i])
 
-    print()
+    H = initial_graph.__class__()
+    H.add_nodes_from(initial_graph)
+    H.add_edges_from(initial_graph.edges)
+
     # [E5] Recurse on G[X]
-
     x = set_B.difference(set_A)
-    initial_graph2 = initial_graph
+    #initial_graph2 = initial_graph
+    H = initial_graph
     for j in x:
-        del initial_graph2._node[j]
-        del initial_graph2._adj[j]
-    # TODO: check if there is need to perform tree decomposition again!!!
-    p2 = approx.treewidth_min_degree(initial_graph2)
-    tree_decomp_graph2 = nx.convert_node_labels_to_integers(p2[1], first_label=0, ordering='default',
-                                                           label_attribute='bags')
-    tw2 = p2[0]
-    temp_nodes = []
-    [temp_nodes.append(i) for i in range(0, len(tree_decomp_graph2._node))]
+        del H._node[j]
+        del H._adj[j]
 
-    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph2, temp_nodes, initial_graph2)
-    portals_of_A2, set_A2, set_B2, A2 = test.skew_kseparator_tree(len(set_A), tw2, tree_decomp_graph2, nodes,
-                                                               adj, set_A, initial_graph2,  initial_graph_nodes, initial_graph_adj )
+    list_to_remove = []
+    temp_adj = H._adj.copy()
+    for i in portals_of_A:
+        for j in temp_adj[i]:
+            if j in x:
+                list_to_remove.append(j)
+        for k in list_to_remove:
+            H._adj[j][i].pop(k)
+        list_to_remove = []
+
+    nodes, adj2, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, A, H)
+    portals_of_A2, set_A2, set_B2, A2, B2 = test.skew_kseparator_tree(len(set_A), tw, nodes,
+                                                               adj2, set_A, initial_graph_adj)
 
     # e_x_Χ: in this variable are stored the values of e(x:X)
     # e_x_Y: in this variable are stored the values of e(x:Y)
@@ -224,45 +262,36 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B):
     # e_z:
     e_x_Y = {}
     e_z = {}
-    e_x_Χ = {}
-    e_y_Y = {}
     e_x = {}
 
-    e_x_X = algorithm_E(initial_graph2, tw2, portals_of_A2, set_A2, set_B2)
+    e_x_X = algorithm_E(H, tw, portals_of_A2, set_A2, set_B2, tree_decomp_graph, A)
     for i in set_A:
         temp_max = 0
         for j in portals_of_A:
             if e_x_z[j].get(i) is not None:
                 if temp_max < (distances_x_zi[i].get(j) + e_x_z[j].get(i)):
                     temp_max = distances_x_zi[i].get(j) + e_x_z[j].get(i)
-            else:
-                if temp_max < (distances_x_zi[i].get(j)):
-                    temp_max = distances_x_zi[i].get(j)
+            # else:
+            #     if temp_max < (distances_x_zi[i].get(j)):
+            #         temp_max = distances_x_zi[i].get(j)
         e_x_Y[i] = temp_max
 
     for i in e_x_X:
-        # if e_x_X[i] and e_x_Y[i]:
         e_x[i] = max(e_x_X[i], e_x_Y[i])
+
     for key, value in distances_from_separator.items():
         e_z[key] = max(value.values())
-
-    print()
-
-   # e_y_Y = algorithm_E(initial_graph, tw, portals_of_A, set_B, set_A, tree_decomp_graph, A)
 
     return e_x
 
 def testing():
     test = Graphs()
 
-    #initial_graph = nx.ladder_graph(140)
-    # initial_graph = nx.lollipop_graph(10, 50)
-    # initial_graph = nx.wheel_graph(200)
-    # initial_graph = nx.star_graph(10)
-    initial_graph = nx.grid_2d_graph(2,70)
+    #initial_graph = nx.ladder_graph(3, 90)
+    initial_graph = nx.grid_2d_graph(2, 160)
 
     # print or not the Graph
-    flag = 1
+    flag = 0
     if flag == 1:
         # print the adjacency list
         #   for line in nx.generate_adjlist(p[1]):
@@ -291,33 +320,23 @@ def testing():
                                                            label_attribute='bags')
     set_of_nodes = [i for i in range(0, len(tree_decomp_graph._node))]
 
-    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, set_of_nodes,
-                                                                           initial_graph)
+    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, set_of_nodes, initial_graph)
     num_of_nodes = len(initial_graph._node)
-    portals_of_A, set_A, set_B, A = test.skew_kseparator_tree(num_of_nodes, p[0], tree_decomp_graph, nodes, adj, [],
-                                                              initial_graph, initial_graph_nodes, initial_graph_adj)
+    portals_of_A, set_A, set_B, A, B = test.skew_kseparator_tree(num_of_nodes, p[0], nodes, adj, [], initial_graph_adj)
 
-    return  initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p
+    return initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p, B
 
 def main():
-    initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p = testing()
+    initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p, B = testing()
 
-    result1 = algorithm_E(initial_graph, p[0], portals_of_A, set_A, set_B)
+    result1 = algorithm_E(initial_graph, p[0], portals_of_A, set_A, set_B, tree_decomp_graph, A)
     # [E6] Flip:
-    initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p = testing()
-    result2 = algorithm_E(initial_graph, p[0], portals_of_A, set_B, set_A)
+    result2 = algorithm_E(initial_graph, p[0], portals_of_A, set_B, set_A, tree_decomp_graph, B)
 
     maximum1 = max(result1, key=result1.get)
-    #print("key:",maximum1,"value:", result1[maximum1])
-
     maximum2 = max(result2, key=result2.get)
-    #print("key:",maximum2,"value:", result2[maximum2])
-
     print("Diameter is:", max(result1[maximum1], result2[maximum2]) )
-
     print()
 
-
-    print()
 if __name__ == "__main__":
     main()
