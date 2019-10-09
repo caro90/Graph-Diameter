@@ -1,13 +1,34 @@
 
 class Node:
     """
+    The main object that is used from BST class and RangeTree class to create trees. For each one of the nodes
+    of the tree on Node object is created.
 
+    Parameters
+    ----------
+    point: Point object
+        Every Node object stores a Point object in which are stored all the rest coordinates of the given point. For
+        example if the Node object is storing x as its coordinate, then in the Point object it will be stored the whole
+        initial point,namely (x, y, z), for the case of three dimensional point.
+    dimension: int
+        An integer to indicate to the Node object which coordinate to store as its own coordinate from the Point object.
+    TAssoc: Node object
+        Every Node object has a TAssoc(Associate tree) which points to the root node of the associate tree. In TAssoc
+        are stored all the subsets of points in the leaves of the subtree rooted at the current Node object, but on the
+        next dimension of the points. The associate tree structure is one of the main characteristics of RangeTree
+        construction.
+
+    Attributes
+    -------------------
+    nextDimNode: Node object
+        It is just a reference to the node of the next dimension. Therefore for a point (x,y,z), the Node object that
+        stores x stores at nextDimNode a reference to y Node, and y to z.
+    coordinate: int
+        Stores the value of x or y or z for the case of three dimensional point.
+    leftChild: Node object
+    rightChild: Node object
     """
-
     def __init__(self, dimension, point, TAssoc):
-        """
-
-        """
         self.nextDimNode = None
         self.point = point
         self.dimension = dimension
@@ -44,7 +65,17 @@ class Node:
 
 class BST:
     """
+    A binary search tree object which provides some useful printing functions to manipulate the Node objects which
+    are the nodes of the trees.
 
+    Parameters
+    ----------
+    root: Node object
+        It stores the root node of the tree.
+    Attributes
+    ----------
+    associateT: BST
+        A reference to the associate BST object in the next dimension. It is not used in the RangeTree class.
     """
     def __init__(self, root):
         # self.root: its class is Node

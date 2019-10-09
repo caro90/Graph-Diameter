@@ -4,8 +4,8 @@ from dijkstra3 import *
 import networkx as nx
 from networkx.algorithms import approximation as approx
 import matplotlib.pyplot as plt
-import operator
-
+from pathlib import Path
+import os
 
 
 class Point:
@@ -83,6 +83,47 @@ class Graphs:
         g[len(g)].append(x)
         g[len(g)].append(y)
         return g
+
+    def create_graph(self, edges):
+        G = nx.Graph()
+        G.add_nodes_from([0])
+        for i in edges:
+            if i[0] not in G._node:
+                G.add_nodes_from([i[0]])
+            G.add_edge(i[0], i[1])
+
+        return G
+
+    def import_graphs(self):
+
+        temp1 = os.path.join('Users', 'Chris', 'PycharmProjects','AlgorithmE_eccentricities','email-Eu-core')
+        data_folder = Path(temp1)
+        data_folder2 = Path("email-Eu-core_network-csv")
+
+
+        # Converting a space delimited to a csv
+        input_file = open(data_folder, 'r')
+        output_file = open(data_folder2, 'w')
+        input_file.readline()  # skip first line
+        for line in input_file:
+            (a, b) = line.strip().split(' ')
+            output_file.write(','.join([a, b]) + '\n')
+        input_file.close()
+        output_file.close()
+
+        # Import the csv
+        edges = []
+        with open(data_folder2, mode='r') as csv_file:
+            csv_reader = csv.DictReader(csv_file)
+            line_count = 0
+            for row in csv_reader:
+                if line_count == 0:
+                    temp_elem = []
+                    for i in row:
+                        temp_elem.append(int(row[i]))
+                    edges.append(temp_elem)
+
+        return edges
 
     # TODO: keep one out of two data_reform and document
     def data_reform(self, num_of_nodes, tw, tree_decomp_graph):
@@ -361,7 +402,6 @@ class Graphs:
 def main():
 
     # Testing using my own grid structure:
-
     test = Graphs()
     g = test.createGrid2D(3, 3)
     print("-------")
@@ -387,7 +427,7 @@ def main():
 
     # Testing using networkx's structure:
 
-    initial_graph = nx.grid_2d_graph(3, 3)
+    initial_graph = nx.grid_2d_graph(3, 4)
     # Add weight 1 in each edge of the grid
     for i in initial_graph._adj:
         for j in initial_graph._adj[i]:
