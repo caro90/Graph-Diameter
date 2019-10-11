@@ -1,6 +1,5 @@
 import csv
 from collections import defaultdict
-from dijkstra3 import *
 import networkx as nx
 from networkx.algorithms import approximation as approx
 import matplotlib.pyplot as plt
@@ -10,7 +9,19 @@ import os
 
 class Point:
     """
+    This class is mainly used from Node class to store the initial list of points. Every point of the form (x, y,..., z)
+    either imported or created is stored in one of those objects.
 
+    Parameters
+    ----------
+    tempList: list
+        In this list is stored all the coordinates of the points.
+
+    Attributes
+    ----------
+    pointList: list of integers
+        The same as tempList but casted as integers. This casting is useful when the points are drawn from files in
+        which they are read as strings.
     """
     def __init__(self, tempList):
         self.pointList = []
@@ -24,17 +35,35 @@ class Point:
 
 class PointHandler:
     """
+    An auxiliary class to manipulate the Point objects.
     """
     def insertManually2(self, listOfCoordinates):
         """
+        This function creates and returns Point objects. It is mainly used for points that have been created and not
+        imported.
+
+        Parameters
+        ----------
+        listOfCoordinates: list
+
+        Returns
+        -------
+        point: Point object
         """
         point = Point(listOfCoordinates)
         return point
 
-    def insertFile_XYZval(self, file):
+    def read_file(self, file):
         """
-        Imports the points from a csv file and creates object points
+        Imports the points from a csv file and creates object points.
 
+        Parameters
+        ----------
+        file:
+            The name of the file to be opened and from which the points will be drawn.
+        Returns
+        --------
+        listOfPoints: list
         """
         listOfPoints = []
         tempList = []
@@ -59,31 +88,12 @@ class PointHandler:
 
 
 class Graphs:
-    # TODO: check if it is needed and delete createGrid2D
-    def createGrid2D(self, x, y):
-        # Creates a grid x*y where all the weights are 1
+    """
+    The main class tha creates, imports and manipulates graphs
 
-        # Every point in the grid and its adjacent points are saved in a list
-        # It creates a list of lists where in every sublist are stored the adjacent
-        # points of the current point
-        g = defaultdict(list)
-        counter =0;
-        for i in range(x):
-            for j in range(y):
-                # Change line
-                if i + 1 <= x - 1: g[i + j + counter].append((i + j + counter + y))
-                # Change column
-                if j + 1 <= y - 1: g[i + j + counter].append((i + j + 1 + counter))
-                # Change line
-                if i - 1 >= 0: g[i + j + counter].append((i + j + counter - y))
-                # Change column
-                if j - 1 >= 0: g[i + j + counter].append((i + j + counter -1))
-            counter = counter + (y-1)
-        # Storing at the last 2 elements of the grid its x and y size
-        g[len(g)].append(x)
-        g[len(g)].append(y)
-        return g
+    """
 
+    # TODO:check if it is needed this function
     def create_graph(self, edges):
         G = nx.Graph()
         G.add_nodes_from([0])
@@ -91,15 +101,12 @@ class Graphs:
             if i[0] not in G._node:
                 G.add_nodes_from([i[0]])
             G.add_edge(i[0], i[1])
-
         return G
 
     def import_graphs(self):
-
         temp1 = os.path.join('Users', 'Chris', 'PycharmProjects','AlgorithmE_eccentricities','email-Eu-core')
         data_folder = Path(temp1)
         data_folder2 = Path("email-Eu-core_network-csv")
-
 
         # Converting a space delimited to a csv
         input_file = open(data_folder, 'r')
@@ -125,74 +132,27 @@ class Graphs:
 
         return edges
 
-    # TODO: keep one out of two data_reform and document
-    def data_reform(self, num_of_nodes, tw, tree_decomp_graph):
-        """
-        Transforms the input graph from networkx into a readable form for skew_kseparator_tree
-        This function breaks the dependency of skew_kseparator_tree on networkx graph structure.
-
-        Parameters:
-        ----------
-        initial_graph :
-            The very first graph without any processing.
-
-        tw: int
-            The treewidth of the current tree decomposition.
-
-        tree_decomp_graph :
-            The resulting graph after applying a tree decomposition algorithm on initial_graph.
-
-        Retuns:
-        -------
-        node_list: list of lists
-            For each list/node or bag contains a list of vertices which came from the tree decomposition
-        adjacency_list: list of lists
-            For each node of the graph(the result of the tree decomposition) it keeps a list of the adjacent nodes
-        node_list_set: list of sets
-            The very same as node_list but in different format for more efficient calculations
-        adjacency_list_set: list of sets
-           ...
-
-        """
-
-        # Read the bags and their adjacency list and move them to a mutable object (list)
-        adjacency_list = []
-        node_list = []
-        for x in tree_decomp_graph._adj:
-            temp1 = []
-            for y in tree_decomp_graph._adj[x]:
-                temp1.append(y)
-            adjacency_list.append(temp1)
-
-        for x in tree_decomp_graph._node:
-            node_list.append(list( tree_decomp_graph._node[x]["bags"]))
-
-        # Creating set versions of node_list and adjacency_list
-        node_list_set = [set(i) for i in node_list]
-        adjacency_list_set = list()
-        temp = []
-        for i in range(0, len(adjacency_list)):
-            for j in adjacency_list[i]:
-                temp.append(j)
-            adjacency_list_set.append(set(temp))
-            temp = list()
-
-        return node_list, adjacency_list, node_list_set, adjacency_list_set
-
-    def data_reform2(self, tree_decomp_graph, set_of_nodes, initial_graph):
+    def data_reform(self, tree_decomp_graph, set_of_nodes, initial_graph):
         """
         Transforms the input graph from networkx library into a readable form for skew_kseparator_tree
         This function breaks the dependency of skew_kseparator_tree on networkx graph structure.
         Parameters:
         ----------
-        initial_graph :
+        tree_decomp_graph: Graph object from networkx library
+            The tree decomposition graph of initial_graph
+        set_of_nodes: list
+            This list stores the nodes to be drawn from tree_decomp_graph. This variable is mainly useful during the
+            recursion where only a subset of nodes of the nodes of tree_decomp_graph are needed.
+        initial_graph:
             The very first graph without any processing.
         Retuns:
         -------
-        node_list: list of lists
-            For each list/node or bag contains a list of vertices which came from the tree decomposition
-        adjacency_list: list of lists
-            For each node of the graph(the result of the tree decomposition) it keeps a list of the adjacent nodes
+        node_dict: dictionary
+            The bags of the tree decomposition graph along with its initial V(G) nodes.
+        adjacency_dict: dictionary
+            For each node of the tree decomposition graph it keeps a list of the adjacent nodes
+        initial_graph_node_dict: dictionary
+        initial_graph_adjacency_dict: dictionary
         """
         node_dict = {}
         adjacency_dict = {}
@@ -218,33 +178,31 @@ class Graphs:
 
         return node_dict, adjacency_dict, initial_graph_node_dict, initial_graph_adjacency_dict
 
-    # TODO: test if needed and delete
-    def test(self, set_t):
-        return len(set_t)
-
     def skew_kseparator_tree(self, num_of_nodes, tw, nodes, adj, set_temp, initial_graph_adj):
-
         """
-        # TODO: write summary of the algorithm
         For k>=1, given a graph G with n > k+1 vertices and treewidth at most k,
         this function computes in linear time a subset A of V(G)
 
         Parameters:
         ----------
-        initial_graph :
-            The very first graph without any processing.
-
-        tw: int
-            The treewidth of the current tree decomposition.
-
         num_of_nodes: int
             The number of nodes in the initial graph(before tree decomposition
+        tw: int
+            The treewidth of the current tree decomposition.
+        nodes:
+        adj:
+        set_temp:
+        initial_graph_adj:
+
         Returns:
         --------
-            A graph which is the skew separator tree.
+        portals_of_A:
+        set_A:
+        set_B:
+        A:
+        B:
 
         """
-
         # num_of_nodes has to be strictly bigger than the treewidth + 1 (Requirement in Lemma 3)
         if num_of_nodes > tw + 1:
             # Transformation part:
@@ -259,8 +217,6 @@ class Graphs:
                             nodes[i].add(next(iter(diff_of_sets)))
                         if len(nodes[i]) == tw + 1:
                             break
-
-            #del diff_of_sets, i, j
 
             # [Step 2] Contract any edge ij in E(T) whenever Xi == Xj.
             # It now holds that any two nodes i j of T are different
@@ -400,34 +356,10 @@ class Graphs:
 
 
 def main():
-
-    # Testing using my own grid structure:
-    test = Graphs()
-    g = test.createGrid2D(3, 3)
-    print("-------")
-    print(g)
-    edges2 = []
-    # Configuring edges to be readable for Dijkstra function
-    for i in range(len(g)-2):
-        for j in range(len(g[i])):
-            edges = [i, g[i][j], 1]
-            if edges2 == []:
-                edges2 = [edges[:]]
-            else:
-                edges2.append(edges)
-
-    # Graph is dijkstra's class
-    graph = Graph(edges2)
-    path, distances = graph.dijkstra(0, 8)
-    print(path)
-    print(distances)
-
-    del i, j, g, path, distances, edges, edges2, graph
-    # -------------------------------
-
     # Testing using networkx's structure:
+    test = Graphs()
 
-    initial_graph = nx.grid_2d_graph(3, 4)
+    initial_graph = nx.grid_2d_graph(3, 3)
     # Add weight 1 in each edge of the grid
     for i in initial_graph._adj:
         for j in initial_graph._adj[i]:
@@ -441,8 +373,7 @@ def main():
     p = approx.treewidth_min_degree(initial_graph)
     tree_decomp_graph = nx.convert_node_labels_to_integers(p[1], first_label=0, ordering='default',
                                                            label_attribute='bags')
-
-    # print or not the Tree Decomposition
+    # Print or not the Tree Decomposition
     flag = 1
     if flag == 0:
         # print the adjacency list
@@ -458,7 +389,7 @@ def main():
     del flag
 
     set_of_nodes = [i for i in range(0, len(tree_decomp_graph._node))]
-    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, set_of_nodes, initial_graph)
+    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform(tree_decomp_graph, set_of_nodes, initial_graph)
     num_of_nodes = len(initial_graph._node)
     portals_of_A, set_A, set_B, A, B = test.skew_kseparator_tree(num_of_nodes, p[0], nodes, adj,
                                                               [], initial_graph_adj)

@@ -25,6 +25,10 @@ class Node:
         stores x stores at nextDimNode a reference to y Node, and y to z.
     coordinate: int
         Stores the value of x or y or z for the case of three dimensional point.
+    val: any arithmetic value, usually integer
+        This value is only used on the Nodes of the last dimension. Stores the value that is chosen for the given point.
+        For example if (x, y, z) is the point the value f(x, y, z) could be stored in val. The f(x, y, z) is not
+        restrictive and can be anything else as long as it accomplishes our purposes.
     leftChild: Node object
     rightChild: Node object
     """

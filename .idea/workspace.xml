@@ -159,8 +159,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.AlgorithmE" />
-        <item itemvalue="Python.RangeTree" />
         <item itemvalue="Python.DataHandler" />
+        <item itemvalue="Python.RangeTree" />
         <item itemvalue="Python.fast_dijkstra" />
         <item itemvalue="Python.dijkstra3" />
       </list>
@@ -197,18 +197,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/DataHandler.py</url>
-          <line>464</line>
-          <option name="timeStamp" value="713" />
+          <line>393</line>
+          <option name="timeStamp" value="819" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
-          <line>362</line>
-          <option name="timeStamp" value="763" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/DataHandler.py</url>
-          <line>462</line>
-          <option name="timeStamp" value="810" />
+          <line>356</line>
+          <option name="timeStamp" value="820" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

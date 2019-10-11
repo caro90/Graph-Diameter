@@ -1,7 +1,6 @@
 from RangeTree import *
 import numpy as np
 import math
-from dijkstra3 import *
 import time
 import fast_dijkstra as fast_dijks
 
@@ -48,9 +47,17 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
 
     Parameters:
     ----------
-        :
+    initial_graph:
+    tw:
+    portals_of_A:
+    set_A:
+    set_B
+    tree_decomp_graph:
+    A:
+
     Returns:
     --------
+    eccentricities:
 
     """
     # TODO: not be dependent on networkx, change variables, eg initial_graph._node
@@ -248,7 +255,7 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
              H._adj[i].pop(k)
         list_to_remove = []
 
-    nodes, adj2, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, A, H)
+    nodes, adj2, initial_graph_nodes, initial_graph_adj = test.data_reform(tree_decomp_graph, A, H)
     portals_of_A2, set_A2, set_B2, A2, B2 = test.skew_kseparator_tree(len(set_A), tw, nodes,
                                                                adj2, set_A, initial_graph_adj)
 
@@ -285,26 +292,11 @@ def algorithm_E(initial_graph, tw, portals_of_A, set_A, set_B, tree_decomp_graph
     # For the calculation of the diameter it can be completely skipped:
     # for key, value in distances_from_separator.items():
     #     e_z[key] = max(value.values())
-
     return e_x
+
 
 def testing(initial_graph):
     test = Graphs()
-    # print or not the Graph
-    flag = 0
-    if flag == 1:
-        # print the adjacency list
-        #   for line in nx.generate_adjlist(p[1]):
-        #       print(line)
-        # write edgelist to grid.edgelist
-        nx.write_edgelist(initial_graph, path="grid.edgelist", delimiter=":")
-        # read edgelist from grid.edgelist
-        H = nx.read_edgelist(path="grid.edgelist", delimiter=":")
-
-        nx.draw(H, with_labels=True)
-        plt.show()
-    del flag
-
     # Add weight 1 in each edge of the graph
     for i in initial_graph._adj:
         for j in initial_graph._adj[i]:
@@ -318,11 +310,27 @@ def testing(initial_graph):
     p = approx.treewidth_min_degree(initial_graph)
     tree_decomp_graph = nx.convert_node_labels_to_integers(p[1], first_label=0, ordering='default',
                                                            label_attribute='bags')
+
+    # -----------print or not the tree decomposition graph-----------------
+    flag = 0
+    if flag == 1:
+        # print the adjacency list
+        #   for line in nx.generate_adjlist(p[1]):
+        #       print(line)
+        # write edgelist to grid.edgelist
+        nx.write_edgelist(tree_decomp_graph, path="grid.edgelist", delimiter=":")
+        # read edgelist from grid.edgelist
+        H = nx.read_edgelist(path="grid.edgelist", delimiter=":")
+
+        nx.draw(H, with_labels=True)
+        plt.show()
+    del flag
+    # ------------------------------------------------
     set_of_nodes = [i for i in range(0, len(tree_decomp_graph._node))]
 
 
     print("treewidth is:", p[0])
-    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform2(tree_decomp_graph, set_of_nodes, initial_graph)
+    nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform(tree_decomp_graph, set_of_nodes, initial_graph)
     num_of_nodes = len(initial_graph._node)
     portals_of_A, set_A, set_B, A, B = test.skew_kseparator_tree(num_of_nodes, p[0], nodes, adj, [], initial_graph_adj)
 
@@ -337,7 +345,7 @@ def main():
 
 
     # initial_graph = nx.ladder_graph(3, 90)
-    G = nx.grid_2d_graph(2, 90)
+    G = nx.grid_2d_graph(4, 90)
     start = time.time()
     print("Start timing")
     print("------------")
@@ -345,9 +353,9 @@ def main():
     initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p, B = testing(G)
     result1 = algorithm_E(initial_graph, p[0], portals_of_A, set_A, set_B, tree_decomp_graph, A)
 
+    # [E6] Flip:
     flip = 0
     if flip == 1:
-        # [E6] Flip:
         print("Flip")
         initial_graph, portals_of_A, set_A, set_B, A, tree_decomp_graph, p, B = testing(G)
         result2 = algorithm_E(initial_graph, p[0], portals_of_A, set_B, set_A, tree_decomp_graph, B)

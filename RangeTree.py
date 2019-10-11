@@ -28,7 +28,7 @@ class RangeTree:
         """
         root = BST(None)
         x = PointHandler()
-        list_of_points = x.insertFile_XYZval("points3D.txt")
+        list_of_points = x.read_file("points3D.txt")
         # length_of_indices: saves the number of indices/coordinates
         length_of_indices = len(list_of_points[0].pointList)
 
@@ -47,7 +47,7 @@ class RangeTree:
         x = self.build_range_tree(self.nodeXList, 0)
         root.setRoot(x)
         print("Query 3D:")
-        range3 = [-5, 11, -11, 200, -100, 11]
+        range3 = [-5, 11, -11, 200, -100, 200]
         L3 = self.dimensional_range_query(root.root, range3, 0)
         for j in L3:
             print(j)
@@ -90,7 +90,7 @@ class RangeTree:
         # Sorting according to the first coordinate
         self.nodeXList.sort(key=operator.attrgetter('coordinate'))
         # TESTING:
-        x = self.build_range_tree(self.nodeXList, 0, root)
+        x = self.build_range_tree(self.nodeXList, 0)
         root.setRoot(x)
 
         return root
