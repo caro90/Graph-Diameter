@@ -5,6 +5,7 @@ from networkx.algorithms import approximation as approx
 import matplotlib.pyplot as plt
 from pathlib import Path
 import os
+import numpy as np
 
 
 class Point:
@@ -72,9 +73,9 @@ class PointHandler:
             csv_reader = csv.DictReader(csv_file)
             line_count = 0
             for row in csv_reader:
-                if line_count == 0:
-                    print(f'Column names are:{", ".join(row)}')
-                print(f'\t\t\t\t { row["x"]}  {row["y"]}  {row["z"]} { row["val"]}')
+                if line_count == 0:pass
+                    #print(f'Column names are:{", ".join(row)}')
+                #print(f'\t\t\t\t { row["x"]}  {row["y"]}  {row["z"]} {row["w"]} {row["u"]} { row["val"]}')
 
                 for i in row:
                     listOfElements.append(row[i])
@@ -101,6 +102,60 @@ class Graphs:
             if i[0] not in G._node:
                 G.add_nodes_from([i[0]])
             G.add_edge(i[0], i[1])
+        return G
+
+    def create_partial_ktrees(self, n, k, p):
+        """
+        Generates partial k-trees using the parametric model: (n,k,p)
+        """
+        # Returns a caveman graph of l cliques of size k.
+        G = nx.caveman_graph(1, k+1)
+        # Insert new nodes
+        for i in range(0, n-k-1):
+            G.add_node(i+k+1)
+            adjacent_nodes = set()
+
+            while len(adjacent_nodes) < k:
+
+                cliques_of_G = nx.cliques_containing_node(G)
+
+                temp = int(np.round(np.random.uniform(low=0.0, high=len(cliques_of_G)-1, size=None)))
+                temp_list = cliques_of_G.get(temp)
+                temp2 = int(np.round(np.random.uniform(low=0.0, high=len(temp_list) - 1, size=None)))
+                temp_list = temp_list[temp2]
+                if len(temp_list) >= k:
+                    while(len(temp_list) != k):
+                        del temp_list[0]
+                    [adjacent_nodes.add(i) for i in temp_list]
+            for j in list(adjacent_nodes):
+                G.add_edge(i+k+1, j)
+
+        a = set()
+        b = set()
+        pairs = set()
+        # Remove p percent edges from the k-tree uniformly at random
+        if p > 0:
+            num = G.number_of_edges()
+            num = int(num * (p/100) )
+            # Finding the edges to remove without replacement
+            while len(pairs) < num:
+                temp1 = 0
+                temp2 = 0
+                while temp1 == temp2:
+                    temp1 = int(np.round(np.random.uniform(low=0.0, high=n, size=None)))
+                    temp2 = int(np.round(np.random.uniform(low=0.0, high=n, size=None)))
+                temp_pairs = set()
+                temp_pairs.add(temp1)
+                temp_pairs.add(temp2)
+                if temp_pairs not in pairs:
+                    pairs.add(frozenset(temp_pairs))
+
+            pairs = list(pairs)
+            pairs_new = []
+            [pairs_new.append(list(i)) for i in pairs]
+            for i in range(0, num):
+                if G.has_edge(pairs_new[i][0], pairs_new[i][1]):
+                    G.remove_edge(pairs_new[i][0], pairs_new[i][1])
         return G
 
     def import_graphs(self):
@@ -203,6 +258,11 @@ class Graphs:
         B:
 
         """
+        A = set()
+        set_B = set()
+        set_A = set()
+        # portals_of_A: are the nodes, of the initial graph, that have some edge incident to V(G)\set_A
+        portals_of_A = []
         # num_of_nodes has to be strictly bigger than the treewidth + 1 (Requirement in Lemma 3)
         if num_of_nodes > tw + 1:
             # Transformation part:
@@ -244,115 +304,118 @@ class Graphs:
 
             # [Step 3] For each node i in T of degree at least k+2 we create k+1 new bags
             # TODO: Doesn't apply on grids. Fill it later
-        else:
-            print("Error: Total vertices inside the bags <= k+1")
-            return
 
-        # [Step 4] Finding separator set A
-        # Assign each vertex of G to one and only one of the bags where it appears,
-        # and define the weight of a bag to be the number of vertices that were
-        # assigned to it
+            # [Step 4] Finding separator set A
+            # Assign each vertex of G to one and only one of the bags where it appears,
+            # and define the weight of a bag to be the number of vertices that were
+            # assigned to it
 
-        set_of_numbers = set()
-        if len(set_temp) == 0:
-            [set_of_numbers.add(i) for i in range(0, num_of_nodes)]
-        else:
-            [set_of_numbers.add(i) for i in set_temp]
-
-        weights = {}
-        for i in nodes:
-            inter = nodes[i].intersection(set_of_numbers)
-            if len(inter) != 0:
-                set_of_numbers = set_of_numbers.difference(inter)
-                weights[i] = len(inter)
-             # TODO: check if one bag can have 0 elements
+            set_of_numbers = set()
+            if len(set_temp) == 0:
+                [set_of_numbers.add(i) for i in range(0, num_of_nodes)]
             else:
-                weights[i] = 0
+                [set_of_numbers.add(i) for i in set_temp]
 
-        # Finding the edge that minimizes the absolute value of the difference
-        # between the weights of the two trees T-ij
+            weights = {}
+            for i in nodes:
+                inter = nodes[i].intersection(set_of_numbers)
+                if len(inter) != 0:
+                    set_of_numbers = set_of_numbers.difference(inter)
+                    weights[i] = len(inter)
+                 # TODO: check if one bag can have 0 elements
+                else:
+                    weights[i] = 0
 
-        # Implementing a non recursive DFS
-        nodes_to_visit = []
-        nodes_already_visited = set()
-        # white_nodes: nodes that still have children to be examined
-        white_nodes = []
-        my_keys = list(nodes.keys())
-        nodes_to_visit.append(my_keys[0])
-        dict = {}
-        dict_sum = {}
-        for i in nodes:
-            dict_sum[i] = 0
-        predecessor = {}
-        while len(nodes_to_visit) > 0:
-            current_node = nodes_to_visit.pop()
-            white_nodes.append(current_node)
-            nodes_already_visited.update([current_node])
+            # Finding the edge that minimizes the absolute value of the difference
+            # between the weights of the two trees T-ij
 
-            # Checking if current node is not leaf
-            if len(adj[current_node].difference(nodes_already_visited)) > 0:
-                for i in adj[current_node]:
-                    if i not in nodes_already_visited:
-                        nodes_to_visit.append(i)
-                        predecessor[i] = current_node
+            # Implementing a non recursive DFS
+            nodes_to_visit = []
+            nodes_already_visited = set()
+            # white_nodes: nodes that still have children to be examined
+            white_nodes = []
+            my_keys = list(nodes.keys())
+            nodes_to_visit.append(my_keys[0])
+            dict = {}
+            dict_sum = {}
+            for i in nodes:
+                dict_sum[i] = 0
+            predecessor = {}
+            while len(nodes_to_visit) > 0:
+                current_node = nodes_to_visit.pop()
+                white_nodes.append(current_node)
+                nodes_already_visited.update([current_node])
+
+                # Checking if current node is not leaf
+                if len(adj[current_node].difference(nodes_already_visited)) > 0:
+                    for i in adj[current_node]:
+                        if i not in nodes_already_visited:
+                            nodes_to_visit.append(i)
+                            predecessor[i] = current_node
+                else:
+                    # Current node is a leaf
+                    dict_sum[current_node] = weights[current_node]
+                    dict[current_node] = abs(dict_sum[current_node] - abs(num_of_nodes - dict_sum[current_node]))
+                    white_nodes.pop()
+
+                while len(white_nodes) > 0 and len(nodes_to_visit) == 0:
+                    temp = white_nodes.pop()
+                    sum = 0
+                    for i in adj[temp]:
+                        sum = dict_sum[i] + sum
+                    dict_sum[temp] = weights[temp] + sum
+                    dict[temp] = abs(dict_sum[temp] - abs(num_of_nodes - dict_sum[temp]))
+
+            #del e, i, inter, sum, temp, white_nodes, set_of_numbers, nodes_already_visited, nodes_to_be_deleted, nodes_to_visit
+
+            # Finding the edge
+            nodes_to_visit = []
+            # A  contains the nodes/bags of the tree decomposition
+
+            x_i = min(dict, key=dict.get)
+            if len(predecessor) > 0: # TODO:check this change
+                x_j = predecessor[x_i]
+                # We now know that the edge with the lowest absolute difference is between node x_i and x_j
+                nodes_to_visit.append(x_i)
+                while len(nodes_to_visit) > 0:
+                    current_node = nodes_to_visit.pop()
+                    A.add(current_node)
+                    for i in adj[current_node]:
+                        # i != x_j : in order to force DFS to give us only the children of x_i
+                        if i not in A and i != x_j:
+                            nodes_to_visit.append(i)
+            # set_A is a subset of V(G)
+            # set_A contains the nodes, of the initial graph, that were inside the node/bags A.
+
+            for i in A:
+                [set_A.add(j) for j in nodes[i]]
+
+            for i in set_A:
+                if len( initial_graph_adj[i].difference(set_A)) > 0:
+                    portals_of_A.append(i)
+
+            # Creating B:
+            temp_node_keys = set( nodes.keys())
+            B = temp_node_keys.difference(A)
+
+            # set_B: are the nodes of V(G) equal to right part of A (or left) along with the portals of A.
+
+            # TODO:change name in set_temp and document it
+            if len(set_temp) == 0:
+                [set_B.add(i) for i in range(0, num_of_nodes)]
             else:
-                # Current node is a leaf
-                dict_sum[current_node] = weights[current_node]
-                dict[current_node] = abs(dict_sum[current_node] - abs(num_of_nodes - dict_sum[current_node]))
-                white_nodes.pop()
+                [set_B.add(i) for i in set_temp]
+            for i in set_A:
+                set_B.remove(i)
+            [set_B.add(i) for i in portals_of_A]
 
-            while len(white_nodes) > 0 and len(nodes_to_visit) == 0:
-                temp = white_nodes.pop()
-                sum = 0
-                for i in adj[temp]:
-                    sum = dict_sum[i] + sum
-                dict_sum[temp] = weights[temp] + sum
-                dict[temp] = abs(dict_sum[temp] - abs(num_of_nodes - dict_sum[temp]))
-
-        del e, i, inter, sum, temp, white_nodes, set_of_numbers, nodes_already_visited, nodes_to_be_deleted, nodes_to_visit
-
-        # Finding the edge
-        x_i = min(dict, key=dict.get)
-        x_j = predecessor[x_i]
-        # We now know that the edge with the lowest absolute difference is between node x_i and x_j
-        nodes_to_visit = []
-        # A  contains the nodes/bags of the tree decomposition
-        A = set()
-        nodes_to_visit.append(x_i)
-        while len(nodes_to_visit) > 0:
-            current_node = nodes_to_visit.pop()
-            A.add(current_node)
-            for i in adj[current_node]:
-                # i != x_j : in order to force DFS to give us only the children of x_i
-                if i not in A and i != x_j:
-                    nodes_to_visit.append(i)
-        # set_A is a subset of V(G)
-        # set_A contains the nodes, of the initial graph, that were inside the node/bags A.
-        set_A = set()
-        for i in A:
-            [set_A.add(j) for j in nodes[i]]
-        # portals_of_A: are the nodes, of the initial graph, that have some edge incident to V(G)\set_A
-        portals_of_A = []
-        for i in set_A:
-            if len( initial_graph_adj[i].difference(set_A)) > 0:
-                portals_of_A.append(i)
-
-        # Creating B:
-        temp_node_keys = set( nodes.keys())
-        B = temp_node_keys.difference(A)
-
-        # set_B: are the nodes of V(G) equal to right part of A (or left) along with the portals of A.
-        set_B = set()
-        # TODO:change name in set_temp and document it
-        if len(set_temp) == 0:
-            [set_B.add(i) for i in range(0, num_of_nodes)]
+            return portals_of_A, set_A, set_B, A, B, 0
         else:
-            [set_B.add(i) for i in set_temp]
-        for i in set_A:
-            set_B.remove(i)
-        [set_B.add(i) for i in portals_of_A]
-
-        return portals_of_A, set_A, set_B, A, B
+            # Base case
+            print("Total vertices inside the bags <= k+1")
+            B = 0
+            flag_separator = 1
+            return portals_of_A, set_A, set_B, A, B, flag_separator
 
 
 def main():

@@ -2,6 +2,9 @@ from DataHandler import *
 from binaryTrees import *
 import operator
 import math
+import time
+from guppy import hpy
+import gc
 
 
 class RangeTree:
@@ -17,6 +20,15 @@ class RangeTree:
     def __init__(self):
         self.nodeXList = []
 
+    def asymptotic_test(self, size):
+        file = open('Range_Tree_test.csv', mode='w')
+        writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(['x', 'y', 'val'])
+
+        for i in range(0, size):
+            writer.writerow([i, i+1, i+5])
+
+
     def initialization(self):
         """
         Loads points and creates Node objects that will be used to build the Range Tree.
@@ -26,32 +38,53 @@ class RangeTree:
         def initialization2
 
         """
-        root = BST(None)
-        x = PointHandler()
-        list_of_points = x.read_file("points3D.txt")
-        # length_of_indices: saves the number of indices/coordinates
-        length_of_indices = len(list_of_points[0].pointList)
 
-        # Creating Node objects for all the coordinates (x, y, z ...)
-        for i in list_of_points:
-            temp = Node(1, i, None)
-            self.nodeXList.append(temp)
-            for j in range(2, length_of_indices):
-                temp.setNextDimNode(Node(j, i, None))
-                temp = temp.nextDimNode
+        file = open('Range_creation_timing7_2dimensions.csv', mode='w')
+        writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        writer.writerow(['i','time'])
+        # h = hpy()
+        # print(h.heap())
+        for counter in range(200, 10000, 200): # *
+            start = time.time()
+            print("Start timing")
+            print("------------")
+        # Temp testing:
+            self.asymptotic_test(counter) # *
+        #---------
+            root = BST(None)
+            x = PointHandler()
+            list_of_points = x.read_file("Range_Tree_test.csv")
+            # length_of_indices: saves the number of indices/coordinates
+            length_of_indices = len(list_of_points[0].pointList)
 
-        # Sorting according to x coordinate
-        self.nodeXList.sort(key=operator.attrgetter('coordinate'))
+            # Creating Node objects for all the coordinates (x, y, z ...)
+            for i in list_of_points:
+                temp = Node(1, i, None)
+                self.nodeXList.append(temp)
+                for j in range(2, length_of_indices):
+                    temp.setNextDimNode(Node(j, i, None))
+                    temp = temp.nextDimNode
 
-        # TESTING:
-        x = self.build_range_tree(self.nodeXList, 0)
-        root.setRoot(x)
-        print("Query 3D:")
-        range3 = [-5, 11, -11, 200, -100, 200]
-        L3 = self.dimensional_range_query(root.root, range3, 0)
-        for j in L3:
-            print(j)
-        print()
+            # Sorting according to x coordinate
+            self.nodeXList.sort(key=operator.attrgetter('coordinate'))
+
+            # TESTING:
+            x = self.build_range_tree(self.nodeXList, 0)
+            end = time.time()
+            print("counter:", counter)
+            print("end:", (end - start) / 60)
+            writer.writerow([counter, format( (end - start) / 60,'.4f')])
+            self.nodeXList = []
+            gc.collect()
+
+
+        # root.setRoot(x)
+        # print("Query 3D:")
+        # range3 = [-5, 11, -11, 200, -100, 200]
+        # L3 = self.dimensional_range_query(root.root, range3, 0)
+        # for j in L3:
+        #     print(j)
+        # print()
 
     def initialization2(self, pi):
         """
@@ -90,12 +123,12 @@ class RangeTree:
         # Sorting according to the first coordinate
         self.nodeXList.sort(key=operator.attrgetter('coordinate'))
         # TESTING:
-        x = self.build_range_tree(self.nodeXList, 0)
+        x = self.build_range_tree(self.nodeXList, 0, len(self.nodeXList))
         root.setRoot(x)
 
         return root
 
-    def build_range_tree(self, nodelist, flag):
+    def build_range_tree(self, nodelist, flag, n):
         """
         This function builds a range tree or as often called a multi-level data structure. The main tree T is called
         first-level tree, and the associate structures are called second-level trees and so on if the dimension is
@@ -123,11 +156,12 @@ class RangeTree:
         next_dim_node_list = []
         if len(nodelist) >= 2:
             if nodelist[0].nextDimNode is not None:
-                for i in nodelist:
-                    next_dim_node_list.append(i.nextDimNode)
+                [next_dim_node_list.append(i.nextDimNode) for i in nodelist]
+
                 # Sorting the list
-                next_dim_node_list.sort(key=operator.attrgetter('coordinate'))
-                t_assoc = self.build_range_tree(next_dim_node_list, flag)
+                if n == len(next_dim_node_list):
+                    next_dim_node_list.sort(key=operator.attrgetter('coordinate'))
+                t_assoc = self.build_range_tree(next_dim_node_list, flag, n)
 
         if len(nodelist) == 1:
             # Base case of the recursion
@@ -138,13 +172,7 @@ class RangeTree:
                 median = int(math.ceil(len(self.nodeXList) / 2))
                 flag += 1
             # Create two new subsets of points: <=median and >median
-            count = 1
-            for i in nodelist:
-                if count <= median:
-                    p_left_list.append(i)
-                else:
-                    p_right_list.append(i)
-                count += 1
+            [p_left_list.append(nodelist[i]) if i+1 <= median else p_right_list.append(nodelist[i]) for i in range(0, len(nodelist))]
 
             mid = Node(nodelist[median - 1].dimension, nodelist[median - 1].point, nodelist[median - 1].TAssoc)
             mid.setChildren(nodelist[median - 1].rightChild, nodelist[median - 1].leftChild)
@@ -153,8 +181,8 @@ class RangeTree:
                 # Make the TAssoc the associate structure of mid
                 mid.TAssoc = t_assoc
             del t_assoc
-            v_left = self.build_range_tree(p_left_list, flag)
-            v_right = self.build_range_tree(p_right_list, flag)
+            v_left = self.build_range_tree(p_left_list, flag, n)
+            v_right = self.build_range_tree(p_right_list, flag, n)
 
             # The internal nodes are used only to guide the search path
             # For the leaves we create new Node classes

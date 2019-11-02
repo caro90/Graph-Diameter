@@ -2,16 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53b84174-18f8-454c-87d4-6a35c0ecff8e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Experiments/test1_dim2.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/test1_dim2_dijkstra.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/test_dim3.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/test_dim3_dijkstra.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/test_dim4.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Experiments/test_dim4_dijkstra.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/plotting.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AlgorithmE.py" beforeDir="false" afterPath="$PROJECT_DIR$/AlgorithmE.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataHandler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RangeTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/RangeTree.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grid.edgelist" beforeDir="false" afterPath="$PROJECT_DIR$/grid.edgelist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotting.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +28,7 @@
   <component name="ProjectId" id="1QyNS0S28cGQrG8Zdhne9mirBEl" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Tracking" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../handtracking" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -47,7 +43,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.plotting">
+  <component name="RunManager" selected="Python.AlgorithmE">
     <configuration name="AlgorithmE" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AlgorithmE_eccentricities" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -162,8 +158,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.plotting" />
         <item itemvalue="Python.AlgorithmE" />
+        <item itemvalue="Python.plotting" />
         <item itemvalue="Python.DataHandler" />
         <item itemvalue="Python.RangeTree" />
         <item itemvalue="Python.fast_dijkstra" />
@@ -201,8 +197,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
-          <line>173</line>
-          <option name="timeStamp" value="869" />
+          <line>196</line>
+          <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
