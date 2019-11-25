@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 import os
 import numpy as np
-
+import itertools
+import random
 
 class Point:
     """
@@ -94,7 +95,9 @@ class Graphs:
 
     """
 
-    # TODO:check if it is needed this function
+    def findsubsets(self, S, m):
+        return set(itertools.combinations(S, m))
+
     def create_graph(self, edges):
         G = nx.Graph()
         G.add_nodes_from([0])
@@ -230,10 +233,12 @@ class Graphs:
             if len(extra_elem) > 0:
                 for e in extra_elem:
                     adjacency_dict[i].remove(e)
+            if len(adjacency_dict.get(i)) == 0:
+                del node_dict[i], adjacency_dict[i]
 
         return node_dict, adjacency_dict, initial_graph_node_dict, initial_graph_adjacency_dict
 
-    def skew_kseparator_tree(self, num_of_nodes, tw, nodes, adj, set_temp, initial_graph_adj):
+    def skew_kseparator_tree(self, num_of_nodes, tw, nodes, adj, set_temp, initial_graph_adj, tree_decomp_graph):
         """
         For k>=1, given a graph G with n > k+1 vertices and treewidth at most k,
         this function computes in linear time a subset A of V(G)
@@ -244,19 +249,26 @@ class Graphs:
             The number of nodes in the initial graph(before tree decomposition
         tw: int
             The treewidth of the current tree decomposition.
-        nodes:
-        adj:
-        set_temp:
-        initial_graph_adj:
-
+        nodes: dict
+            Contains the nodes/bags of the tree decomposition
+        adj: dict
+            The adjacency list of the nodes/bags of the tree decomposition
+        set_temp: list
+            Contains a list of nodes that will be processed from the tree_decomp_graph. It is only useful during
+            the execution of algorithmE where the tree_decomp_graph is divided in smaller sub-parts.
+        initial_graph_adj: list
         Returns:
         --------
-        portals_of_A:
-        set_A:
-        set_B:
-        A:
-        B:
-
+        portals_of_A: list
+            Contains the nodes of V(G) which separate the tree decomposition and initial graph
+        set_A: list
+             Contains the nodes of V(G) to the left of the portals_of_A
+        set_B: list
+            Contains the nodes of V(G) to the right of the portals_of_A
+        A: list
+            Contains the left part of the tree decomposition nodes
+        B: list
+            Contains the right part of the tree decomposition nodes
         """
         A = set()
         set_B = set()
@@ -268,21 +280,28 @@ class Graphs:
             # Transformation part:
             # [Step 1] Add vertices to each bag until each bag has exactly k+1 elements
             for i in nodes:
-                while len(nodes[i]) < tw + 1:
+                temp_adjacent = list(adj[i])
+                #while len(nodes[i]) < tw + 1:
                     # Find the adjacent nodes of current node to draw elements from there
                     # in order to keep property 3 of tree decomposition
-                    for j in adj[i]:
-                        diff_of_sets = nodes[j].difference(nodes[i])
-                        if len(diff_of_sets) != 0:
-                            nodes[i].add(next(iter(diff_of_sets)))
-                        if len(nodes[i]) == tw + 1:
-                            break
+                for j in temp_adjacent:
+                    diff_of_sets = nodes[j].difference(nodes[i])
+                    diff_of_sets = list(diff_of_sets)
+                    if len(diff_of_sets) != 0:
+                        while (len(nodes[i]) < tw + 1) and len(diff_of_sets) > 0:
+                            nodes[i].add(diff_of_sets.pop())
+                        #nodes[i].add(next(iter(diff_of_sets)))
+                    if len(nodes[i]) == tw + 1:
+                         break
+                    # iter_temp = iter(temp_adjacent)
+                    # if len(temp_adjacent) > 0:
+                    #     temp_random = random.sample(temp_adjacent, 1)
+                    #     temp_adjacent = list( adj.get(temp_random[0]))
 
             # [Step 2] Contract any edge ij in E(T) whenever Xi == Xj.
             # It now holds that any two nodes i j of T are different
             nodes_to_be_deleted = []
             for i in nodes:
-                # TODO: delete this line if there is no need to start from the children
                 # Checking if the current bag contains exactly the same elements with one of its neighbors
                 for e in adj[i].copy():
                     if len(nodes[e].difference(nodes[i])) == 0:
@@ -303,7 +322,45 @@ class Graphs:
                  del nodes[j], adj[j]
 
             # [Step 3] For each node i in T of degree at least k+2 we create k+1 new bags
-            # TODO: Doesn't apply on grids. Fill it later
+            d = adj.copy()
+            for key in d.keys():
+                if len(adj[key]) >= tw + 2:
+                    proper_subsets = self.findsubsets(nodes.get(key), tw)
+                    # Remove the edges of T between i and its neighbours
+                    temp_adjacency = adj.get(key)
+                    adj[key] = set()
+                    # Remove also the nodes that point to node key
+                    for i in temp_adjacency:
+                        temp_set = adj.get(i)
+                        if key in temp_set:
+                            temp_set.remove(key)
+                        adj[i] = temp_set
+                    # Create new nodes Y
+                    # We create in the end of the dictionary nodes
+                    x = len(nodes)
+                    list_of_new_points = []
+                    for i in proper_subsets:
+                        nodes[x] = set(i)
+                        # Append the new elements to the tree decomposition graph
+                        tree_decomp_graph._node.update({x:{'bags': frozenset(i)}})
+                        # Connect the new nodes with the node key
+                        adj[x] = set([key])
+                        temp_dict = {}
+                        for j in adj[x]:
+                            temp_dict.update({j : {}})
+                        tree_decomp_graph._adj.update({x : temp_dict})
+                        adj[key].add(x)
+                        list_of_new_points.append(x)
+                        x = x + 1
+
+                    # Add edges between the new nodes Y and the previous neighbours of key node
+                    for i in list_of_new_points:
+                        for j in temp_adjacency:
+                            if nodes[j].issuperset(nodes[i].intersection(nodes[key])):
+                                # Connect the newly created node with the old adjacent node of key
+                                adj[j].add(i)
+                                adj[i].add(j)
+                                break
 
             # [Step 4] Finding separator set A
             # Assign each vertex of G to one and only one of the bags where it appears,
@@ -322,7 +379,6 @@ class Graphs:
                 if len(inter) != 0:
                     set_of_numbers = set_of_numbers.difference(inter)
                     weights[i] = len(inter)
-                 # TODO: check if one bag can have 0 elements
                 else:
                     weights[i] = 0
 
@@ -366,15 +422,13 @@ class Graphs:
                     dict_sum[temp] = weights[temp] + sum
                     dict[temp] = abs(dict_sum[temp] - abs(num_of_nodes - dict_sum[temp]))
 
-            #del e, i, inter, sum, temp, white_nodes, set_of_numbers, nodes_already_visited, nodes_to_be_deleted, nodes_to_visit
-
             # Finding the edge
             nodes_to_visit = []
             # A  contains the nodes/bags of the tree decomposition
 
             x_i = min(dict, key=dict.get)
-            if len(predecessor) > 0: # TODO:check this change
-                x_j = predecessor[x_i]
+            if len(predecessor) > 0:
+                x_j = predecessor.get(x_i)
                 # We now know that the edge with the lowest absolute difference is between node x_i and x_j
                 nodes_to_visit.append(x_i)
                 while len(nodes_to_visit) > 0:
@@ -386,7 +440,6 @@ class Graphs:
                             nodes_to_visit.append(i)
             # set_A is a subset of V(G)
             # set_A contains the nodes, of the initial graph, that were inside the node/bags A.
-
             for i in A:
                 [set_A.add(j) for j in nodes[i]]
 
@@ -399,8 +452,6 @@ class Graphs:
             B = temp_node_keys.difference(A)
 
             # set_B: are the nodes of V(G) equal to right part of A (or left) along with the portals of A.
-
-            # TODO:change name in set_temp and document it
             if len(set_temp) == 0:
                 [set_B.add(i) for i in range(0, num_of_nodes)]
             else:
@@ -422,7 +473,9 @@ def main():
     # Testing using networkx's structure:
     test = Graphs()
 
-    initial_graph = nx.grid_2d_graph(3, 3)
+    #initial_graph = nx.grid_2d_graph(10, 10)
+    initial_graph = test.create_partial_ktrees(100, 5, 60)
+
     # Add weight 1 in each edge of the grid
     for i in initial_graph._adj:
         for j in initial_graph._adj[i]:
@@ -437,8 +490,8 @@ def main():
     tree_decomp_graph = nx.convert_node_labels_to_integers(p[1], first_label=0, ordering='default',
                                                            label_attribute='bags')
     # Print or not the Tree Decomposition
-    flag = 1
-    if flag == 0:
+    flag = 0
+    if flag == 1:
         # print the adjacency list
     #   for line in nx.generate_adjlist(p[1]):
     #       print(line)
@@ -454,8 +507,8 @@ def main():
     set_of_nodes = [i for i in range(0, len(tree_decomp_graph._node))]
     nodes, adj, initial_graph_nodes, initial_graph_adj = test.data_reform(tree_decomp_graph, set_of_nodes, initial_graph)
     num_of_nodes = len(initial_graph._node)
-    portals_of_A, set_A, set_B, A, B = test.skew_kseparator_tree(num_of_nodes, p[0], nodes, adj,
-                                                              [], initial_graph_adj)
+    portals_of_A, set_A, set_B, A, B, flag_separator = test.skew_kseparator_tree(num_of_nodes, p[0], nodes, adj,
+                                                              [], initial_graph_adj, tree_decomp_graph)
     print()
 
 if __name__ == "__main__":

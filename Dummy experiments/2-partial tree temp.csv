@@ -1,0 +1,2 @@
+Treewidth,Dimension,Log(n),First term,Second Term,n,k,p,Diameter,AlgorithmE Time,Tree decomp Time
+2,2,6.396929655216146,93.79499734075574,24,600,2,20,15,0.0365,0.0000

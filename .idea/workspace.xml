@@ -5,6 +5,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AlgorithmE.py" beforeDir="false" afterPath="$PROJECT_DIR$/AlgorithmE.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataHandler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments/test1_dim2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments/test1_dim2_dijkstra.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments/test_dim3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments/test_dim3_dijkstra.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments/test_dim4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments/test_dim4_dijkstra.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/RangeTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/RangeTree.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grid.edgelist" beforeDir="false" afterPath="$PROJECT_DIR$/grid.edgelist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/plotting.py" afterDir="false" />
@@ -28,6 +34,7 @@
   <component name="ProjectId" id="1QyNS0S28cGQrG8Zdhne9mirBEl" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../handtracking" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -44,7 +51,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.AlgorithmE">
-    <configuration name="AlgorithmE" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="AlgorithmE" type="PythonConfigurationType" factoryName="Python">
       <module name="AlgorithmE_eccentricities" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -107,7 +114,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="fast_dijkstra" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="nothing" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="AlgorithmE_eccentricities" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -119,7 +126,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fast_dijkstra.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/nothing.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -150,19 +157,18 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.DataHandler" />
       <item itemvalue="Python.AlgorithmE" />
+      <item itemvalue="Python.nothing" />
+      <item itemvalue="Python.DataHandler" />
       <item itemvalue="Python.RangeTree" />
-      <item itemvalue="Python.fast_dijkstra" />
       <item itemvalue="Python.plotting" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.AlgorithmE" />
-        <item itemvalue="Python.plotting" />
         <item itemvalue="Python.DataHandler" />
+        <item itemvalue="Python.plotting" />
+        <item itemvalue="Python.nothing" />
         <item itemvalue="Python.RangeTree" />
-        <item itemvalue="Python.fast_dijkstra" />
       </list>
     </recent_temporary>
   </component>
@@ -197,8 +203,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AlgorithmE.py</url>
-          <line>196</line>
-          <option name="timeStamp" value="45" />
+          <line>227</line>
+          <option name="timeStamp" value="71" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -5,6 +5,7 @@ import math
 import time
 from guppy import hpy
 import gc
+import sys
 
 
 class RangeTree:
@@ -19,6 +20,7 @@ class RangeTree:
 
     def __init__(self):
         self.nodeXList = []
+        #self.temp_total_sum = 0
 
     def asymptotic_test(self, size):
         file = open('Range_Tree_test.csv', mode='w')
@@ -122,10 +124,13 @@ class RangeTree:
 
         # Sorting according to the first coordinate
         self.nodeXList.sort(key=operator.attrgetter('coordinate'))
+
+        #print(sys.getsizeof( self.nodeXList))
         # TESTING:
         x = self.build_range_tree(self.nodeXList, 0, len(self.nodeXList))
         root.setRoot(x)
 
+        #self.temp_total_sum = self.temp_total_sum + sys.getsizeof( self.nodeXList)
         return root
 
     def build_range_tree(self, nodelist, flag, n):
@@ -157,7 +162,8 @@ class RangeTree:
         if len(nodelist) >= 2:
             if nodelist[0].nextDimNode is not None:
                 [next_dim_node_list.append(i.nextDimNode) for i in nodelist]
-
+                #self.temp_total_sum = self.temp_total_sum + sys.getsizeof(sys.getsizeof(next_dim_node_list))
+                #print(sys.getsizeof(next_dim_node_list))
                 # Sorting the list
                 if n == len(next_dim_node_list):
                     next_dim_node_list.sort(key=operator.attrgetter('coordinate'))
@@ -277,13 +283,9 @@ class RangeTree:
                 if range[counter] <= v.coordinate:
                     if counter + 2 < len(range):
                         if v.rightChild.TAssoc is not None:
-                            temp = self.dimensional_range_query(v.rightChild.TAssoc, range, counter +2)
-                            # if temp is not None:
-                            #     reported_list.append(temp)
+                            temp = self.dimensional_range_query(v.rightChild.TAssoc, range, counter + 2)
                         else:
                             temp = self.dimensional_range_query(v.rightChild.nextDimNode, range, counter + 2)
-                            # if temp is not None:
-                            #     reported_list.append(temp)
                     else:
                         temp = self.one_d_range_query(v.rightChild, [range[counter], range[counter+1]])
                         for i in temp:
